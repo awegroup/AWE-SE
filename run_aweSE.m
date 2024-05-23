@@ -14,14 +14,14 @@ addpath(genpath([pwd '\inputFiles']));
 
 % Load defined input sheet
 % inputSheet_MW_scale_EcoModel;
-inputSheet_Example;
+inputSheet_Example_SE;
 
 [inputs, outputs, optimDetails, processedOutputs] = main_awePower(inputs);
 
 %% Run AWE-Eco
 
 % Import inputs
-inp = eco_system_inputs_MW_scale(inputs, processedOutputs);
+inp = eco_system_inputs_Example_SE(inputs, processedOutputs);
 
 % Run EcoModel by parsing the inputs
 [inp,par,eco] = eco_main(inp);

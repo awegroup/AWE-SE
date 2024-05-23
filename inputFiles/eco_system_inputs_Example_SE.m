@@ -1,4 +1,4 @@
-function inp = eco_system_inputs_MW_scale(inputs, processedOutputs)
+function inp = eco_system_inputs_Example_SE(inputs, processedOutputs)
 
   global eco_settings
 
@@ -25,7 +25,7 @@ function inp = eco_system_inputs_MW_scale(inputs, processedOutputs)
   % Kite
   inp.kite.structure.m            = processedOutputs.m_k; % kg
   inp.kite.structure.A            = inputs.S; % m^2
-  inp.kite.structure.fixed.f_repl = 0; % /year
+  inp.kite.structure.f_repl       = 0; % /year
   inp.kite.obGen.P                = 1e3; % W
   inp.kite.obBatt.E               = 1; % kWh
   
