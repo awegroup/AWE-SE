@@ -19,7 +19,7 @@ function inp = eco_system_inputs_Example_SE(inputs, processedOutputs)
   inp.business.DtoE    = 70/30; % Debt-Equity-ratio      
                           
   % Wind resources
-  inp.atm.wind_range = processedOutputs.vw_100m_operRange; % m/s
+  inp.atm.wind_range = inputs.vw_ref(1):processedOutputs.vw_100m_operRange(end); % m/s
   inp.atm.gw         = atm.k/atm.A *(inp.atm.wind_range/atm.A).^(atm.k-1).*exp(-(inp.atm.wind_range/atm.A).^atm.k); % Wind distribution
   
   % Kite
@@ -43,9 +43,12 @@ function inp = eco_system_inputs_Example_SE(inputs, processedOutputs)
   inp.system.Dt_cycle  = processedOutputs.tCycle; % s
   
   % Ground station
-  inp.gStation.ultracap.E_rated = 1.1*max(processedOutputs.ultraCapSize); % kWh
-  inp.gStation.ultracap.E_ex    = processedOutputs.ultraCapSize; % kWh
-  inp.gStation.ultracap.f_repl  = -1; % /year                          
+  inp.gStation.ultracap.E_rated = 1.1*max(processedOutputs.storageExchange)/1e3; % kWh % 10% oversizing safety factor
+  inp.gStation.ultracap.E_ex    = processedOutputs.storageExchange./1e3; % kWh
+  inp.gStation.ultracap.f_repl  = -1; % /year
+  inp.gStation.batt.E_rated     = max((processedOutputs.P_m_avg+processedOutputs.P_m_i))/1e3; % kWh
+  inp.gStation.batt.E_ex        = processedOutputs.storageExchange./1e3; % kWh
+  inp.gStation.batt.f_repl      = -1; % /year
   inp.gStation.hydAccum.E_rated = inp.gStation.ultracap.E_rated ;  % kWh
   inp.gStation.hydAccum.E_ex    = inp.gStation.ultracap.E_ex; % kWh
   inp.gStation.hydAccum.f_repl  = -1; % /year
