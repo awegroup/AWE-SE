@@ -11,11 +11,10 @@ addpath(genpath([pwd '\inputFiles']));
 
 % Run AWE-Power
 % Load defined input sheet
-inputSheet_MW_scale_SE
+% inputSheet_Example_SE;
+% inputSheet_MW_scale_SE;
+inputSheet_100kW_scale;
 
-inputs.numDeltaLelems  = 1;
-inputs.S               = 70;
-inputs.Ft_max          = 3*inputs.S; %[kN]
 % Get results
 [inputs, outputs, optimDetails, processedOutputs] = main_awePower(inputs);
 
@@ -23,7 +22,6 @@ inputs.Ft_max          = 3*inputs.S; %[kN]
 % plotResults_awePower(inputs, processedOutputs);
 
 % Run AWE-Eco
-
 % Import inputs
 inp = eco_system_inputs_Example_SE(inputs, processedOutputs);
 

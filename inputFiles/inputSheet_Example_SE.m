@@ -1,6 +1,6 @@
 % Input Sheet Example (AP3)
 inputs                = struct();
-inputs.name           = 'inputSheet_Example';
+inputs.name           = 'inputSheet_Example_SE';
 
 inputs.numDeltaLelems  = 5; %[num]
 inputs.FgToggle        = 1; % 0 = No, 1 = Yes
@@ -31,7 +31,7 @@ inputs.Ft_max_SF         = 0.8; % 0.8 for gust margin
 inputs.maxTeLen          = 1000; %[m]
 inputs.maxHeight         = 1000; %[m]
 inputs.minGroundClear    = 100; %[m] 
-inputs.Te_matStrength    = 7e8;
+inputs.Te_matStrength    = 6e8;
 inputs.Te_matDensity     = 980; %[kg/m^3] 
 
 inputs.Cl_maxAirfoil  = 2.5; %[-] % 2.7

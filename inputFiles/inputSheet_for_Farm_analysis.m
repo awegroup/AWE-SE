@@ -1,14 +1,14 @@
 % Inputs sheet: MW scale
 inputs                = struct();
-inputs.name           = 'inputSheet_MW_scale_EcoModel';
+inputs.name           = 'inputSheet_for_farm_analysis';
 
-inputs.numDeltaLelems  = 5; %[num]
+inputs.numDeltaLelems  = 4; %[num]
 inputs.vertWindProfile = 0; % 0 = Modelled, 1 = From dataset 
 inputs.FgToggle        = 1; % 0 = No, 1 = Yes
 
-inputs.vw_ref         = 1:1:25; %[m/s]
+inputs.vw_ref         = 3:1:25; %[m/s]
 inputs.h_ref          = 100; %[m]
-inputs.windShearExp   = 0.143; %[-] % 0.143 over land, 0.11 over sea
+inputs.windShearExp   = 0; %[-] % 0.143 over land, 0.11 over sea
 
 inputs.S              = 100; %[m^2]
 inputs.AR             = 12; %[-]
@@ -18,12 +18,12 @@ inputs.massOverride   = 0;
 inputs.kiteMass       = 600; %[kg]
 inputs.peakM2E_F      = 2.5; %[-]
 
-inputs.Ft_max            = 3.5*inputs.S; %[kN]
+inputs.Ft_max            = 3*inputs.S; %[kN]
 inputs.Ft_max_SF         = 1; % 0.8 for gust margin
 inputs.maxTeLen          = 3000; %[m]
 inputs.maxHeight         = 1000; %[m]
 inputs.minGroundClear    = 100; %[m] 
-inputs.Te_matStrength    = 6e8; % Engineering guess considering tether replacement costs. SHould be between 0.6 to 0.8 GPa
+inputs.Te_matStrength    = 5e8; % Engineering guess considering tether replacement costs. SHould be between 0.6 to 0.8 GPa
 inputs.Te_matDensity     = 970; %[kg/m^3] 
 
 inputs.Cl_maxAirfoil  = 2.5; %[-] % 2.7
