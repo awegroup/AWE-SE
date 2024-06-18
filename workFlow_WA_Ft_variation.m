@@ -16,13 +16,17 @@ clc; clearvars;
 inputSheet_100kW_scale;
 
 % Define the range and step size for wing area and maxWL
-WA_values = [10,15,20]; % Wing area values
-maxWL_values = [2,3,4]; % Maximum wing loading values
+% WA_values = [15, 20, 25]; % Wing area values
+% Ft_guess  = 3*mean(WA_values); % kN
+% Ft_values = [Ft_guess*0.75, Ft_guess, Ft_guess*1.25]; % Maximum wing loading values
+
+WA_values = [20, 25]; % Wing area values
+Ft_values = [75]; % Maximum tether force % kN
 
 % Initialize variables to store results
 num_points_WA = length(WA_values);
-num_points_maxWL = length(maxWL_values);
-LCoE_values = zeros(num_points_WA, num_points_maxWL);
+num_points_maxFt = length(Ft_values);
+LCoE_values = zeros(num_points_WA, num_points_maxFt);
 
 % Loop over each combination of wing area and maxWL
 for i = 1:num_points_WA
@@ -39,10 +43,10 @@ for i = 1:num_points_WA
   inputs.ub     = [500,  deg2rad(90), deg2rad(60), 100, inputs.v_d_max*inputs.nx, inputs.Cl_maxAirfoil*inputs.Cl_eff_F*inputs.nx,...
       inputs.v_d_max*inputs.nx,  200*inputs.nx, inputs.Cl_maxAirfoil*inputs.Cl_eff_F*inputs.nx]; 
 
-    for j = 1:num_points_maxWL
+    for j = 1:num_points_maxFt
         WA = WA_values(i);
-        maxWL = maxWL_values(j);
-        [LCoE, processedOutputs, eco] = objectiveFunction(maxWL, WA, inputs);
+        maxFt = Ft_values(j);
+        [LCoE, processedOutputs, eco] = objectiveFunction(maxFt, inputs);
 
         % Save outputs
         designSpace(i).systemInputs(j) = inputs;
@@ -57,9 +61,20 @@ end
 [minLCoE, minIdx] = min(LCoE_values(:));
 [optIdx_WA, optIdx_maxWL] = ind2sub(size(LCoE_values), minIdx);
 optWA = WA_values(optIdx_WA);
-optMaxWL = maxWL_values(optIdx_maxWL);
+optMaxFt = Ft_values(optIdx_maxWL);
 
-% Plots
+%% Plots
+
+% Display optimal design
+disp('Optimized Wing Area (WA) [m^2]:');
+disp(optWA);
+
+disp('Optimized Maximum Tether Force (F_{t,max}) [kN]:');
+disp(optMaxFt);
+
+disp('Minimum LCoE [€/MWh]:');
+disp(minLCoE);
+
 
 % Plotting power curves for each wing area in separate plots
 for i = 1:length(WA_values)
@@ -67,12 +82,12 @@ for i = 1:length(WA_values)
     figure;
     hold on;
     grid on;
-    xlabel('Wind Speed [m/s]');
+    xlabel('Wind speed at 100m height [m/s]');
     ylabel('Average Power Output [MW]');
     title(['Power Curve for WA = ' num2str(WA_values(i)) ' m^2']);
     
     % Loop through each wing loading (WL) for the current wing area
-    for j = 1:length(maxWL_values)
+    for j = 1:length(Ft_values)
         % Extract power curve data
         avg_power_output = designSpace(i).perfOutputs(j).P_e_avg;
         
@@ -81,9 +96,9 @@ for i = 1:length(WA_values)
     end
     
     % Add legend
-    legendEntries = cell(1, length(maxWL_values));
-    for j = 1:length(maxWL_values)
-        legendEntries{j} = ['WL = ' num2str(maxWL_values(j)) ' kN/m^2'];
+    legendEntries = cell(1, length(Ft_values));
+    for j = 1:length(Ft_values)
+        legendEntries{j} = ['F_{t,max} = ' num2str(Ft_values(j)) ' kN'];
     end
     legend(legendEntries, 'Location', 'Best');
     
@@ -91,64 +106,126 @@ for i = 1:length(WA_values)
     hold off;
 end
 
-% Plotting LCoE vs Wing Area for different Wing Loadings (WL)
+% Plotting LCoE vs Wing Area for different tether forces
 figure;
 hold on;
 grid on;
 xlabel('Wing Area (WA) [m^2]');
-ylabel('Levelized Cost of Energy (LCoE) [$/MWh]');
-title('LCoE vs Wing Area for different Wing Loadings');
-
+ylabel('Levelized Cost of Energy (LCoE) [€/MWh]');
+title('LCoE vs Wing Area for tether forces');
 % Define legend entries
-legendEntries = cell(1, length(maxWL_values));
-
-% Loop through each Wing Loading (WL)
-for j = 1:length(maxWL_values)
+legendEntries = cell(1, length(Ft_values));
+% Loop through each tether force
+for j = 1:length(Ft_values)
     LCoE_values_plot = [];
-    
     % Loop through each Wing Area (WA)
     for i = 1:length(WA_values)
         LCoE_values_plot(i) = LCoE_values(i, j);
     end
-    
     % Plot LCoE for the current WL
     plot(WA_values, LCoE_values_plot, '-o', 'LineWidth', 2);
     
-    % Store legend entry for the current WL
-    legendEntries{j} = ['WL = ' num2str(maxWL_values(j)) ' kN/m^2'];
+    % Store legend entry for the current tether force
+    legendEntries{j} = ['F_{t,max} = ' num2str(Ft_values(j)) ' kN'];
 end
-
 % Add legend to the plot
 legend(legendEntries, 'Location', 'Best');
 hold off;
 
+
+% Plotting AEP vs Wing Area for different tether forces
+figure;
+hold on;
+grid on;
+xlabel('Wing Area (WA) [m^2]');
+ylabel('AEP [MWh]');
+title('AEP vs Wing Area for different tether forces');
+% Define legend entries
+legendEntries = cell(1, length(Ft_values));
+% Loop through each tether force
+for j = 1:length(Ft_values)
+    AEP_values_plot  = [];
+    % Loop through each Wing Area (WA)
+    for i = 1:length(WA_values)
+        AEP_values_plot(i)  = designSpace(i).ecoOutputs(j).metrics.AEP; % MWh  
+    end
+    % Plot LCoE for the current tether force
+    plot(WA_values, AEP_values_plot, '-o', 'LineWidth', 2);
+    % Store legend entry for the current WL
+    legendEntries{j} = ['F_{t,max} = ' num2str(Ft_values(j)) ' kN'];
+end
+% Add legend to the plot
+legend(legendEntries, 'Location', 'Best');
+hold off;
+
+% Plotting ICC vs Wing Area for different tether forces
+figure;
+hold on;
+grid on;
+xlabel('Wing Area (WA) [m^2]');
+ylabel('ICC [€]');
+title('ICC vs Wing Area for different tether forces');
+% Define legend entries
+legendEntries = cell(1, length(Ft_values));
+% Loop through each tether force
+for j = 1:length(Ft_values)
+    ICC_values_plot  = [];
+    % Loop through each Wing Area (WA)
+    for i = 1:length(WA_values)
+        ICC_values_plot(i)  = designSpace(i).ecoOutputs(j).metrics.ICC; % € 
+    end
+    % Plot LCoE for the current tether force
+    plot(WA_values, ICC_values_plot, '-o', 'LineWidth', 2);
+    % Store legend entry for the current WL
+    legendEntries{j} = ['F_{t,max} = ' num2str(Ft_values(j)) ' kN'];
+end
+% Add legend to the plot
+legend(legendEntries, 'Location', 'Best');
+hold off;
+
+% Plotting OMC vs Wing Area for different tether forces
+figure;
+hold on;
+grid on;
+xlabel('Wing Area (WA) [m^2]');
+ylabel('OMC [€]');
+title('OMC vs Wing Area for different tether forces');
+% Define legend entries
+legendEntries = cell(1, length(Ft_values));
+% Loop through each tether force
+for j = 1:length(Ft_values)
+    OMC_values_plot  = [];
+    % Loop through each Wing Area (WA)
+    for i = 1:length(WA_values)
+        OMC_values_plot(i)  = designSpace(i).ecoOutputs(j).metrics.OMC; % € 
+    end
+    % Plot LCoE for the current tether force
+    plot(WA_values, OMC_values_plot, '-o', 'LineWidth', 2);
+    % Store legend entry for the current WL
+    legendEntries{j} = ['F_{t,max} = ' num2str(Ft_values(j)) ' kN'];
+end
+% Add legend to the plot
+legend(legendEntries, 'Location', 'Best');
+hold off;
+
+
 % Contour Plot
 figure;
-contourf(maxWL_values, WA_values, LCoE_values, 20);
+contourf(Ft_values, WA_values, LCoE_values, 20);
 colorbar;
 hold on;
-plot(optMaxWL, optWA, 'ro', 'MarkerSize', 10); % Plot optimal solution
-xlabel('Maximum Wing Loading (maxWL) [kN/m^2]');
+plot(optMaxFt, optWA, 'ro', 'MarkerSize', 10); % Plot optimal solution
+xlabel('Maximum Tether force (F_{t,max}) [kN]');
 ylabel('Wing Area (WA) [m^2]');
 title('LCoE Contour Plot');
 grid on;
 hold off;
 
-% Display results
-disp('Optimized Wing Area (WA) [m^2]:');
-disp(optWA);
-
-disp('Optimized Maximum Wing Loading (maxWL) [kN/m^2]:');
-disp(optMaxWL);
-
-disp('Minimum LCoE [$/MWh]:');
-disp(minLCoE);
-
 % Objective function for optimization
-function [LCoE, processedOutputs, eco] = objectiveFunction(maxWL, WA, inputs)
-    inputs.Ft_max = maxWL * WA;
+function [LCoE, processedOutputs, eco] = objectiveFunction(maxFt, inputs)
+    inputs.Ft_max = maxFt;
     [~, ~, ~, processedOutputs] = main_awePower(inputs);
-    inp = eco_system_inputs_Example_SE(inputs, processedOutputs);
+    inp = eco_system_inputs_SystemDesign(inputs, processedOutputs);
     [~, ~, eco] = eco_main(inp);
     LCoE = eco.metrics.LCoE;
 end

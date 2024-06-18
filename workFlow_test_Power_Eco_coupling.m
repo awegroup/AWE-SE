@@ -19,7 +19,7 @@ inputSheet_100kW_scale;
 [inputs, outputs, optimDetails, processedOutputs] = main_awePower(inputs);
 
 % Plot results
-% plotResults_awePower(inputs, processedOutputs);
+plotResults_awePower(inputs, processedOutputs);
 
 % Run AWE-Eco
 % Import inputs
@@ -29,7 +29,7 @@ inp = eco_system_inputs_Example_SE(inputs, processedOutputs);
 [inp,par,eco] = eco_main(inp);
 
 % Display results
-eco_displayResults(eco)
+eco_displayResults(inp,eco)
 
 
 

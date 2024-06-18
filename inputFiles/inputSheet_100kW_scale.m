@@ -2,25 +2,25 @@
 inputs                = struct();
 inputs.name           = 'inputSheet_100kW_scale';
 
-inputs.numDeltaLelems  = 5   ; %[num]
+inputs.numDeltaLelems  = 4; %[num]
 inputs.FgToggle        = 1; % 0 = No, 1 = Yes
 inputs.vertWindProfile = 0; % 0 = Modelled, 1 = From dataset 
 
-inputs.vw_ref         = 3:1:25; %[m/s]
+inputs.vw_ref         = 2:1:25; %[m/s]
 inputs.h_ref          = 100; %[m]
 inputs.windShearExp   = 0.143; %[-] % 0.143 over land, 0.11 over sea
 
-inputs.S              = 15; %[m^2]
+inputs.S              = 25; %[m^2]
 inputs.AR             = 12; %[-]
 inputs.b              = sqrt(inputs.AR*inputs.S); %[m]
 inputs.P_ratedElec    = 100*1000; %[W]
 inputs.massOverride   = 0;
 inputs.kiteMass       = 600; %[kg]
-inputs.peakM2E_F      = 2; %[-]
+inputs.peakM2E_F      = 2.5; %[-]
 
-inputs.Ft_max            = 2*inputs.S; %[kN]
-inputs.Ft_max_SF         = 1; % 0.8 for gust margin
-inputs.maxTeLen          = 1000; %[m]
+inputs.Ft_max            = 75; %[kN]
+inputs.Ft_max_SF         = 0.8; % 0.8 for gust margin
+inputs.maxTeLen          = 3000; %[m]
 inputs.maxHeight         = 1000; %[m]
 inputs.minGroundClear    = 100; %[m] 
 inputs.Te_matStrength    = 6e8;
@@ -48,13 +48,13 @@ inputs.airDensity     = 1.225; %[kg/m^3]
 % Optimisation problem data
 inputs.nx = ones(1,inputs.numDeltaLelems);
 % Initial guess
-%               [deltaL, avgPattEle,  coneAngle,     Rp_start, v_i,                      CL_i,                                           v_o,           kinematicRatio,         CL]
-inputs.x0     = [200,    deg2rad(30), deg2rad(5),    5*inputs.b,       inputs.v_d_max*inputs.nx, inputs.Cl_maxAirfoil*inputs.Cl_eff_F*inputs.nx, 0.8*inputs.nx, 90*inputs.nx,           inputs.Cl_maxAirfoil*inputs.Cl_eff_F*inputs.nx];
+%               [deltaL, avgPattEle,  coneAngle,     Rp_start, v_i,    CL_i,                     v_o,                                            kinematicRatio,              CL]
+inputs.x0     = [200,    deg2rad(30), deg2rad(5),    5*inputs.b,       inputs.v_d_max*inputs.nx, inputs.Cl_maxAirfoil*inputs.Cl_eff_F*inputs.nx, 0.8*inputs.nx, 90*inputs.nx, inputs.Cl_maxAirfoil*inputs.Cl_eff_F*inputs.nx];
 
 % Bounds
 inputs.lb     = [50,   deg2rad(1),  deg2rad(1),  5*inputs.b,  1*inputs.nx, 0.1*inputs.nx, 0.8*inputs.nx, 1*inputs.nx, 0.1*inputs.nx]; % 
 inputs.ub     = [500,  deg2rad(90), deg2rad(60), 100, inputs.v_d_max*inputs.nx, inputs.Cl_maxAirfoil*inputs.Cl_eff_F*inputs.nx,...
-    inputs.v_d_max*inputs.nx,  200*inputs.nx, inputs.Cl_maxAirfoil*inputs.Cl_eff_F*inputs.nx]; %
+                    inputs.v_d_max*inputs.nx,  200*inputs.nx, inputs.Cl_maxAirfoil*inputs.Cl_eff_F*inputs.nx]; %
 
 
 

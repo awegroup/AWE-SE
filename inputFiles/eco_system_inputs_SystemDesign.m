@@ -1,8 +1,8 @@
-function inp = eco_system_inputs_Example_SE(inputs, processedOutputs)
+function inp = eco_system_inputs_SystemDesign(inputs, processedOutputs)
 
   global eco_settings
   
-  eco_settings.name             = 'example';
+  eco_settings.name             = 'systemDesign';
   eco_settings.input_cost_file  = 'eco_cost_inputs_GG_fixed.xlsx'; % set the input file
   eco_settings.input_model_file = 'code'; % code || set the input file
   eco_settings.power            = 'GG';  % FG || GG 
@@ -28,7 +28,7 @@ function inp = eco_system_inputs_Example_SE(inputs, processedOutputs)
   inp.kite.structure.A            = inputs.S; % m^2
   inp.kite.structure.f_repl       = 0; % /year
   inp.kite.obGen.P                = 1e3; % W
-  inp.kite.obBatt.E               = 1; % kWh
+  inp.kite.obBatt.E               = inp.kite.obGen.P/1e3; % kWh
   
   % Tether
   inp.tether.d      = processedOutputs.Dia_te; % m

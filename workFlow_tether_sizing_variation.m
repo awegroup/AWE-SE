@@ -41,7 +41,7 @@ for i = 1:num_points_tetherSigma
         [~, ~, ~, designSpace(i).perfOutputs(j)] = main_awePower(inputs);
 
         % AWE-Eco
-        inp = eco_system_inputs_Example_SE(inputs, designSpace(i).perfOutputs(j));
+        inp = eco_system_inputs_SystemDesign(inputs, designSpace(i).perfOutputs(j));
         [~, ~, designSpace(i).ecoOutputs(j)] = eco_main(inp);
         LCoE_values(i,j) = designSpace(i).ecoOutputs(j).metrics.LCoE;     
 
@@ -54,7 +54,7 @@ end
 optTetherSigma                     = tetherSigma(optIdx_tetherSigma);
 optMaxWL                           = maxWL_values(optIdx_maxWL);
 
-% Plots
+%% Plots
 
 % Plotting power curves for each wing area in separate plots
 for i = 1:length(tetherSigma)
@@ -72,7 +72,7 @@ for i = 1:length(tetherSigma)
         avg_power_output = designSpace(i).perfOutputs(j).P_e_avg;
         
         % Plot power curve
-        plot(avg_power_output / 1e6, '-o', 'LineWidth', 2);
+        plot(avg_power_output / 1e6, '-o', 'LineWidth', 1.5, MarkerSize=6);
     end
     
     % Add legend
@@ -107,7 +107,7 @@ for j = 1:length(maxWL_values)
     end
     
     % Plot LCoE for the current WL
-    plot(tetherSigma, LCoE_values_plot, '-o', 'LineWidth', 2);
+    plot(tetherSigma, LCoE_values_plot, '-o', 'LineWidth', 1.5, 'MarkerSize',6);
     
     % Store legend entry for the current WL
     legendEntries{j} = ['WL = ' num2str(maxWL_values(j)) ' kN/m^2'];
@@ -124,7 +124,7 @@ colorbar;
 hold on;
 plot(optMaxWL, optTetherSigma, 'ro', 'MarkerSize', 10); % Plot optimal solution
 xlabel('Maximum Wing Loading (maxWL) [kN/m^2]');
-ylabel('Wing Area (WA) [m^2]');
+ylabel('Tether stress [Pa]');
 title('LCoE Contour Plot');
 grid on;
 hold off;
@@ -138,15 +138,3 @@ disp(optMaxWL);
 
 disp('Minimum LCoE [$/MWh]:');
 disp(minLCoE);
-
-% % Objective function
-% function [LCoE, processedOutputs, eco] = objectiveFunction(maxWL, tetherSigma, inputs)
-% 
-%     inputs.Ft_max = maxWL * inputs.S;
-%     inputs.Te_matStrength = tetherSigma;
-% 
-%     [~, ~, ~, processedOutputs] = main_awePower(inputs);
-%     inp = eco_system_inputs_Example_SE(inputs, processedOutputs);
-%     [~, ~, eco] = eco_main(inp);
-%     LCoE = eco.metrics.LCoE;
-% end
