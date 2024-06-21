@@ -16,12 +16,12 @@ clc; clearvars;
 inputSheet_100kW_scale;
 
 % Define the range and step size for wing area and maxWL
-% WA_values = [15, 20, 25]; % Wing area values
-% Ft_guess  = 3*mean(WA_values); % kN
-% Ft_values = [Ft_guess*0.75, Ft_guess, Ft_guess*1.25]; % Maximum wing loading values
+WA_values = [15, 20, 25]; % Wing area values
+Ft_guess  = 2*mean(WA_values); % kN
+Ft_values = [Ft_guess*0.5, Ft_guess*0.75, Ft_guess, Ft_guess*1.25, Ft_guess*1.5]; % Maximum wing loading values
 
-WA_values = [20, 25]; % Wing area values
-Ft_values = [75]; % Maximum tether force % kN
+% WA_values = [20, 25]; % Wing area values
+% Ft_values = [75]; % Maximum tether force % kN
 
 % Initialize variables to store results
 num_points_WA = length(WA_values);

@@ -1,4 +1,4 @@
-function inp = eco_system_inputs_Example_SE(inputs, processedOutputs)
+function inp = eco_system_inputs_awePower(inputs, processedOutputs)
 
   global eco_settings
   
@@ -28,7 +28,7 @@ function inp = eco_system_inputs_Example_SE(inputs, processedOutputs)
   inp.kite.structure.A            = inputs.S; % m^2
   inp.kite.structure.f_repl       = 0; % /year
   inp.kite.obGen.P                = 1e3; % W
-  inp.kite.obBatt.E               = 1; % kWh
+  inp.kite.obBatt.E               = inp.kite.obGen.P/1e3; % kWh
   
   % Tether
   inp.tether.d      = processedOutputs.Dia_te; % m

@@ -18,7 +18,7 @@ inputs.massOverride   = 0;
 inputs.kiteMass       = 600; %[kg]
 inputs.peakM2E_F      = 2.5; %[-]
 
-inputs.Ft_max            = 75; %[kN]
+inputs.Ft_max            = 75*1000; %[N]
 inputs.Ft_max_SF         = 0.8; % 0.8 for gust margin
 inputs.maxTeLen          = 3000; %[m]
 inputs.maxHeight         = 1000; %[m]
