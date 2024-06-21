@@ -17,10 +17,10 @@ inputSheet_100kW_scale;
 
 % Define the design space
 % tetherSigma = [5e8, 6e8]; % Pa % Max stress limit for tether diameter sizing
-% maxWL_values = [2,3,4]; % kN/m^2 % Maximum wing loading values
+% maxWL_values = [2,3,4]; % N/m^2 % Maximum wing loading values
 
 tetherSigma = [4e8, 5e8, 6e8]; % Pa % Max stress limit for tether diameter sizing
-maxWL_values = [2,3,4]; % kN/m^2 % Maximum wing loading values
+maxWL_values = [2,3,4]; % N/m^2 % Maximum wing loading values
 
 % Initialize variables to store results
 num_points_tetherSigma = length(tetherSigma);
@@ -78,7 +78,7 @@ for i = 1:length(tetherSigma)
     % Add legend
     legendEntries = cell(1, length(maxWL_values));
     for j = 1:length(maxWL_values)
-        legendEntries{j} = ['WL = ' num2str(maxWL_values(j)) ' kN/m^2'];
+        legendEntries{j} = ['WL = ' num2str(maxWL_values(j)) ' N/m^2'];
     end
     legend(legendEntries, 'Location', 'Best');
     
@@ -110,7 +110,7 @@ for j = 1:length(maxWL_values)
     plot(tetherSigma, LCoE_values_plot, '-o', 'LineWidth', 1.5, 'MarkerSize',6);
     
     % Store legend entry for the current WL
-    legendEntries{j} = ['WL = ' num2str(maxWL_values(j)) ' kN/m^2'];
+    legendEntries{j} = ['WL = ' num2str(maxWL_values(j)) ' N/m^2'];
 end
 
 % Add legend to the plot
@@ -123,7 +123,7 @@ contourf(maxWL_values, tetherSigma, LCoE_values, 20);
 colorbar;
 hold on;
 plot(optMaxWL, optTetherSigma, 'ro', 'MarkerSize', 10); % Plot optimal solution
-xlabel('Maximum Wing Loading (maxWL) [kN/m^2]');
+xlabel('Maximum Wing Loading (maxWL) [N/m^2]');
 ylabel('Tether stress [Pa]');
 title('LCoE Contour Plot');
 grid on;
@@ -133,7 +133,7 @@ hold off;
 disp('Optimized tether sigma [Pa]:');
 disp(optTetherSigma);
 
-disp('Optimized Maximum Wing Loading (maxWL) [kN/m^2]:');
+disp('Optimized Maximum Wing Loading (maxWL) [N/m^2]:');
 disp(optMaxWL);
 
 disp('Minimum LCoE [$/MWh]:');

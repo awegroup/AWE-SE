@@ -3,25 +3,25 @@
 clc; clearvars;
 
 % Add the source code folders of AWE-Power and AWE-Eco to path
-addpath(genpath('C:\PhD\GitHubRepo\AWE-Power\src'));
-addpath(genpath('C:\PhD\GitHubRepo\AWE-Eco\src'));
+addpath(genpath('C:/PhD/GitHubRepo/AWE-Power/src'));
+addpath(genpath('C:/PhD/GitHubRepo/AWE-Eco/src'));
 
 % Add inputFiles to path
-addpath(genpath([pwd '\inputFiles']));
+addpath(genpath([pwd '/inputFiles']));
 
 %% Grid search or Exhaustive search
 clc; clearvars; 
 
 % Defined input sheet
-inputSheet_100kW_scale;
+inputFile_100kW_awePower;
 
 % Define the range and step size for wing area and maxWL
 WA_values = [15, 20, 25]; % Wing area values
-Ft_guess  = 2*mean(WA_values); % kN
-Ft_values = [Ft_guess*0.5, Ft_guess*0.75, Ft_guess, Ft_guess*1.25, Ft_guess*1.5]; % Maximum wing loading values
+Ft_guess  = 2*mean(WA_values)*1000; % N
+Ft_values = [Ft_guess*0.5, Ft_guess, Ft_guess*1.5]; % Maximum wing loading values
 
 % WA_values = [20, 25]; % Wing area values
-% Ft_values = [75]; % Maximum tether force % kN
+% Ft_values = [75]; % Maximum tether force % N
 
 % Initialize variables to store results
 num_points_WA = length(WA_values);
@@ -69,7 +69,7 @@ optMaxFt = Ft_values(optIdx_maxWL);
 disp('Optimized Wing Area (WA) [m^2]:');
 disp(optWA);
 
-disp('Optimized Maximum Tether Force (F_{t,max}) [kN]:');
+disp('Optimized Maximum Tether Force (F_{t,max}) [N]:');
 disp(optMaxFt);
 
 disp('Minimum LCoE [€/MWh]:');
@@ -98,7 +98,7 @@ for i = 1:length(WA_values)
     % Add legend
     legendEntries = cell(1, length(Ft_values));
     for j = 1:length(Ft_values)
-        legendEntries{j} = ['F_{t,max} = ' num2str(Ft_values(j)) ' kN'];
+        legendEntries{j} = ['F_{t,max} = ' num2str(Ft_values(j)) ' N'];
     end
     legend(legendEntries, 'Location', 'Best');
     
@@ -126,7 +126,7 @@ for j = 1:length(Ft_values)
     plot(WA_values, LCoE_values_plot, '-o', 'LineWidth', 2);
     
     % Store legend entry for the current tether force
-    legendEntries{j} = ['F_{t,max} = ' num2str(Ft_values(j)) ' kN'];
+    legendEntries{j} = ['F_{t,max} = ' num2str(Ft_values(j)) ' N'];
 end
 % Add legend to the plot
 legend(legendEntries, 'Location', 'Best');
@@ -152,7 +152,7 @@ for j = 1:length(Ft_values)
     % Plot LCoE for the current tether force
     plot(WA_values, AEP_values_plot, '-o', 'LineWidth', 2);
     % Store legend entry for the current WL
-    legendEntries{j} = ['F_{t,max} = ' num2str(Ft_values(j)) ' kN'];
+    legendEntries{j} = ['F_{t,max} = ' num2str(Ft_values(j)) ' N'];
 end
 % Add legend to the plot
 legend(legendEntries, 'Location', 'Best');
@@ -177,7 +177,7 @@ for j = 1:length(Ft_values)
     % Plot LCoE for the current tether force
     plot(WA_values, ICC_values_plot, '-o', 'LineWidth', 2);
     % Store legend entry for the current WL
-    legendEntries{j} = ['F_{t,max} = ' num2str(Ft_values(j)) ' kN'];
+    legendEntries{j} = ['F_{t,max} = ' num2str(Ft_values(j)) ' N'];
 end
 % Add legend to the plot
 legend(legendEntries, 'Location', 'Best');
@@ -202,7 +202,7 @@ for j = 1:length(Ft_values)
     % Plot LCoE for the current tether force
     plot(WA_values, OMC_values_plot, '-o', 'LineWidth', 2);
     % Store legend entry for the current WL
-    legendEntries{j} = ['F_{t,max} = ' num2str(Ft_values(j)) ' kN'];
+    legendEntries{j} = ['F_{t,max} = ' num2str(Ft_values(j)) ' N'];
 end
 % Add legend to the plot
 legend(legendEntries, 'Location', 'Best');
@@ -215,7 +215,7 @@ contourf(Ft_values, WA_values, LCoE_values, 20);
 colorbar;
 hold on;
 plot(optMaxFt, optWA, 'ro', 'MarkerSize', 10); % Plot optimal solution
-xlabel('Maximum Tether force (F_{t,max}) [kN]');
+xlabel('Maximum Tether force (F_{t,max}) [N]');
 ylabel('Wing Area (WA) [m^2]');
 title('LCoE Contour Plot');
 grid on;
@@ -224,8 +224,8 @@ hold off;
 % Objective function for optimization
 function [LCoE, processedOutputs, eco] = objectiveFunction(maxFt, inputs)
     inputs.Ft_max = maxFt;
-    [~, ~, ~, processedOutputs] = main_awePower(inputs);
-    inp = eco_system_inputs_SystemDesign(inputs, processedOutputs);
+    [~, ~, processedOutputs] = main_awePower(inputs);
+    inp = eco_system_inputs_awePower(inputs, processedOutputs);
     [~, ~, eco] = eco_main(inp);
     LCoE = eco.metrics.LCoE;
 end
