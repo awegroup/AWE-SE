@@ -10,7 +10,7 @@ inputs.vw_ref         = 2:1:25; %[m/s]
 inputs.h_ref          = 100; %[m]
 inputs.windShearExp   = 0.143; %[-] % 0.143 over land, 0.11 over sea
 
-inputs.S              = 25; %[m^2]
+inputs.S              = 20; %[m^2]
 inputs.AR             = 12; %[-]
 inputs.b              = sqrt(inputs.AR*inputs.S); %[m]
 inputs.P_ratedElec    = 100*1000; %[W]
@@ -18,7 +18,7 @@ inputs.massOverride   = 0;
 inputs.kiteMass       = 600; %[kg]
 inputs.peakM2E_F      = 2.5; %[-]
 
-inputs.Ft_max            = 75*1000; %[N]
+inputs.Ft_max            = 2*inputs.S*1000; %[N]
 inputs.Ft_max_SF         = 0.8; % 0.8 for gust margin
 inputs.maxTeLen          = 3000; %[m]
 inputs.maxHeight         = 1000; %[m]

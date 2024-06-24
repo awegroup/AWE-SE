@@ -13,6 +13,7 @@ addpath(genpath([pwd '/inputFiles']));
 % Load defined input file
 inputFile_example_SE;
 
+
 % Get results
 [outputs, optimDetails, processedOutputs] = main_awePower(inputs);
 
