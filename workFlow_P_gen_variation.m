@@ -16,7 +16,7 @@ addpath(genpath([pwd '/functions']));
 inputFile_100kW_awePower;
 
 % Define the range for P_gen
-P_gen_values = [100, 150, 200, 250, 300]; % kW
+P_gen_values = [100, 150, 250, 300]; % kW
 
 % Loop over each sigma_t_max value
 for i = 1:length(P_gen_values)

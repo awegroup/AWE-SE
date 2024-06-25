@@ -13,9 +13,11 @@ addpath(genpath([pwd '/functions']));
 
 % Defined input sheet
 inputFile_100kW_awePower;
+% inputFile_1MW_awePower;
 
 % Define the range for wing area
-WA_values = [10, 15, 20, 25, 30]; % Wing area values
+WA_values = [10, 15, 20, 25]; % Wing area values
+% WA_values = [80, 100, 120]; % Wing area values
 
 % Loop over each wing area value
 for i = 1:length(WA_values)
@@ -24,7 +26,8 @@ for i = 1:length(WA_values)
 
   % Dependent changes in inputs
   inputs.b      = sqrt(inputs.AR * inputs.S); %[m]
-  inputs.Ft_max = 2*inputs.S*1000; %[N]
+  inputs.Ft_max = 4*inputs.S*1000; %[N]
+
   % Initial guess
   inputs.nx = ones(1, inputs.numDeltaLelems);
   % [deltaL, avgPattEle,  coneAngle, Rp_start, v_i, CL_i, v_o, kinematicRatio, CL]
@@ -34,12 +37,12 @@ for i = 1:length(WA_values)
   % Bounds
   inputs.lb = [50, deg2rad(1), deg2rad(1), 5 * inputs.b, 1 * inputs.nx, 0.1 * inputs.nx, ...
     0.8 * inputs.nx, 1 * inputs.nx, 0.1 * inputs.nx];
-  inputs.ub = [500, deg2rad(90), deg2rad(60), 100, inputs.v_d_max * inputs.nx, ...
+  inputs.ub = [500, deg2rad(90), deg2rad(60), 10*inputs.b, inputs.v_d_max * inputs.nx, ...
     inputs.Cl_maxAirfoil * inputs.Cl_eff_F * inputs.nx, inputs.v_d_max * inputs.nx, ...
     200 * inputs.nx, inputs.Cl_maxAirfoil * inputs.Cl_eff_F * inputs.nx];
 
   % Save parameter values
-  designSpace_WA_var(i).paramValue   = WA_values(i);
+  designSpace_WA_var(i).paramValue = WA_values(i);
 
   % Evaluate design objective
   [designSpace_WA_var(i).systemInputs, designSpace_WA_var(i).perfOutputs, designSpace_WA_var(i).ecoOutputs] = evalDesignObjective(inputs);

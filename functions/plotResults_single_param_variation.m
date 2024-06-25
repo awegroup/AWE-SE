@@ -6,16 +6,16 @@ for i = 1:length(designSpace)
     paramValues(i) = designSpace(i).paramValue;
 
     % Extract power curve data
-    power(i).param = designSpace(i).perfOutputs.P_e_avg;
+    power(i).param = designSpace(i).perfOutputs.P_e_avg/1e6; % MW 
 
     % Extract ICC and OMC
-    cost(i).param  = designSpace(i).ecoOutputs.metrics.ICC + designSpace(i).ecoOutputs.metrics.OMC * (length(designSpace(i).ecoOutputs.metrics.cashflow)-1);
+    cost(i).param  = (designSpace(i).ecoOutputs.metrics.ICC + designSpace(i).ecoOutputs.metrics.OMC * (length(designSpace(i).ecoOutputs.metrics.cashflow)-1))/1e6; % M Euros
 
     % Extract AEP
-    AEP(i).param   = designSpace(i).ecoOutputs.metrics.AEP;
+    AEP(i).param   = designSpace(i).ecoOutputs.metrics.AEP; % MWh
 
     % Extract LCoE
-    LCoE(i).param = designSpace(i).ecoOutputs.metrics.LCoE;
+    LCoE(i).param = designSpace(i).ecoOutputs.metrics.LCoE; % EUR/MWh
 
     % Construct legend entry for this wing area
     legend_entries{i} = [paramName ' = ' num2str(paramValues(i)) paramUnit];
@@ -37,10 +37,10 @@ hold on;
 grid on;
 xlabel('Wind Speed [m/s]');
 ylabel('Power [MW]');
-title('Power Curves');
+title(['Power Curves for different ' paramName]);
 for i = 1:length(designSpace)
     % Plot power curve
-    plot(power(i).param / 1e6, '-o', 'LineWidth', 1.5, 'MarkerSize', 3);
+    plot(power(i).param, '-o', 'LineWidth', 1.5, 'MarkerSize', 2);
 end
 % Add legend with all entries
 legend(legend_entries, 'Location', 'Best');
@@ -52,16 +52,16 @@ hold on;
 grid on;
 xlabel([paramName ' [' paramUnit ' ]']);
 ylabel('LCoE [€/MWh]');
-ylim([150 350]);
+ylim([150 200]);
 title(['LCoE vs ' paramName]);
 for i = 1:length(designSpace)
     % Plot AEP curve
-    plot(paramValues(i), LCoE(i).param, '-x', 'LineWidth', 2, 'MarkerSize', 7);
+    plot(paramValues(i), LCoE(i).param, 'x', 'LineWidth', 2, 'MarkerSize', 7);
 end
 % Add fit line for LCoE
 p = polyfit(paramValues, LCoE_values, 2);
 yfit = polyval(p, paramValues);
-plot(paramValues, yfit, '--');
+plot(paramValues, yfit, '--', LineWidth=1.5);
 % Add legend to the plot
 legend(legend_entries, 'Location', 'Best');
 hold off;
@@ -75,12 +75,12 @@ ylabel('AEP [MWh]');
 title(['AEP vs ' paramName]);
 for i = 1:length(designSpace)
     % Plot AEP curve
-    plot(paramValues(i), AEP(i).param, '-x', 'LineWidth', 2, 'MarkerSize', 7);
+    plot(paramValues(i), AEP(i).param, 'x', 'LineWidth', 2, 'MarkerSize', 7);
 end
 % Add fit line for AEP
 p = polyfit(paramValues, [AEP.param], 2);
 yfit = polyval(p, paramValues);
-plot(paramValues, yfit, '--');
+plot(paramValues, yfit, '--', LineWidth=1.5);
 % Add legend with all entries
 legend(legend_entries, 'Location', 'Best');
 hold off;
@@ -90,16 +90,16 @@ subplot(2, 2, 4);
 hold on;
 grid on;
 xlabel([paramName ' [' paramUnit ' ]']);
-ylabel('Cost [€]');
+ylabel('Cost [M€]');
 title(['Total costs vs ' paramName]);
 for i = 1:length(designSpace)
     % Plot cost curve
-    plot(paramValues(i), cost(i).param, '-x', 'LineWidth', 2, 'MarkerSize', 7);
+    plot(paramValues(i), cost(i).param, 'x', 'LineWidth', 2, 'MarkerSize', 7);
 end
 % Add fit line for cost
 p = polyfit(paramValues, [cost.param], 2);
 yfit = polyval(p, paramValues);
-plot(paramValues, yfit, '--');
+plot(paramValues, yfit, '--', LineWidth=1.5);
 % Add legend with all entries
 legend(legend_entries, 'Location', 'Best');
 hold off;

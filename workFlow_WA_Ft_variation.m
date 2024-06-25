@@ -17,7 +17,7 @@ inputFile_100kW_awePower;
 
 % Define the range and step size for wing area and maxWL
 WA_values = [15, 20, 25]; % Wing area values
-Ft_guess  = 2*mean(WA_values)*1000; % N
+Ft_guess  = 3*mean(WA_values)*1000; % N
 Ft_values = [Ft_guess*0.5, Ft_guess, Ft_guess*1.5]; % Maximum wing loading values
 
 % WA_values = [20, 25]; % Wing area values
@@ -40,7 +40,7 @@ for i = 1:num_points_WA
   
   % Bounds
   inputs.lb     = [50,   deg2rad(1),  deg2rad(1),  5*inputs.b,  1*inputs.nx, 0.1*inputs.nx, 0.8*inputs.nx, 1*inputs.nx, 0.1*inputs.nx]; % 
-  inputs.ub     = [500,  deg2rad(90), deg2rad(60), 100, inputs.v_d_max*inputs.nx, inputs.Cl_maxAirfoil*inputs.Cl_eff_F*inputs.nx,...
+  inputs.ub     = [500,  deg2rad(90), deg2rad(60), 10*inputs.b, inputs.v_d_max*inputs.nx, inputs.Cl_maxAirfoil*inputs.Cl_eff_F*inputs.nx,...
       inputs.v_d_max*inputs.nx,  200*inputs.nx, inputs.Cl_maxAirfoil*inputs.Cl_eff_F*inputs.nx]; 
 
     for j = 1:num_points_maxFt

@@ -16,7 +16,7 @@ addpath(genpath([pwd '/functions']));
 inputFile_100kW_awePower;
 
 % Define the range for wing area
-AR_values = [10, 12, 14]; % Wing area values
+ AR_values = [10, 12, 14, 16]; % Wing area values
 
 % Loop over each wing area value
 for i = 1:length(AR_values)
@@ -34,7 +34,7 @@ for i = 1:length(AR_values)
   % Bounds
   inputs.lb = [50, deg2rad(1), deg2rad(1), 5 * inputs.b, 1 * inputs.nx, 0.1 * inputs.nx, ...
     0.8 * inputs.nx, 1 * inputs.nx, 0.1 * inputs.nx];
-  inputs.ub = [500, deg2rad(90), deg2rad(60), 100, inputs.v_d_max * inputs.nx, ...
+  inputs.ub = [500, deg2rad(90), deg2rad(60), 10*inputs.b, inputs.v_d_max * inputs.nx, ...
     inputs.Cl_maxAirfoil * inputs.Cl_eff_F * inputs.nx, inputs.v_d_max * inputs.nx, ...
     200 * inputs.nx, inputs.Cl_maxAirfoil * inputs.Cl_eff_F * inputs.nx];
 

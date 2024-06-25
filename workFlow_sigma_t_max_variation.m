@@ -16,7 +16,7 @@ addpath(genpath([pwd '/functions']));
 inputFile_100kW_awePower;
 
 % Define the range for sigma_t_max
-sigma_t_max_values = [5e8, 6e8, 7e8]; % Pa
+sigma_t_max_values = [4e8, 5e8, 6e8, 7e8]; % Pa
 
 % Loop over each sigma_t_max value
 for i = 1:length(sigma_t_max_values)

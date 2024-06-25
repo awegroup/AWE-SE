@@ -6,11 +6,11 @@ inputs.numDeltaLelems  = 4; %[num]
 inputs.FgToggle        = 1; % 0 = No, 1 = Yes
 inputs.vertWindProfile = 0; % 0 = Modelled, 1 = From dataset 
 
-inputs.vw_ref         = 2:1:25; %[m/s]
+inputs.vw_ref         = 3:1:25; %[m/s]
 inputs.h_ref          = 100; %[m]
 inputs.windShearExp   = 0.143; %[-] % 0.143 over land, 0.11 over sea
 
-inputs.S              = 20; %[m^2]
+inputs.S              = 15; %[m^2]
 inputs.AR             = 12; %[-]
 inputs.b              = sqrt(inputs.AR*inputs.S); %[m]
 inputs.P_ratedElec    = 100*1000; %[W]
@@ -18,7 +18,7 @@ inputs.massOverride   = 0;
 inputs.kiteMass       = 600; %[kg]
 inputs.peakM2E_F      = 2.5; %[-]
 
-inputs.Ft_max            = 2*inputs.S*1000; %[N]
+inputs.Ft_max            = 4*inputs.S*1000; %[N]
 inputs.Ft_max_SF         = 0.8; % 0.8 for gust margin
 inputs.maxTeLen          = 3000; %[m]
 inputs.maxHeight         = 1000; %[m]
@@ -53,7 +53,7 @@ inputs.x0     = [200,    deg2rad(30), deg2rad(5),    5*inputs.b,       inputs.v_
 
 % Bounds
 inputs.lb     = [50,   deg2rad(1),  deg2rad(1),  5*inputs.b,  1*inputs.nx, 0.1*inputs.nx, 0.8*inputs.nx, 1*inputs.nx, 0.1*inputs.nx]; % 
-inputs.ub     = [500,  deg2rad(90), deg2rad(60), 100, inputs.v_d_max*inputs.nx, inputs.Cl_maxAirfoil*inputs.Cl_eff_F*inputs.nx,...
+inputs.ub     = [500,  deg2rad(90), deg2rad(60), 10*inputs.b, inputs.v_d_max*inputs.nx, inputs.Cl_maxAirfoil*inputs.Cl_eff_F*inputs.nx,...
                     inputs.v_d_max*inputs.nx,  200*inputs.nx, inputs.Cl_maxAirfoil*inputs.Cl_eff_F*inputs.nx]; %
 
 

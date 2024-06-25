@@ -1,6 +1,6 @@
 % Inputs sheet: MW scale
 inputs                = struct();
-inputs.name           = 'inputSheet_MW_scale_SE';
+inputs.name           = 'inputSheet_1MW_awePower';
 
 inputs.numDeltaLelems  = 5; %[num]
 inputs.vertWindProfile = 0; % 0 = Modelled, 1 = From dataset 
@@ -19,11 +19,11 @@ inputs.kiteMass       = 600; %[kg]
 inputs.peakM2E_F      = 2.5; %[-]
 
 inputs.Ft_max            = 3*inputs.S*1000; %[N]
-inputs.Ft_max_SF         = 1; % 0.8 for gust margin
+inputs.Ft_max_SF         = 0.8; % 0.8 for gust margin
 inputs.maxTeLen          = 3000; %[m]
 inputs.maxHeight         = 1000; %[m]
 inputs.minGroundClear    = 100; %[m] 
-inputs.Te_matStrength    = 4e8; % Engineering guess considering tether replacement costs. Should be between 0.6 to 0.8 GPa
+inputs.Te_matStrength    = 6e8; % Engineering guess considering tether replacement costs. Should be between 0.6 to 0.8 GPa
 inputs.Te_matDensity     = 970; %[kg/m^3] 
 
 inputs.Cl_maxAirfoil  = 2.5; %[-] % 2.7
@@ -53,7 +53,7 @@ inputs.x0     = [200,    deg2rad(30), deg2rad(5),   5*inputs.b,       inputs.v_d
 
 % Bounds
 inputs.lb     = [50,   deg2rad(1),  deg2rad(1),  5*inputs.b,  1*inputs.nx, 0.1*inputs.nx, 0.8*inputs.nx, 1*inputs.nx, 0.1*inputs.nx]; % 
-inputs.ub     = [500,  deg2rad(90), deg2rad(60), 500, inputs.v_d_max*inputs.nx, inputs.Cl_maxAirfoil*inputs.Cl_eff_F*inputs.nx,...
+inputs.ub     = [500,  deg2rad(90), deg2rad(60), 10*inputs.b, inputs.v_d_max*inputs.nx, inputs.Cl_maxAirfoil*inputs.Cl_eff_F*inputs.nx,...
   inputs.v_d_max*inputs.nx,  200*inputs.nx, inputs.Cl_maxAirfoil*inputs.Cl_eff_F*inputs.nx]; %
 
 

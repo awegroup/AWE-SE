@@ -11,8 +11,9 @@ addpath(genpath([pwd '/inputFiles']));
 
 % Run AWE-Power
 % Load defined input file
-inputFile_example_SE;
-
+%inputFile_example_SE;
+inputFile_100kW_awePower;
+% inputFile_1MW_awePower;
 
 % Get results
 [outputs, optimDetails, processedOutputs] = main_awePower(inputs);

@@ -16,7 +16,7 @@ addpath(genpath([pwd '/functions']));
 inputFile_100kW_awePower;
 
 % Define the range for Ft_max
-Ft_guess  = 2*mean(inputs.S)*1000; % N
+Ft_guess  = 4*mean(inputs.S)*1000; % N
 Ft_max_values = [Ft_guess*0.5, Ft_guess*0.75, Ft_guess, Ft_guess*1.25, Ft_guess*1.5]; % N
 
 % Loop over each Ft_max value
