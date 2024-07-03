@@ -38,9 +38,11 @@ function inp = eco_system_inputs_awePower(inputs, processedOutputs)
   
   % System
   inp.system.F_t       = mean(processedOutputs.Ft,2)'; % N
-  inp.system.P_m_peak  = inputs.peakM2E_F * inputs.P_ratedElec; % W
+%   inp.system.P_m_peak  = inputs.peakM2E_F * inputs.P_ratedElec; % W
+  inp.system.P_m_peak  = max(processedOutputs.P_m_o); % W
   inp.system.P_e_avg   = processedOutputs.P_e_avg; % W
-  inp.system.P_e_rated = inputs.P_ratedElec; % W
+%   inp.system.P_e_rated = inputs.P_ratedElec; % W
+  inp.system.P_e_rated = max(processedOutputs.P_e_avg); % W
   inp.system.Dt_cycle  = processedOutputs.tCycle; % s
   
   % Ground station

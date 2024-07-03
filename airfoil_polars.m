@@ -41,3 +41,9 @@ plot(CD, CL, 'LineWidth', 1.5);
 ylabel('CL');
 xlabel('CD');
 grid on;
+
+
+
+
+
+
