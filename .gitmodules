@@ -1,0 +1,3 @@
+[submodule "AWE-Eco"]
+	path = AWE-Eco
+	url = https://github.com/awegroup/AWE-Eco.git
