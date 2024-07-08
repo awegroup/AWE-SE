@@ -26,7 +26,7 @@ for i = 1:length(P_gen_values)
   designSpace_P_gen_var(i).paramValue   = P_gen_values(i);
 
   % Evaluate design objective
-  [designSpace_P_gen_var(i).systemInputs, designSpace_P_gen_var(i).perfOutputs, designSpace_P_gen_var(i).ecoOutputs] = evalDesignObjective(inputs);
+  [designSpace_P_gen_var(i).systemInputs, designSpace_P_gen_var(i).perfOutputs, designSpace_P_gen_var(i).ecoInputs, designSpace_P_gen_var(i).ecoOutputs] = evalDesignObjective(inputs);
 
 end
 

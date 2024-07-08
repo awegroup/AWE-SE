@@ -1,5 +1,4 @@
-%% AR variation
-
+%% Wingspan variation
 clc; clearvars;
 
 % Add the source code folders of AWE-Power and AWE-Eco to path
@@ -16,21 +15,17 @@ addpath(genpath([pwd '/functions']));
 inputFile_100kW_awePower;
 
 % Define the range for wing area
- AR_values = [12,13,14,15,16]; % Wing area values
-
-%  % Fixing the wing span
- inputs.b = 14; % m
+span_values = [10, 12, 14, 16]; %m Wingspan values
 
 % Loop over each wing area value
-for i = 1:length(AR_values)
-  inputs.AR = AR_values(i);
+for i = 1:length(span_values)
 
-%   % Dependent changes in inputs
-%   inputs.b      = sqrt(inputs.AR * inputs.S); %[m]
+  inputs.b = span_values(i);
 
-  inputs.S      = inputs.b^2/inputs.AR;
+  % Dependent changes in inputs
+  inputs.S      = inputs.b^2/inputs.AR; %[m^2]
   inputs.Ft_max = 4*inputs.S*1000; %[N]
-  
+
   % Initial guess
   inputs.nx = ones(1, inputs.numDeltaLelems);
   % [deltaL, avgPattEle,  coneAngle, Rp_start, v_i, CL_i, v_o, kinematicRatio, CL]
@@ -45,21 +40,22 @@ for i = 1:length(AR_values)
     200 * inputs.nx, inputs.Cl_maxAirfoil * inputs.Cl_eff_F * inputs.nx];
 
   % Save parameter values
-  designSpace_AR_var(i).paramValue   = AR_values(i);
+  designSpace_span_var(i).paramValue = span_values(i);
 
   % Evaluate design objective
-  [designSpace_AR_var(i).systemInputs, designSpace_AR_var(i).perfOutputs, designSpace_AR_var(i).ecoInputs, designSpace_AR_var(i).ecoOutputs] = evalDesignObjective(inputs);
+  [designSpace_span_var(i).systemInputs, designSpace_span_var(i).perfOutputs, designSpace_span_var(i).ecoInputs, designSpace_span_var(i).ecoOutputs] = evalDesignObjective(inputs);
 
 end
 
 % Save design space results
-save('outPutFiles/designSpace_AR_var.mat','designSpace_AR_var');
+save('outPutFiles/designSpace_span_var.mat','designSpace_span_var');
 
 %% Plots
+
 % Load saved results
-load("outputFiles/designSpace_AR_var.mat");
+load("outputFiles/designSpace_WA_var.mat");
 
 % Plot
-plotResults_single_param_variation('AR', '', designSpace_AR_var);
+plotResults_single_param_variation('Wingspan', 'm', designSpace_span_var);
 
 

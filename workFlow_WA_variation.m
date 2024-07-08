@@ -45,7 +45,7 @@ for i = 1:length(WA_values)
   designSpace_WA_var(i).paramValue = WA_values(i);
 
   % Evaluate design objective
-  [designSpace_WA_var(i).systemInputs, designSpace_WA_var(i).perfOutputs, designSpace_WA_var(i).ecoOutputs] = evalDesignObjective(inputs);
+  [designSpace_WA_var(i).systemInputs, designSpace_WA_var(i).perfOutputs, designSpace_WA_var(i).ecoInputs, designSpace_WA_var(i).ecoOutputs] = evalDesignObjective(inputs);
 
 end
 

@@ -25,7 +25,7 @@ for i = 1:length(sigma_t_max_values)
   designSpace_sigma_t_max_var(i).paramValue   = sigma_t_max_values(i);
 
   % Evaluate design objective
-  [designSpace_sigma_t_max_var(i).systemInputs, designSpace_sigma_t_max_var(i).perfOutputs, designSpace_sigma_t_max_var(i).ecoOutputs] = evalDesignObjective(inputs);
+  [designSpace_sigma_t_max_var(i).systemInputs, designSpace_sigma_t_max_var(i).perfOutputs, designSpace_sigma_t_max_var(i).ecoInputs, designSpace_sigma_t_max_var(i).ecoOutputs] = evalDesignObjective(inputs);
 
 end
 

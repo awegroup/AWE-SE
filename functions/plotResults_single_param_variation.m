@@ -52,7 +52,7 @@ hold on;
 grid on;
 xlabel([paramName ' [' paramUnit ' ]']);
 ylabel('LCoE [€/MWh]');
-ylim([150 200]);
+% ylim([150 200]);
 title(['LCoE vs ' paramName]);
 for i = 1:length(designSpace)
     % Plot AEP curve

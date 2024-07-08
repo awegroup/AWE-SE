@@ -20,7 +20,7 @@ inputs.peakM2E_F      = 2.5; %[-]
 
 inputs.Ft_max            = 4*inputs.S*1000; %[N]
 inputs.Ft_max_SF         = 0.8; % 0.8 for gust margin
-inputs.maxTeLen          = 3000; %[m]
+inputs.maxTeLen          = 2500; %[m]
 inputs.maxHeight         = 1000; %[m]
 inputs.minGroundClear    = 100; %[m] 
 inputs.Te_matStrength    = 6e8;

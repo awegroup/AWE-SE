@@ -16,6 +16,8 @@ addpath(genpath([pwd '/functions']));
 inputFile_100kW_awePower;
 
 % Define the range for Ft_max
+% Ft_guess  = 3.5*mean(inputs.S)*1000; % N
+% Ft_max_values = [Ft_guess-2e4, Ft_guess-1e4, Ft_guess, Ft_guess+1e4, Ft_guess+2e4]; % N
 Ft_guess  = 4*mean(inputs.S)*1000; % N
 Ft_max_values = [Ft_guess*0.5, Ft_guess*0.75, Ft_guess, Ft_guess*1.25, Ft_guess*1.5]; % N
 
@@ -27,7 +29,7 @@ for i = 1:length(Ft_max_values)
   designSpace_Ft_max_var(i).paramValue   = Ft_max_values(i);
 
   % Evaluate design objective
-  [designSpace_Ft_max_var(i).systemInputs, designSpace_Ft_max_var(i).perfOutputs, designSpace_Ft_max_var(i).ecoOutputs] = evalDesignObjective(inputs);
+  [designSpace_Ft_max_var(i).perfInputs, designSpace_Ft_max_var(i).perfOutputs, designSpace_Ft_max_var(i).ecoInputs, designSpace_Ft_max_var(i).ecoOutputs] = evalDesignObjective(inputs);
 
 end
 
@@ -41,4 +43,31 @@ load("outputFiles/designSpace_Ft_max_var.mat");
 
 % Plot
 plotResults_single_param_variation('F_{t,max}', 'N', designSpace_Ft_max_var);
+
+%% 
+figure()
+hold on
+for i = 1:length(designSpace_Ft_max_var)
+    opex(i)  = designSpace_Ft_max_var(i).ecoOutputs.tether.OPEX;
+    capex(i) = designSpace_Ft_max_var(i).ecoOutputs.tether.CAPEX;
+    f_repl(i) = designSpace_Ft_max_var(i).ecoOutputs.tether.f_repl;
+end
+yyaxis left
+plot(opex);
+plot(capex);
+yyaxis right
+plot(f_repl)
+hold off
+
+figure()
+hold on
+for i = 1:length(designSpace_Ft_max_var)
+    len_t(i)  = designSpace_Ft_max_var(i).ecoInputs.tether.L;
+    dia_t(i)  = designSpace_Ft_max_var(i).ecoInputs.tether.d;
+end
+yyaxis left
+plot(len_t);
+yyaxis right
+plot(dia_t)
+hold off
 
