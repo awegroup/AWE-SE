@@ -18,7 +18,7 @@ The model is built and tested in MATLAB R2021b (without additional add-ons). Try
 ## Installation and execution 
 
 Please Clone or Download the repository to start using the model.
-
+git clone --recurse-submodules https://github.com/awegroup/AWE-SE
 
 
 ## Overview of the Repository
