@@ -1,13 +1,12 @@
-# AWESdesign
+# AWE-SE
 
-
+A repository establishing the coupling between AWE-Power and AWE-Eco to setup workflows for AWES design
 
 ## How to cite
 
 If you use the model then please cite:
 
-1. [GitHub release]
-1. [Paper]
+[Associated paper]
 
 
 ## Dependencies
@@ -17,36 +16,22 @@ The model is built and tested in MATLAB R2021b (without additional add-ons). Try
 
 ## Installation and execution 
 
-Please Clone or Download the repository to start using the model.
+Please Clone the repository using the following command
+
 git clone --recurse-submodules https://github.com/awegroup/AWE-SE
 
+## Licence
+This project is licensed under the MIT License. Please see the below WAIVER in association with the license.
 
-## Overview of the Repository
+### WAIVER
 
+Technische Universiteit Delft hereby disclaims all copyright interest in the program “AWE-SE” (a systems engineering toolchain) written by the Author(s).
 
-## Pre-defined Example Simulation
+Prof.dr. H.G.C. (Henri) Werij, Dean of Aerospace Engineering
 
-
-
-
-## To Run with User-defined Inputs
-
-
-
-### Generated Output Files
+Copyright (c) 2024 Rishikesh Joshi
 
 
-
-## LICENSE
-
-
-
-
-## Author Details
-
-Name: Rishikesh Joshi  
-Email: [r.joshi@tudelft.nl](mailto:r.joshi@tudelft.nl), [rishikeshsjoshi@gmail.com](mailto:rishikeshsjoshi@gmail.com)  
-Affiliation: Wind Energy Section, Delft University of Technology
 
 
 
