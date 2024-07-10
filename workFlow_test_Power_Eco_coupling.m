@@ -19,7 +19,7 @@ inputFile_100kW_awePower;
 [outputs, optimDetails, processedOutputs] = main_awePower(inputs);
 
 % Plot results
-plotResults_awePower(inputs);
+% plotResults_awePower(inputs);
 
 % Run AWE-Eco
 % Import inputs
