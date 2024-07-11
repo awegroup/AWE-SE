@@ -1,7 +1,7 @@
 function [perfInputs, perfOutputs, ecoInputs, ecoOutputs] = evalDesignObjective(perfInputs)
 
   % AWE-Power
-  [~, ~, perfOutputs] = main_awePower(perfInputs);
+  [perfInputs, ~, ~, perfOutputs] = main_awePower(perfInputs);
 
   % AWE-Eco
   ecoInputs = eco_system_inputs_awePower(perfInputs, perfOutputs);
