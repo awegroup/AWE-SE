@@ -1,4 +1,4 @@
-%% WA and AR variation
+%% WA and b variation
 
 clc; clearvars;
 
@@ -17,8 +17,8 @@ inputFile_100kW_awePower;
 % inputFile_1MW_awePower;
 
 % Define the range for wing area and aspect ratio
-WA_values = [10,15,20,25]; % Wing area values
-AR_values = [10,12,14,16,18]; % Aspect ratio values
+WA_values = [10,15,20]; % Wing area values
+b_values  = [10,12,14]; % wingspan values
 
 % Initialize a counter for storing results
 counter = 1;
@@ -26,14 +26,14 @@ counter = 1;
 % Loop over each wing area value
 for i = 1:length(WA_values)
     % Loop over each aspect ratio value
-    for j = 1:length(AR_values)
+    for j = 1:length(b_values)
         
-        % Set wing area and aspect ratio
+        % Set wing area and wingspan
         inputs.S = WA_values(i);
-        inputs.AR = AR_values(j);
+        inputs.b = b_values(j);
 
         % Dependent changes in inputs
-        inputs.b = sqrt(inputs.AR * inputs.S); %[m]
+        inputs.AR = inputs.b^2/inputs.S; %[]
         inputs.Ft_max = 4 * inputs.S * 1000; %[N]
 
         % Initial guess
@@ -50,11 +50,11 @@ for i = 1:length(WA_values)
             200 * inputs.nx, inputs.Cl_maxAirfoil * inputs.Cl_eff_F * inputs.nx];
 
         % Save parameter values
-        designSpace_WA_AR_var(counter).WA_value = WA_values(i);
-        designSpace_WA_AR_var(counter).AR_value = AR_values(j);
+        designSpace_WA_b_var(counter).WA_value = WA_values(i);
+        designSpace_WA_b_var(counter).b_value = b_values(j);
 
         % Evaluate design objective
-        [designSpace_WA_AR_var(counter).systemInputs, designSpace_WA_AR_var(counter).perfOutputs, designSpace_WA_AR_var(counter).ecoInputs, designSpace_WA_AR_var(counter).ecoOutputs] = evalDesignObjective(inputs);
+        [designSpace_WA_b_var(counter).systemInputs, designSpace_WA_b_var(counter).perfOutputs, designSpace_WA_b_var(counter).ecoInputs, designSpace_WA_b_var(counter).ecoOutputs] = evalDesignObjective(inputs);
 
         % Increment the counter
         counter = counter + 1;
@@ -62,14 +62,14 @@ for i = 1:length(WA_values)
 end
 
 % Save design space results
-save('outPutFiles/designSpace_WA_AR_var.mat','designSpace_WA_AR_var');
+save('outPutFiles/designSpace_WA_b_var.mat','designSpace_WA_b_var');
 
 %% Plots
 
 % Load the saved design space results
-load('outPutFiles/designSpace_WA_AR_var.mat');
+load('outPutFiles/designSpace_WA_b_var.mat');
 
-plotResults_two_param_variation('WA', 'm^2', 'AR','', designSpace_WA_AR_var)
+plotResults_two_param_variation('WA', 'm^2', 'b','m', designSpace_WA_b_var)
 
 
 

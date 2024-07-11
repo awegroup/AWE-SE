@@ -10,7 +10,7 @@ addpath(genpath([pwd '/AWE-Eco']));
 addpath(genpath([pwd '/inputFiles']));
 
 % Add functions to path
-addpath(genpath([pwd '/functions']));
+addpath(genpath([pwd '/src']));
 
 % Defined input sheet
 inputFile_100kW_awePower;
@@ -19,17 +19,17 @@ inputFile_100kW_awePower;
  AR_values = [12,13,14,15,16]; % Wing area values
 
 %  % Fixing the wing span
- inputs.b = 14; % m
+%  inputs.b = 14; % m
 
 % Loop over each wing area value
 for i = 1:length(AR_values)
   inputs.AR = AR_values(i);
 
 %   % Dependent changes in inputs
-%   inputs.b      = sqrt(inputs.AR * inputs.S); %[m]
+  inputs.b      = sqrt(inputs.AR * inputs.S); %[m]
 
-  inputs.S      = inputs.b^2/inputs.AR;
-  inputs.Ft_max = 4*inputs.S*1000; %[N]
+%   inputs.S      = inputs.b^2/inputs.AR;
+%   inputs.Ft_max = 4*inputs.S*1000; %[N]
   
   % Initial guess
   inputs.nx = ones(1, inputs.numDeltaLelems);

@@ -7,7 +7,7 @@ clearvars;
 addpath(genpath('C:/PhD/GitHubRepo/AWE-Power/src'));
 addpath(genpath([pwd '/AWE-Eco']));
 addpath(genpath([pwd '/inputFiles']));
-addpath(genpath([pwd '/functions']));
+addpath(genpath([pwd '/src']));
 
 % Load input file (adjust as needed)
 inputFile_100kW_awePower;

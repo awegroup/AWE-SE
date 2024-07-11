@@ -9,7 +9,7 @@ addpath(genpath([pwd '/AWE-Eco']));
 addpath(genpath([pwd '/inputFiles']));
 
 % Add functions to path
-addpath(genpath([pwd '/functions']));
+addpath(genpath([pwd '/src']));
 
 % Defined input sheet
 inputFile_100kW_awePower;

@@ -1,5 +1,4 @@
-%% AWE-Power and AWE-Eco coupling test
-
+%% Example script to test AWE-Power and AWE-Eco coupling
 clc; clearvars;
 
 % Add the source code folders of AWE-Power and AWE-Eco to path
@@ -11,15 +10,13 @@ addpath(genpath([pwd '/inputFiles']));
 
 % Run AWE-Power
 % Load defined input file
-%inputFile_example_SE;
-inputFile_100kW_awePower;
-% inputFile_1MW_awePower;
+inputs = loadInputs('inputFile_100kW_awePower.yml');
 
-% Get results
-[outputs, optimDetails, processedOutputs] = main_awePower(inputs);
+% Run AWE-Power
+[inputs, outputs, optimDetails, processedOutputs] = main_awePower(inputs);
 
 % Plot results
-% plotResults_awePower(inputs);
+plotResults(inputs);
 
 % Run AWE-Eco
 % Import inputs
@@ -28,7 +25,7 @@ inp = eco_system_inputs_awePower(inputs, processedOutputs);
 % Run EcoModel by parsing the inputs
 [inp,par,eco] = eco_main(inp);
 
-% Display results
+% Plot results
 eco_displayResults(inp,eco)
 
 

@@ -23,7 +23,7 @@ inputs.Ft_max_SF         = 0.8; % 0.8 for gust margin
 inputs.maxTeLen          = 2500; %[m]
 inputs.maxHeight         = 1000; %[m]
 inputs.minGroundClear    = 100; %[m] 
-inputs.Te_matStrength    = 6e8;
+inputs.Te_matStrength    = 5e8;
 inputs.Te_matDensity     = 970; %[kg/m^3] 
 
 inputs.Cl_maxAirfoil  = 2.5; %[-] % 2.7

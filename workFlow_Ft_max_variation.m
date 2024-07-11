@@ -10,16 +10,14 @@ addpath(genpath([pwd '/AWE-Eco']));
 addpath(genpath([pwd '/inputFiles']));
 
 % Add functions to path
-addpath(genpath([pwd '/functions']));
+addpath(genpath([pwd '/src']));
 
 % Defined input sheet
 inputFile_100kW_awePower;
 
 % Define the range for Ft_max
-% Ft_guess  = 3.5*mean(inputs.S)*1000; % N
-% Ft_max_values = [Ft_guess-2e4, Ft_guess-1e4, Ft_guess, Ft_guess+1e4, Ft_guess+2e4]; % N
-Ft_guess  = 4*mean(inputs.S)*1000; % N
-Ft_max_values = [Ft_guess*0.5, Ft_guess*0.75, Ft_guess, Ft_guess*1.25, Ft_guess*1.5]; % N
+Ft_guess           = 4*mean(inputs.S)*1000; % N
+Ft_max_values      = [Ft_guess*0.5, Ft_guess*0.75, Ft_guess, Ft_guess*1.25, Ft_guess*1.5]; % N
 
 % Loop over each Ft_max value
 for i = 1:length(Ft_max_values)
@@ -41,10 +39,8 @@ save('outPutFiles/designSpace_Ft_max_var.mat','designSpace_Ft_max_var');
 % Load saved results
 load("outputFiles/designSpace_Ft_max_var.mat");
 
-% Plot
 plotResults_single_param_variation('F_{t,max}', 'N', designSpace_Ft_max_var);
-
-%% 
+ 
 figure()
 hold on
 for i = 1:length(designSpace_Ft_max_var)
@@ -55,8 +51,11 @@ end
 yyaxis left
 plot(opex);
 plot(capex);
+ylabel('Euros');
 yyaxis right
 plot(f_repl)
+ylabel('f_{repl}');
+legend('OPEX','CAPEX','f_{repl}');
 hold off
 
 figure()
@@ -67,7 +66,9 @@ for i = 1:length(designSpace_Ft_max_var)
 end
 yyaxis left
 plot(len_t);
+ylabel('Tether length (m)');
 yyaxis right
 plot(dia_t)
+ylabel('Tether diameter (m)');
 hold off
 
