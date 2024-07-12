@@ -22,8 +22,8 @@ windProfile_h: 'h_windDataset'
 windProfile_vw: 'v_windDataset_Cabauw'
 
 # System Parameters
-S: 15  # Wing surface area [m^2]
-AR: 12  # Aspect ratio [-]
+S: 20  # Wing surface area [m^2]
+AR: 14  # Aspect ratio [-]
 P_ratedElec: 100000  # Rated electrical power [W]
 massOverride: 0  # Mass override toggle
 kiteMass: 600  # (Overridden) Kite mass [kg]

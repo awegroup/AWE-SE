@@ -31,9 +31,9 @@ for i = 1:length(designSpace)
     plot(P_e_avg, 'DisplayName', label);
 end
 hold off;
-xlabel('Time step');
-ylabel('Average Power (W)');
-title(sprintf('Power Curves for Different %s and %s Combinations', name1, name2));
+xlabel('Wind speed (m/s)');
+ylabel('Power (W)');
+% title(sprintf('Power Curves for Different %s and %s Combinations', name1, name2));
 legend('show');
 grid on;
 
@@ -52,7 +52,8 @@ end
 figure;
 [values1_grid, values2_grid] = meshgrid(values1, values2);
 contourf(values1_grid, values2_grid, LCoE');
-colorbar;
+c = colorbar;
+c.Label.String = 'LCoE (€/MWh)';
 xlabel(sprintf('%s (%s)', name1, unit1));
 ylabel(sprintf('%s (%s)', name2, unit2));
 title('LCoE Contours');

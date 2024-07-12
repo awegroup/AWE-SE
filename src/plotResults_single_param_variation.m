@@ -29,11 +29,12 @@ function plotResults_single_param_variation(paramName, paramUnit, designSpace)
   optParam = paramValues(optIdx_param);
 
   % Create a larger figure
-  figure('Position', [100, 100, 1200, 800]);
+  figure('Position', [50, 50, 1200, 500]);
 
   % Top-left subplot for power curves
   subplot(2, 2, 1);
   hold on;
+  box on
   grid on;
   xlabel('Wind Speed [m/s]');
   ylabel('Power [MW]');
@@ -49,9 +50,10 @@ function plotResults_single_param_variation(paramName, paramUnit, designSpace)
   % Top-right subplot for LCoE vs Wing Area
   subplot(2, 2, 2);
   hold on;
+  box on
   grid on;
   xlabel([paramName ' [' paramUnit ' ]']);
-  ylabel('LCoE [€/MWh]');
+  ylabel('LCoE (€/MWh)');
   % ylim([150 200]);
   title(['LCoE vs ' paramName]);
   for i = 1:length(designSpace)
@@ -69,8 +71,9 @@ function plotResults_single_param_variation(paramName, paramUnit, designSpace)
   % Bottom-left subplot for AEP vs Parameter Values
   subplot(2, 2, 3);
   hold on;
+  box on
   grid on;
-  xlabel([paramName ' [' paramUnit ' ]']);
+  xlabel([paramName ' (' paramUnit ' )']);
   ylabel('AEP [MWh]');
   title(['AEP vs ' paramName]);
   for i = 1:length(designSpace)
@@ -88,8 +91,9 @@ function plotResults_single_param_variation(paramName, paramUnit, designSpace)
   % Bottom-right subplot for Cost vs Parameter Values
   subplot(2, 2, 4);
   hold on;
+  box on
   grid on;
-  xlabel([paramName ' [' paramUnit ' ]']);
+  xlabel([paramName ' (' paramUnit ' )']);
   ylabel('Cost [M€]');
   title(['Total costs vs ' paramName]);
   for i = 1:length(designSpace)
@@ -105,10 +109,10 @@ function plotResults_single_param_variation(paramName, paramUnit, designSpace)
   hold off;
 
   % Display results
-  disp(['Optimized ' paramName ' [' paramUnit ']']);
+  disp(['Optimized ' paramName ' (' paramUnit ')']);
   disp(optParam);
 
-  disp('Minimum LCoE [€/MWh]:');
+  disp('Minimum LCoE (€/MWh):');
   disp(minLCoE);
 
 end

@@ -6,44 +6,133 @@ addpath(genpath('C:/PhD/GitHubRepo/AWE-Power/src'));
 addpath(genpath('C:/PhD/GitHubRepo/AWE-Power/lib'));
 addpath(genpath([pwd '/AWE-Eco']));
 
-% Add inputFiles to path
+% Add folders to path
 addpath(genpath([pwd '/inputFiles']));
-
-% Add functions to path
+addpath(genpath([pwd '/outputFiles']));
 addpath(genpath([pwd '/src']));
 
-%% WA var
+%% Wing area and wing loading variation
+clearvars
+
+% Load input file
+inputs = loadInputs('inputFile_100kW_awePower.yml');
+
+% Define range for wing area 
+WA_values = [15, 20, 25]; % m^2
+
+% Define range for wing loading
+WL_values = [2e3, 3e3, 4e3, 5e3]; % N/m^2
+
+% Evaluate design space
+[designSpace_100kW_WA_WL_var] = wingArea_wingLoading_variation(WA_values, WL_values, inputs);
+
+% Save design space results
+save('outPutFiles/designSpace_100kW_WA_WL_var.mat', 'designSpace_100kW_WA_WL_var');
+
+% Load saved design space results
+load('outPutFiles/designSpace_100kW_WA_WL_var.mat');
+
+% Plot
+plotResults_two_param_variation('WA', 'm^2', 'WL', 'N/m^2', designSpace_100kW_WA_WL_var);
+
+%% Wing loading and sigma_t_max var
 
 % Load input file
 clearvars
 inputs = loadInputs('inputFile_100kW_awePower.yml');
 
+% Define range for wing loading
+WL_values = [2e3, 3e3, 4e3]; % N/m^2
+
+% Define the range for sigma_t_max
+sigma_t_max_values = [3e8,4e8,5e8,6e8,7e8]; % Pa
+
+[designSpace_100kW_WL_sigma_t_var] = wingLoading_sigma_t_max_variation(WL_values, sigma_t_max_values, inputs);
+
+% Save design space results
+save('outPutFiles/designSpace_100kW_WL_sigma_t_var.mat','designSpace_100kW_WL_sigma_t_var');
+
+% Load the saved design space results
+load('outPutFiles/designSpace_100kW_WL_sigma_t_var.mat');
+
+% Plot
+plotResults_two_param_variation('WL', 'N/m^2', 'σ_{t,max}','Pa', designSpace_100kW_WL_sigma_t_var)
+
+%% Wing area an aspect ratio variation 
+clearvars
+
+% Load input file
+inputs = loadInputs('inputFile_100kW_awePower.yml');
+
+% Define the range for wing area and aspect ratio
+WA_values = [10,15,20,25]; % m^2
+AR_values = [10,12,14,16,18]; % -
+
+% Evaluate design space
+[designSpace_100kW_WA_AR_var] = wingArea_aspectRatio_variation(WA_values, AR_values, inputs);
+
+% Save design space results
+save('outPutFiles/designSpace_100kW_WA_AR_var.mat','designSpace_100kW_WA_AR_var');
+
+% Load the saved design space results
+load('outPutFiles/designSpace_100kW_WA_AR_var.mat');
+
+% Plot
+plotResults_two_param_variation('WA', 'm^2', 'AR','', designSpace_100kW_WA_AR_var)
+
+%% Generator rated-power to system rated power ratio and System rated power variation 
+
+
+
+
+
+
+%% %%%%%%%%%%%%%%%%%%%%%
+% Archived
+
+%% Generator rated-power to system rated power ratio variation
+clearvars
+
+% Load input file
+inputs = loadInputs('inputFile_100kW_awePower.yml');
+
+% Define the range for P_gen
+peakM2E_F_values = [1, 1.5, 2.5, 3]; % -
+
+% Evaluate design space
+[designSpace_100kW_peakM2E_F_var] = peakM2E_F_variation(peakM2E_F_values, inputs);
+
+% Save design space results
+save('outPutFiles/designSpace_100kW_peakM2E_F_var.mat','designSpace_100kW_peakM2E_F_var');
+
+% Load saved results
+load("outputFiles/designSpace_100kW_peakM2E_F_var.mat");
+
+% Plot
+plotResults_single_param_variation('P_{gen}/P_{system}', '', designSpace_100kW_peakM2E_F_var);
+
+%% Wing area variation
+clearvars
+
+% Load input file
+inputs = loadInputs('inputFile_100kW_awePower.yml');
+
 % Define the range for wing area
 WA_values = [10, 15, 20, 25]; % m
 
-% % Loop over each wing area value
-% for i = 1:length(WA_values)
-% 
-%   inputs.S      = WA_values(i);
-%   inputs.Ft_max = 4*inputs.S*1000; %[N]
-% 
-%   % Save parameter values
-%   designSpace_100kW_WA_var(i).paramValue = WA_values(i);
-% 
-%   % Evaluate design objective
-%   [designSpace_100kW_WA_var(i).perfInputs, designSpace_100kW_WA_var(i).perfOutputs, designSpace_100kW_WA_var(i).ecoInputs, designSpace_100kW_WA_var(i).ecoOutputs] = evalDesignObjective(inputs);
-% end
+% Evaluate design space
+[designSpace_100kW_WA_var] = wingArea_variation(WA_values, inputs);
 
-[designSpace_100kW_WA_var] = wingareaVar(WA_values, inputs, 'designSpace_100kW_WA_var');
-
-% % Save design space results
-% save('outPutFiles/designSpace_100kW_WA_var.mat','designSpace_100kW_WA_var');
+% Save design space results
+save('outPutFiles/designSpace_100kW_WA_var.mat','designSpace_100kW_WA_var');
 
 % Load saved results
 load("outputFiles/designSpace_100kW_WA_var.mat");
 
-% Plot
+% Plots
 plotResults_single_param_variation('Wing area', 'm^2', designSpace_100kW_WA_var);
+tetherDetailsPlots('Wing area', 'm^2',designSpace_100kW_WA_var);
+
 
 %% AR var
 
@@ -143,37 +232,6 @@ load("outputFiles/designSpace_100kW_Ft_max_var.mat");
 % Plot
 plotResults_single_param_variation('F_{t,max}', 'N', designSpace_100kW_Ft_max_var);
 
-figure()
-hold on
-for i = 1:length(designSpace_100kW_Ft_max_var)
-  opex(i)  = designSpace_100kW_Ft_max_var(i).ecoOutputs.tether.OPEX;
-  capex(i) = designSpace_100kW_Ft_max_var(i).ecoOutputs.tether.CAPEX;
-  f_repl(i) = designSpace_100kW_Ft_max_var(i).ecoOutputs.tether.f_repl;
-end
-yyaxis left
-plot(opex);
-plot(capex);
-ylabel('Euros');
-yyaxis right
-plot(f_repl)
-ylabel('f_{repl}');
-legend('OPEX','CAPEX','f_{repl}');
-hold off
-
-figure()
-hold on
-for i = 1:length(designSpace_100kW_Ft_max_var)
-  len_t(i)  = designSpace_100kW_Ft_max_var(i).ecoInputs.tether.L;
-  dia_t(i)  = designSpace_100kW_Ft_max_var(i).ecoInputs.tether.d;
-end
-yyaxis left
-plot(len_t);
-ylabel('Tether length (m)');
-yyaxis right
-plot(dia_t)
-ylabel('Tether diameter (m)');
-hold off
-
 
 %% sigma_t_max var
 
@@ -204,84 +262,6 @@ load("outputFiles/designSpace_100kW_sigma_t_max_var.mat");
 
 % Plot
 plotResults_single_param_variation('σ_{t,max}', 'Pa', designSpace_100kW_sigma_t_max_var);
-
-
-%% P_gen var
-
-% Load input file
-clearvars
-inputs = loadInputs('inputFile_100kW_awePower.yml');
-
-% Define the range for P_gen
-P_gen_values = [100, 150, 250, 300]; % kW
-
-% Loop over each sigma_t_max value
-for i = 1:length(P_gen_values)
-  inputs.peakM2E_F = P_gen_values(i)/inputs.P_ratedElec*1000;
-
-  % Save parameter values
-  designSpace_100kW_P_gen_var(i).paramValue   = P_gen_values(i);
-
-  % Evaluate design objective
-  [designSpace_100kW_P_gen_var(i).perfInputs, designSpace_100kW_P_gen_var(i).perfOutputs, designSpace_100kW_P_gen_var(i).ecoInputs, designSpace_100kW_P_gen_var(i).ecoOutputs] = evalDesignObjective(inputs);
-
-end
-
-% Save design space results
-save('outPutFiles/designSpace_100kW_P_gen_var.mat','designSpace_100kW_P_gen_var');
-
-% Load saved results
-load("outputFiles/designSpace_100kW_P_gen_var.mat");
-
-% Plot
-plotResults_single_param_variation('P_{gen}', 'kW', designSpace_100kW_P_gen_var);
-
-
-%% WA and AR var
-
-% Load input file
-clearvars
-inputs = loadInputs('inputFile_100kW_awePower.yml');
-
-% Define the range for wing area and aspect ratio
-WA_values = [10,15,20,25]; % Wing area values
-AR_values = [10,12,14,16,18]; % Aspect ratio values
-
-% Initialize a counter for storing results
-counter = 1;
-
-% Loop over each wing area value
-for i = 1:length(WA_values)
-  % Loop over each aspect ratio value
-  for j = 1:length(AR_values)
-
-    % Set wing area and aspect ratio
-    inputs.S = WA_values(i);
-    inputs.AR = AR_values(j);
-
-    % Dependent changes in inputs
-    inputs.Ft_max = 4 * inputs.S * 1000; %[N]
-
-    % Save parameter values
-    designSpace_100kW_WA_AR_var(counter).WA_value = WA_values(i);
-    designSpace_100kW_WA_AR_var(counter).AR_value = AR_values(j);
-
-    % Evaluate design objective
-    [designSpace_100kW_WA_AR_var(counter).perfInputs, designSpace_100kW_WA_AR_var(counter).perfOutputs, designSpace_100kW_WA_AR_var(counter).ecoInputs, designSpace_100kW_WA_AR_var(counter).ecoOutputs] = evalDesignObjective(inputs);
-
-    % Increment the counter
-    counter = counter + 1;
-  end
-end
-
-% Save design space results
-save('outPutFiles/designSpace_100kW_WA_AR_var.mat','designSpace_100kW_WA_AR_var');
-
-% Load the saved design space results
-load('outPutFiles/designSpace_100kW_WA_AR_var.mat');
-
-% Plot
-plotResults_two_param_variation('WA', 'm^2', 'AR','', designSpace_100kW_WA_AR_var)
 
 
 %% WA and b var
@@ -330,52 +310,6 @@ load('outPutFiles/designSpace_100kW_WA_b_var.mat');
 
 % Plot
 plotResults_two_param_variation('WA', 'm^2', 'b','m', designSpace_100kW_WA_b_var)
-
-
-%% Ft_max and sigma_t_max var
-
-% Load input file
-clearvars
-inputs = loadInputs('inputFile_100kW_awePower.yml');
-
-% Define the range for Ft_max and sigma_t_max
-Ft_guess           = 4*mean(inputs.S)*1000; % N
-Ft_max_values      = [Ft_guess*0.5, Ft_guess*0.75, Ft_guess, Ft_guess*1.5]; % N
-sigma_t_max_values = [3e8,4e8,5e8,6e8,7e8]; % Pa
-
-% Initialize a counter for storing results
-counter = 1;
-
-% Loop over each Ft_max value
-for i = 1:length(Ft_max_values)
-  % Loop over each sigma_t_max value
-  for j = 1:length(sigma_t_max_values)
-
-    % Set Ft_max and sigma_t_max
-    inputs.Ft_max = Ft_max_values(i);
-    inputs.Te_matStrength = sigma_t_max_values(j);
-
-    % Save parameter values
-    designSpace_100kW_Ft_max_sigma_t_var(counter).Ft_max_value = Ft_max_values(i);
-    designSpace_100kW_Ft_max_sigma_t_var(counter).sigma_t_value = sigma_t_max_values(j);
-
-    % Evaluate design objective
-    [designSpace_100kW_Ft_max_sigma_t_var(counter).perfInputs, designSpace_100kW_Ft_max_sigma_t_var(counter).perfOutputs, designSpace_100kW_Ft_max_sigma_t_var(counter).ecoInputs, designSpace_100kW_Ft_max_sigma_t_var(counter).ecoOutputs] = evalDesignObjective(inputs);
-
-    % Increment the counter
-    counter = counter + 1;
-  end
-end
-
-% Save design space results
-save('outPutFiles/designSpace_100kW_Ft_max_sigma_t_var.mat','designSpace_100kW_Ft_max_sigma_t_var');
-
-% Load the saved design space results
-load('outPutFiles/designSpace_100kW_Ft_max_sigma_t_var.mat');
-
-% Plot
-plotResults_two_param_variation('F_{t,max}', 'N', 'σ_{t,max}','Pa', designSpace_100kW_Ft_max_sigma_t_var)
-
 
 %% WA and Ft_max var
 
