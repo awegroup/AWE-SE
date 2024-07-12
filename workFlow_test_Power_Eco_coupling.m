@@ -3,6 +3,7 @@ clc; clearvars;
 
 % Add the source code folders of AWE-Power and AWE-Eco to path
 addpath(genpath('C:/PhD/GitHubRepo/AWE-Power/src'));
+addpath(genpath('C:/PhD/GitHubRepo/AWE-Power/lib'));
 addpath(genpath([pwd '/AWE-Eco']));
 
 % Add inputFiles to path

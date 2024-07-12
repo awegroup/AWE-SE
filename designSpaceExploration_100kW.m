@@ -3,6 +3,7 @@ clc; clearvars;
 
 % Add the source code folders of AWE-Power and AWE-Eco to path
 addpath(genpath('C:/PhD/GitHubRepo/AWE-Power/src'));
+addpath(genpath('C:/PhD/GitHubRepo/AWE-Power/lib'));
 addpath(genpath([pwd '/AWE-Eco']));
 
 % Add inputFiles to path
@@ -20,27 +21,29 @@ inputs = loadInputs('inputFile_100kW_awePower.yml');
 % Define the range for wing area
 WA_values = [10, 15, 20, 25]; % m
 
-% Loop over each wing area value
-for i = 1:length(WA_values)
+% % Loop over each wing area value
+% for i = 1:length(WA_values)
+% 
+%   inputs.S      = WA_values(i);
+%   inputs.Ft_max = 4*inputs.S*1000; %[N]
+% 
+%   % Save parameter values
+%   designSpace_100kW_WA_var(i).paramValue = WA_values(i);
+% 
+%   % Evaluate design objective
+%   [designSpace_100kW_WA_var(i).perfInputs, designSpace_100kW_WA_var(i).perfOutputs, designSpace_100kW_WA_var(i).ecoInputs, designSpace_100kW_WA_var(i).ecoOutputs] = evalDesignObjective(inputs);
+% end
 
-  inputs.S      = WA_values(i);
-  inputs.Ft_max = 4*inputs.S*1000; %[N]
+[designSpace_100kW_WA_var] = wingareaVar(WA_values, inputs, 'designSpace_100kW_WA_var');
 
-  % Save parameter values
-  designSpace_WA_var(i).paramValue = WA_values(i);
-
-  % Evaluate design objective
-  [designSpace_WA_var(i).perfInputs, designSpace_WA_var(i).perfOutputs, designSpace_WA_var(i).ecoInputs, designSpace_WA_var(i).ecoOutputs] = evalDesignObjective(inputs);
-end
-
-% Save design space results
-save('outPutFiles/designSpace_WA_var.mat','designSpace_WA_var');
+% % Save design space results
+% save('outPutFiles/designSpace_100kW_WA_var.mat','designSpace_100kW_WA_var');
 
 % Load saved results
-load("outputFiles/designSpace_WA_var.mat");
+load("outputFiles/designSpace_100kW_WA_var.mat");
 
 % Plot
-plotResults_single_param_variation('Wing area', 'm^2', designSpace_WA_var);
+plotResults_single_param_variation('Wing area', 'm^2', designSpace_100kW_WA_var);
 
 %% AR var
 
@@ -56,21 +59,21 @@ for i = 1:length(AR_values)
   inputs.AR = AR_values(i);
 
   % Save parameter values
-  designSpace_AR_var(i).paramValue   = AR_values(i);
+  designSpace_100kW_AR_var(i).paramValue   = AR_values(i);
 
   % Evaluate design objective
-  [designSpace_AR_var(i).perfInputs, designSpace_AR_var(i).perfOutputs, designSpace_AR_var(i).ecoInputs, designSpace_AR_var(i).ecoOutputs] = evalDesignObjective(inputs);
+  [designSpace_100kW_AR_var(i).perfInputs, designSpace_100kW_AR_var(i).perfOutputs, designSpace_100kW_AR_var(i).ecoInputs, designSpace_100kW_AR_var(i).ecoOutputs] = evalDesignObjective(inputs);
 
 end
 
 % Save design space results
-save('outPutFiles/designSpace_AR_var.mat','designSpace_AR_var');
+save('outPutFiles/designSpace_100kW_AR_var.mat','designSpace_100kW_AR_var');
 
 % Load saved results
-load("outputFiles/designSpace_AR_var.mat");
+load("outputFiles/designSpace_100kW_AR_var.mat");
 
 % Plot
-plotResults_single_param_variation('AR', '', designSpace_AR_var);
+plotResults_single_param_variation('AR', '', designSpace_100kW_AR_var);
 
 
 %% Wingspan var
@@ -92,21 +95,21 @@ for i = 1:length(span_values)
   inputs.Ft_max = 4*inputs.S*1000; %[N]
 
   % Save parameter values
-  designSpace_span_var(i).paramValue = span_values(i);
+  designSpace_100kW_span_var(i).paramValue = span_values(i);
 
   % Evaluate design objective
-  [designSpace_span_var(i).perfInputs, designSpace_span_var(i).perfOutputs, designSpace_span_var(i).ecoInputs, designSpace_span_var(i).ecoOutputs] = evalDesignObjective(inputs);
+  [designSpace_100kW_span_var(i).perfInputs, designSpace_100kW_span_var(i).perfOutputs, designSpace_100kW_span_var(i).ecoInputs, designSpace_100kW_span_var(i).ecoOutputs] = evalDesignObjective(inputs);
 
 end
 
 % Save design space results
-save('outPutFiles/designSpace_span_var.mat','designSpace_span_var');
+save('outPutFiles/designSpace_100kW_span_var.mat','designSpace_100kW_span_var');
 
 % Load saved results
-load("outputFiles/designSpace_WA_var.mat");
+load("outputFiles/designSpace_100kW_WA_var.mat");
 
 % Plot
-plotResults_single_param_variation('Wingspan', 'm', designSpace_span_var);
+plotResults_single_param_variation('Wingspan', 'm', designSpace_100kW_span_var);
 
 
 %% Ft_max var
@@ -124,28 +127,28 @@ for i = 1:length(Ft_max_values)
   inputs.Ft_max = Ft_max_values(i);
 
   % Save parameter values
-  designSpace_Ft_max_var(i).paramValue   = Ft_max_values(i);
+  designSpace_100kW_Ft_max_var(i).paramValue   = Ft_max_values(i);
 
   % Evaluate design objective
-  [designSpace_Ft_max_var(i).perfInputs, designSpace_Ft_max_var(i).perfOutputs, designSpace_Ft_max_var(i).ecoInputs, designSpace_Ft_max_var(i).ecoOutputs] = evalDesignObjective(inputs);
+  [designSpace_100kW_Ft_max_var(i).perfInputs, designSpace_100kW_Ft_max_var(i).perfOutputs, designSpace_100kW_Ft_max_var(i).ecoInputs, designSpace_100kW_Ft_max_var(i).ecoOutputs] = evalDesignObjective(inputs);
 
 end
 
 % Save design space results
-save('outPutFiles/designSpace_Ft_max_var.mat','designSpace_Ft_max_var');
+save('outPutFiles/designSpace_100kW_Ft_max_var.mat','designSpace_100kW_Ft_max_var');
 
 % Load saved results
-load("outputFiles/designSpace_Ft_max_var.mat");
+load("outputFiles/designSpace_100kW_Ft_max_var.mat");
 
 % Plot
-plotResults_single_param_variation('F_{t,max}', 'N', designSpace_Ft_max_var);
+plotResults_single_param_variation('F_{t,max}', 'N', designSpace_100kW_Ft_max_var);
 
 figure()
 hold on
-for i = 1:length(designSpace_Ft_max_var)
-  opex(i)  = designSpace_Ft_max_var(i).ecoOutputs.tether.OPEX;
-  capex(i) = designSpace_Ft_max_var(i).ecoOutputs.tether.CAPEX;
-  f_repl(i) = designSpace_Ft_max_var(i).ecoOutputs.tether.f_repl;
+for i = 1:length(designSpace_100kW_Ft_max_var)
+  opex(i)  = designSpace_100kW_Ft_max_var(i).ecoOutputs.tether.OPEX;
+  capex(i) = designSpace_100kW_Ft_max_var(i).ecoOutputs.tether.CAPEX;
+  f_repl(i) = designSpace_100kW_Ft_max_var(i).ecoOutputs.tether.f_repl;
 end
 yyaxis left
 plot(opex);
@@ -159,9 +162,9 @@ hold off
 
 figure()
 hold on
-for i = 1:length(designSpace_Ft_max_var)
-  len_t(i)  = designSpace_Ft_max_var(i).ecoInputs.tether.L;
-  dia_t(i)  = designSpace_Ft_max_var(i).ecoInputs.tether.d;
+for i = 1:length(designSpace_100kW_Ft_max_var)
+  len_t(i)  = designSpace_100kW_Ft_max_var(i).ecoInputs.tether.L;
+  dia_t(i)  = designSpace_100kW_Ft_max_var(i).ecoInputs.tether.d;
 end
 yyaxis left
 plot(len_t);
@@ -186,21 +189,21 @@ for i = 1:length(sigma_t_max_values)
   inputs.Te_matStrength = sigma_t_max_values(i);
 
   % Save parameter values
-  designSpace_sigma_t_max_var(i).paramValue   = sigma_t_max_values(i);
+  designSpace_100kW_sigma_t_max_var(i).paramValue   = sigma_t_max_values(i);
 
   % Evaluate design objective
-  [designSpace_sigma_t_max_var(i).perfInputs, designSpace_sigma_t_max_var(i).perfOutputs, designSpace_sigma_t_max_var(i).ecoInputs, designSpace_sigma_t_max_var(i).ecoOutputs] = evalDesignObjective(inputs);
+  [designSpace_100kW_sigma_t_max_var(i).perfInputs, designSpace_100kW_sigma_t_max_var(i).perfOutputs, designSpace_100kW_sigma_t_max_var(i).ecoInputs, designSpace_100kW_sigma_t_max_var(i).ecoOutputs] = evalDesignObjective(inputs);
 
 end
 
 % Save design space results
-save('outPutFiles/designSpace_sigma_t_max_var.mat','designSpace_sigma_t_max_var');
+save('outPutFiles/designSpace_100kW_sigma_t_max_var.mat','designSpace_100kW_sigma_t_max_var');
 
 % Load saved results
-load("outputFiles/designSpace_sigma_t_max_var.mat");
+load("outputFiles/designSpace_100kW_sigma_t_max_var.mat");
 
 % Plot
-plotResults_single_param_variation('σ_{t,max}', 'Pa', designSpace_sigma_t_max_var);
+plotResults_single_param_variation('σ_{t,max}', 'Pa', designSpace_100kW_sigma_t_max_var);
 
 
 %% P_gen var
@@ -217,21 +220,21 @@ for i = 1:length(P_gen_values)
   inputs.peakM2E_F = P_gen_values(i)/inputs.P_ratedElec*1000;
 
   % Save parameter values
-  designSpace_P_gen_var(i).paramValue   = P_gen_values(i);
+  designSpace_100kW_P_gen_var(i).paramValue   = P_gen_values(i);
 
   % Evaluate design objective
-  [designSpace_P_gen_var(i).perfInputs, designSpace_P_gen_var(i).perfOutputs, designSpace_P_gen_var(i).ecoInputs, designSpace_P_gen_var(i).ecoOutputs] = evalDesignObjective(inputs);
+  [designSpace_100kW_P_gen_var(i).perfInputs, designSpace_100kW_P_gen_var(i).perfOutputs, designSpace_100kW_P_gen_var(i).ecoInputs, designSpace_100kW_P_gen_var(i).ecoOutputs] = evalDesignObjective(inputs);
 
 end
 
 % Save design space results
-save('outPutFiles/designSpace_P_gen_var.mat','designSpace_P_gen_var');
+save('outPutFiles/designSpace_100kW_P_gen_var.mat','designSpace_100kW_P_gen_var');
 
 % Load saved results
-load("outputFiles/designSpace_P_gen_var.mat");
+load("outputFiles/designSpace_100kW_P_gen_var.mat");
 
 % Plot
-plotResults_single_param_variation('P_{gen}', 'kW', designSpace_P_gen_var);
+plotResults_single_param_variation('P_{gen}', 'kW', designSpace_100kW_P_gen_var);
 
 
 %% WA and AR var
@@ -260,11 +263,11 @@ for i = 1:length(WA_values)
     inputs.Ft_max = 4 * inputs.S * 1000; %[N]
 
     % Save parameter values
-    designSpace_WA_AR_var(counter).WA_value = WA_values(i);
-    designSpace_WA_AR_var(counter).AR_value = AR_values(j);
+    designSpace_100kW_WA_AR_var(counter).WA_value = WA_values(i);
+    designSpace_100kW_WA_AR_var(counter).AR_value = AR_values(j);
 
     % Evaluate design objective
-    [designSpace_WA_AR_var(counter).perfInputs, designSpace_WA_AR_var(counter).perfOutputs, designSpace_WA_AR_var(counter).ecoInputs, designSpace_WA_AR_var(counter).ecoOutputs] = evalDesignObjective(inputs);
+    [designSpace_100kW_WA_AR_var(counter).perfInputs, designSpace_100kW_WA_AR_var(counter).perfOutputs, designSpace_100kW_WA_AR_var(counter).ecoInputs, designSpace_100kW_WA_AR_var(counter).ecoOutputs] = evalDesignObjective(inputs);
 
     % Increment the counter
     counter = counter + 1;
@@ -272,13 +275,13 @@ for i = 1:length(WA_values)
 end
 
 % Save design space results
-save('outPutFiles/designSpace_WA_AR_var.mat','designSpace_WA_AR_var');
+save('outPutFiles/designSpace_100kW_WA_AR_var.mat','designSpace_100kW_WA_AR_var');
 
 % Load the saved design space results
-load('outPutFiles/designSpace_WA_AR_var.mat');
+load('outPutFiles/designSpace_100kW_WA_AR_var.mat');
 
 % Plot
-plotResults_two_param_variation('WA', 'm^2', 'AR','', designSpace_WA_AR_var)
+plotResults_two_param_variation('WA', 'm^2', 'AR','', designSpace_100kW_WA_AR_var)
 
 
 %% WA and b var
@@ -308,11 +311,11 @@ for i = 1:length(WA_values)
     inputs.Ft_max = 4 * inputs.S * 1000; %[N]
 
     % Save parameter values
-    designSpace_WA_b_var(counter).WA_value = WA_values(i);
-    designSpace_WA_b_var(counter).b_value = b_values(j);
+    designSpace_100kW_WA_b_var(counter).WA_value = WA_values(i);
+    designSpace_100kW_WA_b_var(counter).b_value = b_values(j);
 
     % Evaluate design objective
-    [designSpace_WA_b_var(counter).perfInputs, designSpace_WA_b_var(counter).perfOutputs, designSpace_WA_b_var(counter).ecoInputs, designSpace_WA_b_var(counter).ecoOutputs] = evalDesignObjective(inputs);
+    [designSpace_100kW_WA_b_var(counter).perfInputs, designSpace_100kW_WA_b_var(counter).perfOutputs, designSpace_100kW_WA_b_var(counter).ecoInputs, designSpace_100kW_WA_b_var(counter).ecoOutputs] = evalDesignObjective(inputs);
 
     % Increment the counter
     counter = counter + 1;
@@ -320,13 +323,13 @@ for i = 1:length(WA_values)
 end
 
 % Save design space results
-save('outPutFiles/designSpace_WA_b_var.mat','designSpace_WA_b_var');
+save('outPutFiles/designSpace_100kW_WA_b_var.mat','designSpace_100kW_WA_b_var');
 
 % Load the saved design space results
-load('outPutFiles/designSpace_WA_b_var.mat');
+load('outPutFiles/designSpace_100kW_WA_b_var.mat');
 
 % Plot
-plotResults_two_param_variation('WA', 'm^2', 'b','m', designSpace_WA_b_var)
+plotResults_two_param_variation('WA', 'm^2', 'b','m', designSpace_100kW_WA_b_var)
 
 
 %% Ft_max and sigma_t_max var
@@ -353,11 +356,11 @@ for i = 1:length(Ft_max_values)
     inputs.Te_matStrength = sigma_t_max_values(j);
 
     % Save parameter values
-    designSpace_Ft_max_sigma_t_var(counter).Ft_max_value = Ft_max_values(i);
-    designSpace_Ft_max_sigma_t_var(counter).sigma_t_value = sigma_t_max_values(j);
+    designSpace_100kW_Ft_max_sigma_t_var(counter).Ft_max_value = Ft_max_values(i);
+    designSpace_100kW_Ft_max_sigma_t_var(counter).sigma_t_value = sigma_t_max_values(j);
 
     % Evaluate design objective
-    [designSpace_Ft_max_sigma_t_var(counter).perfInputs, designSpace_Ft_max_sigma_t_var(counter).perfOutputs, designSpace_Ft_max_sigma_t_var(counter).ecoInputs, designSpace_Ft_max_sigma_t_var(counter).ecoOutputs] = evalDesignObjective(inputs);
+    [designSpace_100kW_Ft_max_sigma_t_var(counter).perfInputs, designSpace_100kW_Ft_max_sigma_t_var(counter).perfOutputs, designSpace_100kW_Ft_max_sigma_t_var(counter).ecoInputs, designSpace_100kW_Ft_max_sigma_t_var(counter).ecoOutputs] = evalDesignObjective(inputs);
 
     % Increment the counter
     counter = counter + 1;
@@ -365,13 +368,13 @@ for i = 1:length(Ft_max_values)
 end
 
 % Save design space results
-save('outPutFiles/designSpace_Ft_max_sigma_t_var.mat','designSpace_Ft_max_sigma_t_var');
+save('outPutFiles/designSpace_100kW_Ft_max_sigma_t_var.mat','designSpace_100kW_Ft_max_sigma_t_var');
 
 % Load the saved design space results
-load('outPutFiles/designSpace_Ft_max_sigma_t_var.mat');
+load('outPutFiles/designSpace_100kW_Ft_max_sigma_t_var.mat');
 
 % Plot
-plotResults_two_param_variation('F_{t,max}', 'N', 'σ_{t,max}','Pa', designSpace_Ft_max_sigma_t_var)
+plotResults_two_param_variation('F_{t,max}', 'N', 'σ_{t,max}','Pa', designSpace_100kW_Ft_max_sigma_t_var)
 
 
 %% WA and Ft_max var
@@ -388,7 +391,7 @@ Ft_guess = 4*mean(WA_values)*1000; % N
 Ft_max_values = [Ft_guess*0.8, Ft_guess,Ft_guess*1.2]; % Range for Ft_max
 
 % Initialize structure array to store design space results
-designSpace_WA_Ft_var = struct([]);
+designSpace_100kW_WA_Ft_var = struct([]);
 
 % Initialize counter for storing results
 counter = 1;
@@ -404,12 +407,12 @@ for i = 1:length(WA_values)
 
 
     % Save parameter values
-    designSpace_WA_Ft_var(counter).S_value = inputs.S;
-    designSpace_WA_Ft_var(counter).Ft_max_value = inputs.Ft_max;
+    designSpace_100kW_WA_Ft_var(counter).S_value = inputs.S;
+    designSpace_100kW_WA_Ft_var(counter).Ft_max_value = inputs.Ft_max;
 
     % Evaluate design objective
-    [designSpace_WA_Ft_var(counter).systemInputs, designSpace_WA_Ft_var(counter).perfOutputs, ...
-      designSpace_WA_Ft_var(counter).ecoInputs, designSpace_WA_Ft_var(counter).ecoOutputs] = evalDesignObjective(inputs);
+    [designSpace_100kW_WA_Ft_var(counter).systemInputs, designSpace_100kW_WA_Ft_var(counter).perfOutputs, ...
+      designSpace_100kW_WA_Ft_var(counter).ecoInputs, designSpace_100kW_WA_Ft_var(counter).ecoOutputs] = evalDesignObjective(inputs);
 
     % Increment counter
     counter = counter + 1;
@@ -417,12 +420,12 @@ for i = 1:length(WA_values)
 end
 
 % Save design space results
-save('outPutFiles/designSpace_WA_Ft_var.mat', 'designSpace_WA_Ft_var');
+save('outPutFiles/designSpace_100kW_WA_Ft_var.mat', 'designSpace_100kW_WA_Ft_var');
 
 % Load saved design space results
-load('outPutFiles/designSpace_WA_Ft_var.mat');
+load('outPutFiles/designSpace_100kW_WA_Ft_var.mat');
 
 % Plot
-plotResults_two_param_variation('WA', 'm^2', 'F_{t,max}', 'N', designSpace_WA_Ft_var);
+plotResults_two_param_variation('WA', 'm^2', 'F_{t,max}', 'N', designSpace_100kW_WA_Ft_var);
 
 
