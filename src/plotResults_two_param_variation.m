@@ -16,6 +16,7 @@ num_values2 = length(values2);
 % Create a figure for power curves
 figure;
 hold on;
+box on;
 for i = 1:length(designSpace)
     % Extract values for the current combination
     value1 = designSpace(i).(fieldNames{1});
@@ -25,7 +26,7 @@ for i = 1:length(designSpace)
     P_e_avg = designSpace(i).perfOutputs.P_e_avg;
     
     % Generate a label for the legend
-    label = sprintf('%s: %.2f %s, %s: %.2f %s', name1, value1, unit1, name2, value2, unit2);
+    label = sprintf('%s: %.1f (%s), %s: %.1f (%s)', name1, value1, unit1, name2, value2, unit2);
     
     % Plot the power curve
     plot(P_e_avg, 'DisplayName', label);
@@ -33,7 +34,6 @@ end
 hold off;
 xlabel('Wind speed (m/s)');
 ylabel('Power (W)');
-% title(sprintf('Power Curves for Different %s and %s Combinations', name1, name2));
 legend('show');
 grid on;
 
@@ -51,12 +51,14 @@ end
 % Create a figure for LCoE contours
 figure;
 [values1_grid, values2_grid] = meshgrid(values1, values2);
-contourf(values1_grid, values2_grid, LCoE');
+contourf(values1_grid, values2_grid, LCoE'); 
+caxis([120 200]); % Set the color bar limits
+colormap("turbo")
 c = colorbar;
 c.Label.String = 'LCoE (€/MWh)';
 xlabel(sprintf('%s (%s)', name1, unit1));
 ylabel(sprintf('%s (%s)', name2, unit2));
-title('LCoE Contours');
+title('LCoE contours');
 grid on;
 
 % Find the minimum LCoE value and its corresponding indices
@@ -67,9 +69,14 @@ grid on;
 optimal_value1 = values1(optimal_idx1);
 optimal_value2 = values2(optimal_idx2);
 
+% Mark the minimum LCoE value on the contour plot
+hold on;
+plot(values1(optimal_idx1), values2(optimal_idx2), 'kx', 'MarkerSize', 5, 'LineWidth', 1.5);
+text(values1(optimal_idx1), values2(optimal_idx2), sprintf('%.0f €/MWh ', round(min_LCoE)), 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'left', 'Color', 'k');
+
 % Display the optimal combination
 fprintf('Optimal %s: %.2f %s\n', name1, optimal_value1, unit1);
 fprintf('Optimal %s: %.2f %s\n', name2, optimal_value2, unit2);
-fprintf('Minimum LCoE: %.2f\n', min_LCoE);
+fprintf('Minimum LCoE: %.2f €/MWh\n', min_LCoE);
 
 end

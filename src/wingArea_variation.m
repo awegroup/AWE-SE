@@ -9,7 +9,7 @@ function [designSpace] = wingArea_variation(WA_values, inputs)
     inputs.S      = WA_values(i);
     
 %     inputs.Ft_max = inputs.S*4000; %[N]
-    inputs.Ft_max = mean(WA_values)*3000;
+    inputs.Ft_max = mean(WA_values)*4000;
 
     % Save parameter values
     designSpace(i).paramValue = WA_values(i);
