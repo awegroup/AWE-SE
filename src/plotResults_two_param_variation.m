@@ -52,14 +52,19 @@ end
 figure;
 [values1_grid, values2_grid] = meshgrid(values1, values2);
 contourf(values1_grid, values2_grid, LCoE'); 
-caxis([120 200]); % Set the color bar limits
-colormap("turbo")
+% caxis([120 200]); % Set the color bar limits
+% colormap("turbo")
 c = colorbar;
 c.Label.String = 'LCoE (€/MWh)';
 xlabel(sprintf('%s (%s)', name1, unit1));
 ylabel(sprintf('%s (%s)', name2, unit2));
 title('LCoE contours');
 grid on;
+
+% Add contour labels
+hold on;
+[C, h] = contour(values1_grid, values2_grid, LCoE', 'LineColor', 'k');
+clabel(C, h, 'FontSize', 10, 'Color', 'k');
 
 % Find the minimum LCoE value and its corresponding indices
 [min_LCoE, min_idx] = min(LCoE(:));
@@ -72,7 +77,7 @@ optimal_value2 = values2(optimal_idx2);
 % Mark the minimum LCoE value on the contour plot
 hold on;
 plot(values1(optimal_idx1), values2(optimal_idx2), 'kx', 'MarkerSize', 5, 'LineWidth', 1.5);
-text(values1(optimal_idx1), values2(optimal_idx2), sprintf('%.0f €/MWh ', round(min_LCoE)), 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'left', 'Color', 'k');
+text(values1(optimal_idx1), values2(optimal_idx2), sprintf('%.0f', round(min_LCoE)), 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'left', 'Color', 'k');
 
 % Display the optimal combination
 fprintf('Optimal %s: %.2f %s\n', name1, optimal_value1, unit1);

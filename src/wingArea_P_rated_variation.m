@@ -1,4 +1,4 @@
-function [designSpace] = wingArea_wingLoading_variation(WA_values, WL_values, inputs)
+function [designSpace] = wingArea_P_rated_variation(WA_values, P_rated_values, inputs)
 
   % Initialize structure array to store design space results
   designSpace = struct([]);
@@ -9,15 +9,16 @@ function [designSpace] = wingArea_wingLoading_variation(WA_values, WL_values, in
   % Loop over each wing area value
   for i = 1:length(WA_values)
     % Loop over each Ft_max value
-    for j = 1:length(WL_values)
+    for j = 1:length(P_rated_values)
 
-      % Set wing area and Ft_max
-      inputs.S = WA_values(i); % m^2
-      inputs.Ft_max = WL_values(j)*inputs.S; % N
+      % Update inputs
+      inputs.S           = WA_values(i); % m^2
+      inputs.Ft_max      = inputs.S * 3000; % N
+      inputs.P_ratedElec = P_rated_values(j);
 
       % Save parameter values
       designSpace(counter).S_value  = inputs.S;
-      designSpace(counter).WL_value = WL_values(j);
+      designSpace(counter).P_rated_value = P_rated_values(j);
 
       % Evaluate design objective
       [designSpace(counter).perfInputs, designSpace(counter).perfOutputs, ...
@@ -27,4 +28,5 @@ function [designSpace] = wingArea_wingLoading_variation(WA_values, WL_values, in
       counter = counter + 1;
     end
   end
+
 end

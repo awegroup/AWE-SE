@@ -1,4 +1,4 @@
-name: 'inputSheet_1MW_scale'  # Input file name
+name: 'inputSheet_2MW_scale'  # Input file name
 
 # Model Settings
 numDeltaLelems: 4  # Number of stroke length elements [num]
@@ -22,20 +22,20 @@ windProfile_h: 'h_windDataset'
 windProfile_vw: 'v_windDataset_Cabauw'
 
 # System Parameters
-S: 100  # Wing surface area [m^2]
+S: 150  # Wing surface area [m^2]
 AR: 14  # Aspect ratio [-]
-P_ratedElec: 1e6  # Rated electrical power [W]
+P_ratedElec: 2e6  # Rated electrical power [W]
 massOverride: 0  # Mass override toggle
 kiteMass: 600  # (Overridden) Kite mass [kg]
 crestFactor_power: 2.5  # Peak mechanical to electric cycle power factor [-]
 
 # Tether Parameters
-Ft_max: 300000  # Maximum tether force [N]
+Ft_max: 450000  # Maximum tether force [N]
 Ft_max_SF: 1.0  # Safety factor for maximum tether force
 maxTeLen: 3500  # Maximum tether length [m]
 maxHeight: 1000  # Maximum operational height [m]
 minGroundClear: 100  # Minimum ground clearance [m]
-Te_matStrength: 400000000  # Tether material tensile strength [Pa]
+Te_matStrength: 500000000  # Tether material tensile strength [Pa]
 Te_matDensity: 970  # Tether material density [kg/m^3]
 
 # Aerodynamic Parameters

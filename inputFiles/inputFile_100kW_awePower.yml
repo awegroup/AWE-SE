@@ -31,7 +31,7 @@ crestFactor_power: 2.5  # Peak mechanical to electric cycle power factor [-]
 
 # Tether Parameters
 Ft_max: 60000  # Maximum tether force [N]
-Ft_max_SF: 0.8  # Safety factor for maximum tether force
+Ft_max_SF: 1.0  # Safety factor for maximum tether force
 maxTeLen: 2500  # Maximum tether length [m]
 maxHeight: 1000  # Maximum operational height [m]
 minGroundClear: 100  # Minimum ground clearance [m]
