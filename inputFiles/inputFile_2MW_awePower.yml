@@ -27,7 +27,7 @@ AR: 14  # Aspect ratio [-]
 P_ratedElec: 2e6  # Rated electrical power [W]
 massOverride: 0  # Mass override toggle
 kiteMass: 600  # (Overridden) Kite mass [kg]
-crestFactor_power: 2.5  # Peak mechanical to electric cycle power factor [-]
+crestFactor_power: 1.5  # Peak mechanical to electric cycle power factor [-]
 
 # Tether Parameters
 Ft_max: 450000  # Maximum tether force [N]

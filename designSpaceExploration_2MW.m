@@ -18,7 +18,7 @@ clearvars
 inputs = loadInputs('inputFile_2MW_awePower.yml');
 
 % Define range for wing area 
-WA_values = [130, 140, 150, 160, 170, 180]; % m^2
+WA_values = [140, 150, 160, 170]; % m^2
 
 % Define range for wing loading
 WL_values = [2e3, 3e3, 4e3]; % N/m^2

@@ -20,7 +20,7 @@ function inp = eco_system_inputs_awePower(inputs, processedOutputs)
   inp.business.DtoE    = 70/30; % Debt-Equity-ratio      
                           
   % Wind resources
-  inp.atm.wind_range = inputs.vw_ref(1):processedOutputs.vw_100m_operRange(end); % m/s
+  inp.atm.wind_range = inputs.vw_ref(1):processedOutputs.vw_h_ref_operRange(end); % m/s
   inp.atm.gw         = atm.k/atm.A *(inp.atm.wind_range/atm.A).^(atm.k-1).*exp(-(inp.atm.wind_range/atm.A).^atm.k); % Wind distribution
   
   % Kite

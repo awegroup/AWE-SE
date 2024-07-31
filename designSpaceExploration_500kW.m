@@ -65,7 +65,7 @@ clearvars
 inputs = loadInputs('inputFile_500kW_awePower.yml');
 
 % Define the range for wing area and aspect ratio
-WA_values = [40, 50, 60, 70]; % m^2
+WA_values = [50, 60, 70]; % m^2
 AR_values = [12, 14, 16]; % -
 
 % Evaluate design space
@@ -88,7 +88,7 @@ inputs = loadInputs('inputFile_500kW_awePower.yml');
 
 % Define the range for wing area and aspect ratio
 crestFactor_values = [1, 1.5, 2, 2.5, 3]; % -
-P_rated_values   = [250e3, 500e3, 800e3]; % W
+P_rated_values   = [250e3, 500e3, 750e3]; % W
 
 % Evaluate design space
 [designSpace_500kW_crestFactor_P_rated_var] = crestFactor_P_rated_variation(crestFactor_values, P_rated_values, inputs);
@@ -128,6 +128,7 @@ plotResults_two_param_variation('crestFactor', '-', 'P_{rated}','W', designSpace
 %% Reference 500 kW system design
 clearvars
 perfInputs = loadInputs('inputFile_500kW_awePower.yml');
+
 [perfInputs, perfOutputs, ecoInputs, ecoOutputs] = evalDesignObjective(perfInputs);
 
 % Power curve
