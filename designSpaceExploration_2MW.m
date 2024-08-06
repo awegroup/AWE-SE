@@ -18,10 +18,10 @@ clearvars
 inputs = loadInputs('inputFile_2MW_awePower.yml');
 
 % Define range for wing area 
-WA_values = [140, 150, 160, 170]; % m^2
+WA_values = [130, 140, 150]; % m^2
 
 % Define range for wing loading
-WL_values = [2e3, 3e3, 4e3]; % N/m^2
+WL_values = [3e3, 4e3, 5e3]; % N/m^2
 
 % Evaluate design space
 [designSpace_2MW_WA_WL_var] = wingArea_wingLoading_variation(WA_values, WL_values, inputs);
@@ -42,10 +42,10 @@ clearvars
 inputs = loadInputs('inputFile_2MW_awePower.yml');
 
 % Define range for wing loading
-WL_values = [2e3, 3e3, 4e3]; % N/m^2
+WL_values = [3e3, 4e3, 5e3]; % N/m^2
 
 % Define the range for sigma_t_max
-sigma_t_max_values = [3e8, 4e8, 5e8]; % Pa
+sigma_t_max_values = [4e8, 5e8, 6e8]; % Pa
 
 [designSpace_2MW_WL_sigma_t_var] = wingLoading_sigma_t_max_variation(WL_values, sigma_t_max_values, inputs);
 
@@ -65,7 +65,7 @@ clearvars
 inputs = loadInputs('inputFile_2MW_awePower.yml');
 
 % Define the range for wing area and aspect ratio
-WA_values = [80, 100, 120]; % m^2
+WA_values = [130, 140, 150]; % m^2
 AR_values = [12, 14, 16]; % -
 
 % Evaluate design space
@@ -87,8 +87,8 @@ clearvars
 inputs = loadInputs('inputFile_2MW_awePower.yml');
 
 % Define the range for wing area and aspect ratio
-crestFactor_values = [1, 1.5, 2, 2.5, 3]; % -
-P_rated_values   = [500e3, 1000e3, 1500e3, 2000e3, 2500e3]; % W
+crestFactor_values = [2, 2.5, 3]; % -
+P_rated_values   = [1750e3, 2000e3, 2250e3]; % W
 
 % Evaluate design space
 [designSpace_2MW_crestFactor_P_rated_var] = crestFactor_P_rated_variation(crestFactor_values, P_rated_values, inputs);
@@ -127,15 +127,23 @@ plotResults_two_param_variation('crestFactor', '-', 'P_{rated}','W', designSpace
 
 %% Reference 2 MW system design
 clearvars
+
 perfInputs = loadInputs('inputFile_2MW_awePower.yml');
+
 [perfInputs, perfOutputs, ecoInputs, ecoOutputs] = evalDesignObjective(perfInputs);
+
+systemData_2MW.perfInputs  = perfInputs;
+systemData_2MW.perfOutputs = perfOutputs;
+systemData_2MW.ecoInputs   = ecoInputs;
+systemData_2MW.ecoOutputs  = ecoOutputs;
+save('outputFiles/systemData_2MW.mat');
 
 % Power curve
 figure()
 hold on
 grid on
 box on
-plot(perfOutputs.P_e_avg)
+plot(perfOutputs.P_e_avg,'-x');
 hold off
 
 % Eco results

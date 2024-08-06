@@ -18,10 +18,10 @@ clearvars
 inputs = loadInputs('inputFile_100kW_awePower.yml');
 
 % Define range for wing area 
-WA_values = [10, 20, 30, 40]; % m^2
+WA_values = [15, 20, 25]; % m^2
 
 % Define range for wing loading
-WL_values = [1e3, 2e3, 3e3, 4e3, 5e3]; % N/m^2
+WL_values = [1e3, 2e3, 3e3]; % N/m^2
 
 % Evaluate design space
 [designSpace_100kW_WA_WL_var] = wingArea_wingLoading_variation(WA_values, WL_values, inputs);
@@ -45,7 +45,7 @@ inputs = loadInputs('inputFile_100kW_awePower.yml');
 WL_values = [1e3, 2e3, 3e3]; % N/m^2
 
 % Define the range for sigma_t_max
-sigma_t_max_values = [2e8, 3e8, 4e8, 5e8]; % Pa
+sigma_t_max_values = [2e8, 3e8, 4e8]; % Pa
 
 [designSpace_100kW_WL_sigma_t_var] = wingLoading_sigma_t_max_variation(WL_values, sigma_t_max_values, inputs);
 
@@ -65,8 +65,8 @@ clearvars
 inputs = loadInputs('inputFile_100kW_awePower.yml');
 
 % Define the range for wing area and aspect ratio
-WA_values = [10, 20, 30, 40]; % m^2
-AR_values = [10, 12, 14, 16, 18]; % -
+WA_values = [15, 20, 25]; % m^2
+AR_values = [12, 14, 16]; % -
 
 % Evaluate design space
 [designSpace_100kW_WA_AR_var] = wingArea_aspectRatio_variation(WA_values, AR_values, inputs);
@@ -80,15 +80,15 @@ load('outPutFiles/designSpace_100kW_WA_AR_var.mat');
 % Plot
 plotResults_two_param_variation('WA', 'm^2', 'AR','-', designSpace_100kW_WA_AR_var)
 
-%% Generator rated-power to system rated power ratio and System rated power variation 
+%% Crest factor and System rated power variation 
 clearvars
 
 % Load input file
 inputs = loadInputs('inputFile_100kW_awePower.yml');
 
 % Define the range for wing area and aspect ratio
-crestFactor_values = [1, 1.5, 2, 2.5, 3]; % -
-P_rated_values   = [50e3, 100e3, 150e3, 200e3, 250e3]; % W
+crestFactor_values = [1.5, 2, 2.5]; % -
+P_rated_values   = [75e3, 100e3, 125e3]; % W
 
 % Evaluate design space
 [designSpace_100kW_crestFactor_P_rated_var] = crestFactor_P_rated_variation(crestFactor_values, P_rated_values, inputs);
@@ -102,7 +102,6 @@ load('outPutFiles/designSpace_100kW_crestFactor_P_rated_var.mat');
 % Plot
 plotResults_two_param_variation('crestFactor', '-', 'P_{rated}','W', designSpace_100kW_crestFactor_P_rated_var)
 
-
 %% Plots
 
 % Load saved design space results
@@ -113,30 +112,37 @@ plotResults_two_param_variation('WA', 'm^2', 'WL', 'N/m^2', designSpace_100kW_WA
 % Load the saved design space results
 load('outPutFiles/designSpace_100kW_WL_sigma_t_var.mat');
 % Plot
-plotResults_two_param_variation('WL', 'N/m^2', 'σ_{t,max}','Pa', designSpace_100kW_WL_sigma_t_var)
-
-% Load the saved design space results
-load('outPutFiles/designSpace_100kW_crestFactor_P_rated_var.mat');
-% Plot
-plotResults_two_param_variation('crestFactor', '-', 'P_{rated}','W', designSpace_100kW_crestFactor_P_rated_var)
+plotResults_two_param_variation('WL', 'N/m^2', 'σ_{t,max}','Pa', designSpace_100kW_WL_sigma_t_var);
 
 % Load the saved design space results
 load('outPutFiles/designSpace_100kW_WA_AR_var.mat');
 % Plot
 plotResults_two_param_variation('WA', 'm^2', 'AR','-', designSpace_100kW_WA_AR_var)
 
+% Load the saved design space results
+load('outPutFiles/designSpace_100kW_crestFactor_P_rated_var.mat');
+% Plot
+plotResults_two_param_variation('crestFactor', '-', 'P_{rated}','W', designSpace_100kW_crestFactor_P_rated_var)
+
 %% Reference 100 kW system design
 clearvars
+
 perfInputs = loadInputs('inputFile_100kW_awePower.yml');
 
 [perfInputs, perfOutputs, ecoInputs, ecoOutputs] = evalDesignObjective(perfInputs);
+
+systemData_100kW.perfInputs  = perfInputs;
+systemData_100kW.perfOutputs = perfOutputs;
+systemData_100kW.ecoInputs   = ecoInputs;
+systemData_100kW.ecoOutputs  = ecoOutputs;
+save('outputFiles/systemData_100kW.mat');
 
 % Power curve
 figure()
 hold on
 grid on
 box on
-plot(perfOutputs.P_e_avg)
+plot(perfOutputs.P_e_avg,'-x');
 hold off
 
 % Eco results
@@ -147,28 +153,50 @@ eco_displayResults(ecoInputs, ecoOutputs)
 % Archived
 %%%%%%%%%%%%%%%%%%%%%%%%
 
+% %% WA and f_crest variation
+% clearvars
+% 
+% % Load input file
+% inputs = loadInputs('inputFile_100kW_awePower.yml');
+% 
+% % Define the range for wing area and aspect ratio
+% WA_values          = [15, 20, 25]; % m^2
+% crestFactor_values = [1.8, 2]; % -
+% 
+% % Evaluate design space
+% [designSpace_100kW_WA_crestFactor_var] = wingArea_crestFactor_variation(WA_values, crestFactor_values, inputs);
+% 
+% % Save design space results
+% save('outPutFiles/designSpace_100kW_WA_crestFactor_var.mat','designSpace_100kW_WA_crestFactor_var');
+% 
+% % Load the saved design space results
+% load('outPutFiles/designSpace_100kW_WA_crestFactor_var.mat');
+% 
+% % Plot
+% plotResults_two_param_variation('Wing area', 'm^2', 'f_{crest}','-', designSpace_100kW_WA_crestFactor_var)
 
-%% Wing area variation
-clearvars
-
-% Load input file
-inputs = loadInputs('inputFile_100kW_awePower.yml');
-
-% Define the range for wing area
-WA_values = [10, 15, 20, 25]; % m
-
-% Evaluate design space
-[designSpace_100kW_WA_var] = wingArea_variation(WA_values, inputs);
-
-% Save design space results
-save('outPutFiles/designSpace_100kW_WA_var.mat','designSpace_100kW_WA_var');
-
-% Load saved results
-load("outputFiles/designSpace_100kW_WA_var.mat");
-
-% Plots
-plotResults_single_param_variation('Wing area', 'm^2', designSpace_100kW_WA_var);
-tetherDetailsPlots('Wing area', 'm^2',designSpace_100kW_WA_var);
+% 
+% %% Wing area variation
+% clearvars
+% 
+% % Load input file
+% inputs = loadInputs('inputFile_100kW_awePower.yml');
+% 
+% % Define the range for wing area
+% WA_values = [10, 15, 20, 25]; % m
+% 
+% % Evaluate design space
+% [designSpace_100kW_WA_var] = wingArea_variation(WA_values, inputs);
+% 
+% % Save design space results
+% save('outPutFiles/designSpace_100kW_WA_var.mat','designSpace_100kW_WA_var');
+% 
+% % Load saved results
+% load("outputFiles/designSpace_100kW_WA_var.mat");
+% 
+% % Plots
+% plotResults_single_param_variation('Wing area', 'm^2', designSpace_100kW_WA_var);
+% tetherDetailsPlots('Wing area', 'm^2',designSpace_100kW_WA_var);
 % 
 % 
 % %% AR var

@@ -18,7 +18,7 @@ clearvars
 inputs = loadInputs('inputFile_1MW_awePower.yml');
 
 % Define range for wing area 
-WA_values = [80, 90, 100, 110]; % m^2
+WA_values = [90, 100, 110]; % m^2
 
 % Define range for wing loading
 WL_values = [2e3, 3e3, 4e3]; % N/m^2
@@ -65,7 +65,7 @@ clearvars
 inputs = loadInputs('inputFile_1MW_awePower.yml');
 
 % Define the range for wing area and aspect ratio
-WA_values = [80, 90, 100, 110]; % m^2
+WA_values = [90, 100, 110]; % m^2
 AR_values = [12, 14, 16]; % -
 
 % Evaluate design space
@@ -88,7 +88,7 @@ inputs = loadInputs('inputFile_1MW_awePower.yml');
 
 % Define the range for wing area and aspect ratio
 crestFactor_values = [1, 1.5, 2, 2.5, 3]; % -
-P_rated_values   = [500e3, 1000e3, 1500e3, 2000e3]; % W
+P_rated_values   = [750e3, 1000e3, 1250e3]; % W
 
 % Evaluate design space
 [designSpace_1MW_crestFactor_P_rated_var] = crestFactor_P_rated_variation(crestFactor_values, P_rated_values, inputs);
@@ -101,7 +101,6 @@ load('outPutFiles/designSpace_1MW_crestFactor_P_rated_var.mat');
 
 % Plot
 plotResults_two_param_variation('crestFactor', '-', 'P_{rated}','W', designSpace_1MW_crestFactor_P_rated_var)
-
 
 %% Plotting saved results
 
@@ -125,19 +124,27 @@ load('outPutFiles/designSpace_1MW_crestFactor_P_rated_var.mat');
 % Plot
 plotResults_two_param_variation('crestFactor', '-', 'P_{rated}','W', designSpace_1MW_crestFactor_P_rated_var)
 
+
 %% Reference 1 MW system design
 clearvars
 perfInputs = loadInputs('inputFile_1MW_awePower.yml');
 
 [perfInputs, perfOutputs, ecoInputs, ecoOutputs] = evalDesignObjective(perfInputs);
 
+systemData_1MW.perfInputs  = perfInputs;
+systemData_1MW.perfOutputs = perfOutputs;
+systemData_1MW.ecoInputs   = ecoInputs;
+systemData_1MW.ecoOutputs  = ecoOutputs;
+save('outputFiles/systemData_1MW.mat');
+
 % Power curve
 figure()
 hold on
 grid on
 box on
-plot(perfOutputs.P_e_avg)
+plot(perfOutputs.P_e_avg,'-x');
 hold off
 
 % Eco results
 eco_displayResults(ecoInputs, ecoOutputs)
+

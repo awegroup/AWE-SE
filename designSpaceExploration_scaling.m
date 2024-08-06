@@ -12,48 +12,55 @@ addpath(genpath([pwd '/inputFiles']));
 addpath(genpath([pwd '/outputFiles']));
 addpath(genpath([pwd '/src']));
 
-%% Wing area and P_rated variation
+%% Load system data
 
-clearvars
+load('outputFiles/systemData_100kW.mat');
+load('outputFiles/systemData_250kW.mat');
+load('outputFiles/systemData_500kW.mat');
+load('outputFiles/systemData_750kW.mat');
+load('outputFiles/systemData_1MW.mat');
+load('outputFiles/systemData_2MW.mat');
 
-% Load input file
-inputs = loadInputs('inputFile_500kW_awePower.yml');
+systemSizes = [100, 250, 500, 750, 1000, 2000];
 
-% Define the range for wing area and aspect ratio
-WA_values      = [25, 50, 75, 100, 125, 150, 175, 200]; % m^2
-P_rated_values = [100e3, 500e3, 1000e3, 1500e3, 2000e3, 2500e3]; % W
+LCoE = [systemData_100kW.ecoOutputs.metrics.LCoE, systemData_250kW.ecoOutputs.metrics.LCoE, ...
+        systemData_500kW.ecoOutputs.metrics.LCoE, systemData_750kW.ecoOutputs.metrics.LCoE, ...
+        systemData_1MW.ecoOutputs.metrics.LCoE, systemData_2MW.ecoOutputs.metrics.LCoE];
 
-% Evaluate design space
-[designSpace_WA_P_rated_var] = wingArea_P_rated_variation(WA_values, P_rated_values, inputs);
+CF   = [systemData_100kW.ecoOutputs.metrics.CF, systemData_250kW.ecoOutputs.metrics.CF, ...
+      systemData_500kW.ecoOutputs.metrics.CF, systemData_750kW.ecoOutputs.metrics.CF, ...
+      systemData_1MW.ecoOutputs.metrics.CF, systemData_2MW.ecoOutputs.metrics.CF];
 
-% Save design space results
-save('outPutFiles/designSpace_WA_P_rated_var.mat','designSpace_WA_P_rated_var');
+WASP = [systemData_100kW.perfInputs.P_ratedElec/systemData_100kW.perfInputs.S, ...
+        systemData_250kW.perfInputs.P_ratedElec/systemData_250kW.perfInputs.S, ...
+        systemData_500kW.perfInputs.P_ratedElec/systemData_500kW.perfInputs.S, ...
+        systemData_750kW.perfInputs.P_ratedElec/systemData_750kW.perfInputs.S, ...
+        systemData_1MW.perfInputs.P_ratedElec/systemData_1MW.perfInputs.S, ...
+        systemData_2MW.perfInputs.P_ratedElec/systemData_2MW.perfInputs.S];
 
-% Load the saved design space results
-load('outPutFiles/designSpace_WA_P_rated_var.mat');
+figure()
+hold on
+grid on
+box on
+% Set the x-axis ticks
+xticks([100, 250, 500, 750, 1000, 1250, 1500, 1750, 2000]);
+yyaxis left
+plot(systemSizes, LCoE, '-o', 'linewidth', 1 ,'markersize', 5);
+ylabel('LCoE (€/MWh)');
+yyaxis right
+plot(systemSizes, CF, '-s', 'linewidth', 1 , 'markersize', 5);
+ylabel('Capacity factor (-)');
+xlabel('System size (kW)');
+hold off
 
-% Plot
-plotResults_two_param_variation('Wing area', 'm^2', 'P_{rated}','W', designSpace_WA_P_rated_var)
+figure()
+hold on
+grid on
+box on
+% Set the x-axis ticks
+xticks([100, 250, 500, 750, 1000, 1250, 1500, 1750, 2000]);
+plot(systemSizes, WASP, '-s', 'linewidth', 1 , 'markersize', 5);
+ylabel('WASP (W/m^2)');
+xlabel('System size (kW)');
+hold off
 
-%% WA and f_crest variation: 500kW
-
-clearvars
-
-% Load input file
-inputs = loadInputs('inputFile_500kW_awePower.yml');
-
-% Define the range for wing area and aspect ratio
-WA_values          = [40, 50, 60, 70]; % m^2
-crestFactor_values = [1, 1.5, 2, 2.5, 3]; % -
-
-% Evaluate design space
-[designSpace_WA_crestFactor_var] = wingArea_crestFactor_variation(WA_values, crestFactor_values, inputs);
-
-% Save design space results
-save('outPutFiles/designSpace_WA_crestFactor_var.mat','designSpace_WA_crestFactor_var');
-
-% Load the saved design space results
-load('outPutFiles/designSpace_WA_crestFactor_var.mat');
-
-% Plot
-plotResults_two_param_variation('Wing area', 'm^2', 'f_{crest}','-', designSpace_WA_crestFactor_var)

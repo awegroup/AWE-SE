@@ -52,8 +52,8 @@ end
 figure;
 [values1_grid, values2_grid] = meshgrid(values1, values2);
 contourf(values1_grid, values2_grid, LCoE'); 
-% caxis([120 200]); % Set the color bar limits
-% colormap("turbo")
+% caxis([130 180]); % Set the color bar limits
+colormap("parula")
 c = colorbar;
 c.Label.String = 'LCoE (€/MWh)';
 xlabel(sprintf('%s (%s)', name1, unit1));
@@ -78,6 +78,7 @@ optimal_value2 = values2(optimal_idx2);
 hold on;
 plot(values1(optimal_idx1), values2(optimal_idx2), 'kx', 'MarkerSize', 5, 'LineWidth', 1.5);
 text(values1(optimal_idx1), values2(optimal_idx2), sprintf('%.0f', round(min_LCoE)), 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'left', 'Color', 'k');
+hold off
 
 % Display the optimal combination
 fprintf('Optimal %s: %.2f %s\n', name1, optimal_value1, unit1);

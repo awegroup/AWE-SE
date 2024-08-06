@@ -1,7 +1,7 @@
 name: 'inputSheet_100kW_scale'  # Input file name
 
 # Model Settings
-numDeltaLelems: 4  # Number of stroke length elements [num]
+numDeltaLelems: 5  # Number of stroke length elements [num]
 FgToggle: 1  # Gravity toggle: 1 = True,  0 = False
 vertWindProfile: 0  # Vertical wind profile: 0 = Modelled, 1 = From dataset
 
@@ -32,7 +32,7 @@ crestFactor_power: 2  # Peak mechanical to electric cycle power factor [-]
 # Tether Parameters
 Ft_max: 40000  # Maximum tether force [N]
 Ft_max_SF: 1.0  # Safety factor for maximum tether force
-maxTeLen: 2500  # Maximum tether length [m]
+maxTeLen: 3500  # Maximum tether length [m]
 maxHeight: 1000  # Maximum operational height [m]
 minGroundClear: 100  # Minimum ground clearance [m]
 Te_matStrength: 300000000  # Tether material tensile strength [Pa]
