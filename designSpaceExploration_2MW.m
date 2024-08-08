@@ -64,12 +64,15 @@ clearvars
 % Load input file
 inputs = loadInputs('inputFile_2MW_awePower.yml');
 
+% Fixed WL
+WL_max = 4e3;
+
 % Define the range for wing area and aspect ratio
 WA_values = [130, 140, 150]; % m^2
 AR_values = [12, 14, 16]; % -
 
 % Evaluate design space
-[designSpace_2MW_WA_AR_var] = wingArea_aspectRatio_variation(WA_values, AR_values, inputs);
+[designSpace_2MW_WA_AR_var] = wingArea_aspectRatio_variation(WA_values, AR_values, inputs, WL_max);
 
 % Save design space results
 save('outPutFiles/designSpace_2MW_WA_AR_var.mat','designSpace_2MW_WA_AR_var');
@@ -102,6 +105,32 @@ load('outPutFiles/designSpace_2MW_crestFactor_P_rated_var.mat');
 % Plot
 plotResults_two_param_variation('crestFactor', '-', 'P_{rated}','W', designSpace_2MW_crestFactor_P_rated_var)
 
+%% Reference 2 MW system design
+clearvars
+
+perfInputs = loadInputs('inputFile_2MW_awePower.yml');
+
+[perfInputs, perfOutputs, ecoInputs, ecoOutputs] = evalDesignObjective(perfInputs);
+
+systemData_2MW.perfInputs  = perfInputs;
+systemData_2MW.perfOutputs = perfOutputs;
+systemData_2MW.ecoInputs   = ecoInputs;
+systemData_2MW.ecoOutputs  = ecoOutputs;
+save('outputFiles/systemData_2MW.mat');
+
+%% Plot results
+
+load('outputFiles/systemData_2MW.mat');
+
+figure()
+hold on
+grid on
+box on
+plot(systemData_2MW.perfInputs.vw_ref(1):systemData_2MW.perfOutputs.vw_h_ref_operRange(end),systemData_2MW.perfOutputs.P_e_avg,'-o');
+hold off
+
+% Eco results
+eco_displayResults(systemData_2MW.ecoInputs, systemData_2MW.ecoOutputs)
 
 %% Plotting saved results
 
@@ -124,27 +153,3 @@ plotResults_two_param_variation('WA', 'm^2', 'AR','-', designSpace_2MW_WA_AR_var
 load('outPutFiles/designSpace_2MW_crestFactor_P_rated_var.mat');
 % Plot
 plotResults_two_param_variation('crestFactor', '-', 'P_{rated}','W', designSpace_2MW_crestFactor_P_rated_var)
-
-%% Reference 2 MW system design
-clearvars
-
-perfInputs = loadInputs('inputFile_2MW_awePower.yml');
-
-[perfInputs, perfOutputs, ecoInputs, ecoOutputs] = evalDesignObjective(perfInputs);
-
-systemData_2MW.perfInputs  = perfInputs;
-systemData_2MW.perfOutputs = perfOutputs;
-systemData_2MW.ecoInputs   = ecoInputs;
-systemData_2MW.ecoOutputs  = ecoOutputs;
-save('outputFiles/systemData_2MW.mat');
-
-% Power curve
-figure()
-hold on
-grid on
-box on
-plot(perfOutputs.P_e_avg,'-x');
-hold off
-
-% Eco results
-eco_displayResults(ecoInputs, ecoOutputs)

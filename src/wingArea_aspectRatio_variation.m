@@ -1,4 +1,4 @@
-function [designSpace] = wingArea_aspectRatio_variation(WA_values, AR_values, inputs)
+function [designSpace] = wingArea_aspectRatio_variation(WA_values, AR_values, inputs, WL_max)
 
   % Initialize structure array to store design space results
   designSpace = struct([]);
@@ -16,7 +16,7 @@ function [designSpace] = wingArea_aspectRatio_variation(WA_values, AR_values, in
       inputs.AR = AR_values(j);
 
       % Dependent changes in inputs
-      inputs.Ft_max = inputs.S * 3000; %[N]
+      inputs.Ft_max = inputs.S * WL_max; %[N]
 
       % Save parameter values
       designSpace(counter).WA_value = WA_values(i);

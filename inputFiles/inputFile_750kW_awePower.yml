@@ -1,7 +1,7 @@
 name: 'inputSheet_750kW_scale'  # Input file name
 
 # Model Settings
-numDeltaLelems: 5  # Number of stroke length elements [num]
+numDeltaLelems: 4  # Number of stroke length elements [num]
 FgToggle: 1  # Gravity toggle: 1 = True,  0 = False
 vertWindProfile: 0  # Vertical wind profile: 0 = Modelled, 1 = From dataset
 
@@ -24,7 +24,7 @@ windProfile_vw: 'v_windDataset_Cabauw'
 # System Parameters
 S: 80  # Wing surface area [m^2]
 AR: 14  # Aspect ratio [-]
-P_ratedElec: 750e3  # Rated electrical power [W]
+P_ratedElec: 750000  # Rated electrical power [W]
 massOverride: 0  # Mass override toggle
 kiteMass: 600  # (Overridden) Kite mass [kg]
 crestFactor_power: 2  # Peak mechanical to electric cycle power factor [-]

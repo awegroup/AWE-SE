@@ -27,8 +27,8 @@ function inp = eco_system_inputs_awePower(inputs, processedOutputs)
   inp.kite.structure.m            = processedOutputs.m_k; % kg
   inp.kite.structure.A            = inputs.S; % m^2
   inp.kite.structure.f_repl       = 0; % /year
-  inp.kite.obGen.P                = 1e3; % W
-  inp.kite.obBatt.E               = inp.kite.obGen.P/1e3; % kWh
+  inp.kite.obGen.P                = 0; % 1e3; % W
+  inp.kite.obBatt.E               = 0; % inp.kite.obGen.P/1e3; % kWh
   
   % Tether
   inp.tether.d      = processedOutputs.Dia_te; % m
@@ -49,7 +49,7 @@ function inp = eco_system_inputs_awePower(inputs, processedOutputs)
   inp.gStation.ultracap.E_rated = 1.1*max(processedOutputs.storageExchange)/1e3; % kWh % 10% oversizing safety factor
   inp.gStation.ultracap.E_ex    = processedOutputs.storageExchange./1e3; % kWh
   inp.gStation.ultracap.f_repl  = -1; % /year
-  inp.gStation.batt.E_rated     = max((processedOutputs.P_m_avg+processedOutputs.P_m_i))/1e3; % kWh
+  inp.gStation.batt.E_rated     = 1.1*max((processedOutputs.P_m_avg+processedOutputs.P_m_i))/1e3; % kWh 10% oversizing for SoC limits
   inp.gStation.batt.E_ex        = processedOutputs.storageExchange./1e3; % kWh
   inp.gStation.batt.f_repl      = -1; % /year
   inp.gStation.hydAccum.E_rated = inp.gStation.ultracap.E_rated ;  % kWh

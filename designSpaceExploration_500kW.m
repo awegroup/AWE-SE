@@ -64,12 +64,15 @@ clearvars
 % Load input file
 inputs = loadInputs('inputFile_500kW_awePower.yml');
 
+% Fixed WL
+WL_max = 3e3;
+
 % Define the range for wing area and aspect ratio
 WA_values = [50, 60, 70]; % m^2
-AR_values = [10, 12, 14, 16]; % -
+AR_values = [12, 14, 16]; % -
 
 % Evaluate design space
-[designSpace_500kW_WA_AR_var] = wingArea_aspectRatio_variation(WA_values, AR_values, inputs);
+[designSpace_500kW_WA_AR_var] = wingArea_aspectRatio_variation(WA_values, AR_values, inputs, WL_max);
 
 % Save design space results
 save('outPutFiles/designSpace_500kW_WA_AR_var.mat','designSpace_500kW_WA_AR_var');
@@ -102,6 +105,29 @@ load('outPutFiles/designSpace_500kW_crestFactor_P_rated_var.mat');
 % Plot
 plotResults_two_param_variation('crestFactor', '-', 'P_{rated}','W', designSpace_500kW_crestFactor_P_rated_var)
 
+%% Reference 500 kW system design
+clearvars
+perfInputs = loadInputs('inputFile_500kW_awePower.yml');
+
+[perfInputs, perfOutputs, ecoInputs, ecoOutputs] = evalDesignObjective(perfInputs);
+
+systemData_500kW.perfInputs  = perfInputs;
+systemData_500kW.perfOutputs = perfOutputs;
+systemData_500kW.ecoInputs   = ecoInputs;
+systemData_500kW.ecoOutputs  = ecoOutputs;
+save('outputFiles/systemData_500kW.mat');
+
+%% Power curve
+figure()
+hold on
+grid on
+box on
+plot(perfOutputs.P_e_avg,'-x');
+hold off
+
+% Eco results
+eco_displayResults(ecoInputs, ecoOutputs)
+
 %% Plotting saved results
 
 % Load saved design space results
@@ -123,29 +149,5 @@ plotResults_two_param_variation('WA', 'm^2', 'AR','-', designSpace_500kW_WA_AR_v
 load('outPutFiles/designSpace_500kW_crestFactor_P_rated_var.mat');
 % Plot
 plotResults_two_param_variation('crestFactor', '-', 'P_{rated}','W', designSpace_500kW_crestFactor_P_rated_var)
-
-%% Reference 500 kW system design
-clearvars
-perfInputs = loadInputs('inputFile_500kW_awePower.yml');
-
-[perfInputs, perfOutputs, ecoInputs, ecoOutputs] = evalDesignObjective(perfInputs);
-
-systemData_500kW.perfInputs  = perfInputs;
-systemData_500kW.perfOutputs = perfOutputs;
-systemData_500kW.ecoInputs   = ecoInputs;
-systemData_500kW.ecoOutputs  = ecoOutputs;
-save('outputFiles/systemData_500kW.mat');
-
-% Power curve
-figure()
-hold on
-grid on
-box on
-plot(perfOutputs.P_e_avg,'-x');
-hold off
-
-% Eco results
-eco_displayResults(ecoInputs, ecoOutputs)
-
 
 

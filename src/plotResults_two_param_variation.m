@@ -52,7 +52,7 @@ end
 figure;
 [values1_grid, values2_grid] = meshgrid(values1, values2);
 contourf(values1_grid, values2_grid, LCoE'); 
-% caxis([130 180]); % Set the color bar limits
+% caxis([140 280]); % Set the color bar limits
 colormap("parula")
 c = colorbar;
 c.Label.String = 'LCoE (€/MWh)';

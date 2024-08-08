@@ -64,12 +64,15 @@ clearvars
 % Load input file
 inputs = loadInputs('inputFile_750kW_awePower.yml');
 
+% Fixed WL
+WL_max = 3e3;
+
 % Define the range for wing area and aspect ratio
 WA_values = [70, 80, 90]; % m^2
 AR_values = [10, 12, 14, 16]; % -
 
 % Evaluate design space
-[designSpace_750kW_WA_AR_var] = wingArea_aspectRatio_variation(WA_values, AR_values, inputs);
+[designSpace_750kW_WA_AR_var] = wingArea_aspectRatio_variation(WA_values, AR_values, inputs, WL_max);
 
 % Save design space results
 save('outPutFiles/designSpace_750kW_WA_AR_var.mat','designSpace_750kW_WA_AR_var');
@@ -87,7 +90,7 @@ clearvars
 inputs = loadInputs('inputFile_750kW_awePower.yml');
 
 % Define the range for wing area and aspect ratio
-crestFactor_values = [1, 1.5, 2, 2.5]; % -
+crestFactor_values = [1.5, 2, 2.5]; % -
 P_rated_values   = [650e3, 750e3, 850e3]; % W
 
 % Evaluate design space
@@ -101,6 +104,29 @@ load('outPutFiles/designSpace_750kW_crestFactor_P_rated_var.mat');
 
 % Plot
 plotResults_two_param_variation('crestFactor', '-', 'P_{rated}','W', designSpace_750kW_crestFactor_P_rated_var)
+
+%% Reference 750 kW system design
+clearvars
+perfInputs = loadInputs('inputFile_750kW_awePower.yml');
+
+[perfInputs, perfOutputs, ecoInputs, ecoOutputs] = evalDesignObjective(perfInputs);
+
+systemData_750kW.perfInputs  = perfInputs;
+systemData_750kW.perfOutputs = perfOutputs;
+systemData_750kW.ecoInputs   = ecoInputs;
+systemData_750kW.ecoOutputs  = ecoOutputs;
+save('outputFiles/systemData_750kW.mat');
+
+%% Power curve
+figure()
+hold on
+grid on
+box on
+plot(perfOutputs.P_e_avg,'-x');
+hold off
+
+% Eco results
+eco_displayResults(ecoInputs, ecoOutputs)
 
 %% Plotting saved results
 
@@ -123,26 +149,3 @@ plotResults_two_param_variation('WA', 'm^2', 'AR','-', designSpace_750kW_WA_AR_v
 load('outPutFiles/designSpace_750kW_crestFactor_P_rated_var.mat');
 % Plot
 plotResults_two_param_variation('crestFactor', '-', 'P_{rated}','W', designSpace_750kW_crestFactor_P_rated_var)
-
-%% Reference 750 kW system design
-clearvars
-perfInputs = loadInputs('inputFile_750kW_awePower.yml');
-
-[perfInputs, perfOutputs, ecoInputs, ecoOutputs] = evalDesignObjective(perfInputs);
-
-systemData_750kW.perfInputs  = perfInputs;
-systemData_750kW.perfOutputs = perfOutputs;
-systemData_750kW.ecoInputs   = ecoInputs;
-systemData_750kW.ecoOutputs  = ecoOutputs;
-save('outputFiles/systemData_750kW.mat');
-
-% Power curve
-figure()
-hold on
-grid on
-box on
-plot(perfOutputs.P_e_avg,'-x');
-hold off
-
-% Eco results
-eco_displayResults(ecoInputs, ecoOutputs)
