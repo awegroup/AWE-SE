@@ -1,4 +1,4 @@
-function [designSpace] = wingArea_crestFactor_variation(WA_values, crestFactor_values, inputs)
+function [designSpace] = wingArea_crestFactor_variation(WA_values, crestFactor_values, inputs, WL_max)
 
   % Initialize structure array to store design space results
   designSpace = struct([]);
@@ -13,7 +13,7 @@ function [designSpace] = wingArea_crestFactor_variation(WA_values, crestFactor_v
 
       % Update inputs
       inputs.S                 = WA_values(i); % m^2
-      inputs.Ft_max            = inputs.S * 3000; % N
+      inputs.Ft_max            = inputs.S * WL_max; % N
       inputs.crestFactor_power = crestFactor_values(j);
 
       % Save parameter values

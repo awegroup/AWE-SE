@@ -15,7 +15,8 @@ num_values2 = length(values2);
 
 % Create a figure for power curves
 figure;
-hold on;
+hold on
+% set(gcf, 'Units', 'centimeters', 'Position', [4, 4, 10, 7]); 
 box on;
 for i = 1:length(designSpace)
     % Extract values for the current combination
@@ -49,22 +50,24 @@ for i = 1:length(designSpace)
 end
 
 % Create a figure for LCoE contours
-figure;
+figure();
+set(gcf, 'Units', 'centimeters', 'Position', [2, 2, 10, 7]); 
 [values1_grid, values2_grid] = meshgrid(values1, values2);
 contourf(values1_grid, values2_grid, LCoE'); 
-% caxis([140 280]); % Set the color bar limits
-colormap("parula")
+% caxis([140 230]); % Set the color bar limits
+% caxis([170 240]); % Set the color bar limits
+colormap("turbo")
 c = colorbar;
+c.FontSize = 9;
 c.Label.String = 'LCoE (€/MWh)';
 xlabel(sprintf('%s (%s)', name1, unit1));
 ylabel(sprintf('%s (%s)', name2, unit2));
-title('LCoE contours');
-grid on;
+% title('LCoE contours');
 
 % Add contour labels
 hold on;
 [C, h] = contour(values1_grid, values2_grid, LCoE', 'LineColor', 'k');
-clabel(C, h, 'FontSize', 10, 'Color', 'k');
+clabel(C, h, 'FontSize', 8, 'Color', 'w');
 
 % Find the minimum LCoE value and its corresponding indices
 [min_LCoE, min_idx] = min(LCoE(:));
@@ -76,8 +79,8 @@ optimal_value2 = values2(optimal_idx2);
 
 % Mark the minimum LCoE value on the contour plot
 hold on;
-plot(values1(optimal_idx1), values2(optimal_idx2), 'kx', 'MarkerSize', 5, 'LineWidth', 1.5);
-text(values1(optimal_idx1), values2(optimal_idx2), sprintf('%.0f', round(min_LCoE)), 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'left', 'Color', 'k');
+plot(values1(optimal_idx1), values2(optimal_idx2), 'wx', 'MarkerSize', 5, 'LineWidth', 1);
+text(values1(optimal_idx1), values2(optimal_idx2), sprintf('%.0f', round(min_LCoE)), 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'left', 'Color', 'w','FontSize', 10);
 hold off
 
 % Display the optimal combination

@@ -9,15 +9,15 @@ function inp = eco_system_inputs_awePower(inputs, processedOutputs)
   eco_settings.wing             = 'fixed';  % fixed || soft
   
   % Wind conditions
-  atm.k = 2;
-  atm.A = 8/(gamma(1+1/atm.k));
+  atm.k = 2; % Weibull shape parameter
+  atm.A = 8.5/(gamma(1+1/atm.k)); % Mean wind speed of 8m/s at 100m height
   
   % Business related quantities
   inp.business.N_y     = 25; % project years
-  inp.business.r_d     = 0.08; % cost of debt
-  inp.business.r_e     = 0.12; % cost of equity
-  inp.business.TaxRate = 0.25; % Tax rate (25%)
-  inp.business.DtoE    = 70/30; % Debt-Equity-ratio      
+  inp.business.r_d     = 0.10; % cost of debt
+  inp.business.r_e     = 0.10; % cost of equity
+  inp.business.TaxRate = 0; % Tax rate (25%)
+  inp.business.DtoE    = 1; % Debt-Equity-ratio      
                           
   % Wind resources
   inp.atm.wind_range = inputs.vw_ref(1):processedOutputs.vw_h_ref_operRange(end); % m/s

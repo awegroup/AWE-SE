@@ -11,51 +11,73 @@ addpath(genpath([pwd '/AWE-Eco']));
 addpath(genpath([pwd '/inputFiles']));
 addpath(genpath([pwd '/outputFiles']));
 addpath(genpath([pwd '/src']));
+addpath(genpath([pwd '/lib']));
 
-%% Load system data
+%% Load Base case
+load('outputFiles/systemData_100kW_baseCase.mat');
+load('outputFiles/systemData_500kW_baseCase.mat');
+load('outputFiles/systemData_1000kW_baseCase.mat');
+load('outputFiles/systemData_2000kW_baseCase.mat');
 
-load('outputFiles/systemData_100kW.mat');
-load('outputFiles/systemData_250kW.mat');
-load('outputFiles/systemData_500kW.mat');
-load('outputFiles/systemData_750kW.mat');
-load('outputFiles/systemData_1MW.mat');
-load('outputFiles/systemData_2MW.mat');
+%% 
 
-%% 100,500,1000,2000 kW
+%%
+
+
+%% Plots
 
 systemSizes = [100, 500, 1000, 2000];
 
 LCoE = [systemData_100kW.ecoOutputs.metrics.LCoE, ...
         systemData_500kW.ecoOutputs.metrics.LCoE, ...
-        systemData_1MW.ecoOutputs.metrics.LCoE, ...
-        systemData_2MW.ecoOutputs.metrics.LCoE];
+        systemData_1000kW.ecoOutputs.metrics.LCoE, ...
+        systemData_2000kW.ecoOutputs.metrics.LCoE];
 
 CF   = [systemData_100kW.ecoOutputs.metrics.CF, ...
         systemData_500kW.ecoOutputs.metrics.CF, ...
-        systemData_1MW.ecoOutputs.metrics.CF, ...
-        systemData_2MW.ecoOutputs.metrics.CF];
+        systemData_1000kW.ecoOutputs.metrics.CF, ...
+        systemData_2000kW.ecoOutputs.metrics.CF];
 
 WASP = [systemData_100kW.perfInputs.P_ratedElec/systemData_100kW.perfInputs.S, ...
         systemData_500kW.perfInputs.P_ratedElec/systemData_500kW.perfInputs.S, ...
-        systemData_1MW.perfInputs.P_ratedElec/systemData_1MW.perfInputs.S, ...
-        systemData_2MW.perfInputs.P_ratedElec/systemData_2MW.perfInputs.S];
+        systemData_1000kW.perfInputs.P_ratedElec/systemData_1000kW.perfInputs.S, ...
+        systemData_2000kW.perfInputs.P_ratedElec/systemData_2000kW.perfInputs.S];
 
-figure()
+% Power curves
+figure('units','inch','Position', [1 1 3.5 2.2])
+hold on
+grid on
+box on
+plot(systemData_100kW.perfInputs.vw_ref(1):systemData_100kW.perfOutputs.vw_h_ref_operRange(end), ...
+    systemData_100kW.perfOutputs.P_e_avg./1e3,'-o', 'MarkerSize',3, 'LineWidth',1);
+plot(systemData_500kW.perfInputs.vw_ref(1):systemData_500kW.perfOutputs.vw_h_ref_operRange(end), ...
+    systemData_500kW.perfOutputs.P_e_avg./1e3,'-o', 'MarkerSize',3, 'LineWidth',1);
+plot(systemData_1000kW.perfInputs.vw_ref(1):systemData_1000kW.perfOutputs.vw_h_ref_operRange(end), ...
+    systemData_1000kW.perfOutputs.P_e_avg./1e3,'-o', 'MarkerSize',3, 'LineWidth',1);
+plot(systemData_2000kW.perfInputs.vw_ref(1):systemData_2000kW.perfOutputs.vw_h_ref_operRange(end), ...
+    systemData_2000kW.perfOutputs.P_e_avg./1e3,'-o', 'MarkerSize',3, 'LineWidth',1);
+xlabel('Wind speed at 100 m (m/s)');
+ylabel('Power (kW)');
+hold off
+
+% LCoE and CF
+figure('units','inch','Position', [5 1 3.5 2.2])
 hold on
 grid on
 box on
 % Set the x-axis ticks
 xticks([100, 500, 1000, 1500, 2000]);
 yyaxis left
-plot(systemSizes, LCoE, '-o', 'linewidth', 1 ,'markersize', 5);
+plot(systemSizes, LCoE, '-o', 'linewidth', 1 ,'markersize', 4);
 ylabel('LCoE (€/MWh)');
 yyaxis right
-plot(systemSizes, CF, '-s', 'linewidth', 1 , 'markersize', 5);
+plot(systemSizes, CF, '-x', 'linewidth', 1 , 'markersize', 4);
 ylabel('Capacity factor (-)');
 xlabel('System size (kW)');
 hold off
 
-figure()
+% WASP
+figure('units','inch','Position', [9 1 3.5 2.2])
 hold on
 grid on
 box on
@@ -64,52 +86,63 @@ xticks([100, 500, 1000, 1500, 2000]);
 plot(systemSizes, WASP, '-s', 'linewidth', 1 , 'markersize', 5);
 ylabel('WASP (W/m^2)');
 xlabel('System size (kW)');
-hold off
+hold off  
+
+% Design matrix table
+kW100 = [systemData_100kW.perfInputs.P_ratedElec/1e3, ...
+         systemData_100kW.perfInputs.S,...
+         systemData_100kW.perfInputs.Ft_max/systemData_100kW.perfInputs.S,...
+         systemData_100kW.perfInputs.Te_matStrength/1e9,...
+         systemData_100kW.perfInputs.AR,...
+         systemData_100kW.perfInputs.crestFactor_power];
+kW500 = [systemData_500kW.perfInputs.P_ratedElec/1e3, ...
+         systemData_500kW.perfInputs.S,...
+         systemData_500kW.perfInputs.Ft_max/systemData_500kW.perfInputs.S,...
+         systemData_500kW.perfInputs.Te_matStrength/1e9,...
+         systemData_500kW.perfInputs.AR,...
+         systemData_500kW.perfInputs.crestFactor_power];
+kW1000 = [systemData_1000kW.perfInputs.P_ratedElec/1e3, ...
+         systemData_1000kW.perfInputs.S,...
+         systemData_1000kW.perfInputs.Ft_max/systemData_1000kW.perfInputs.S,...
+         systemData_1000kW.perfInputs.Te_matStrength/1e9,...
+         systemData_1000kW.perfInputs.AR,...
+         systemData_1000kW.perfInputs.crestFactor_power];
+kW2000 = [systemData_2000kW.perfInputs.P_ratedElec/1e3, ...
+         systemData_2000kW.perfInputs.S,...
+         systemData_2000kW.perfInputs.Ft_max/systemData_2000kW.perfInputs.S,...
+         systemData_2000kW.perfInputs.Te_matStrength/1e9,...
+         systemData_2000kW.perfInputs.AR,...
+         systemData_2000kW.perfInputs.crestFactor_power];
+% Combine all data into one matrix
+data = [kW100; kW500; kW1000; kW2000];
+
+% Define column names
+columnNames = {'P_{rated}','S', 'Ft_max/S', 'Te_matStrength (GPa)', 'AR', 'Crest Factor'};
+
+% Create the table with data for each attribute
+designMatrixTable = table(data(:,1), data(:,2), data(:,3), data(:,4), data(:,5), data(:,6), 'VariableNames', columnNames);
+
+% Display the table
+disp(designMatrixTable);
 
 
 
-
-%% 100, 250, 500, 750, 1000, 2000 kW
-% systemSizes = [100, 250, 500, 750, 1000, 2000];
+% % Spider plot
+% % Data Matrix
+% D1 = [20 14 2 0.3 2];
+% D2 = [60 14 3 0.4 2];
+% D3 = [100 14 3 0.4 2];
+% D4 = [140 14 4 0.5 2.5];
+% data = [D1; D2; D3; D4]; 
 % 
-% LCoE = [systemData_100kW.ecoOutputs.metrics.LCoE, systemData_250kW.ecoOutputs.metrics.LCoE, ...
-%         systemData_500kW.ecoOutputs.metrics.LCoE, systemData_750kW.ecoOutputs.metrics.LCoE, ...
-%         systemData_1MW.ecoOutputs.metrics.LCoE, systemData_2MW.ecoOutputs.metrics.LCoE];
+% axes_limits = [min(data(:,1)), min(data(:,2))-1, min(data(:,3)), min(data(:,4)), min(data(:,5)); 
+%                max(data(:,1)), max(data(:,2)), max(data(:,3)), max(data(:,4)), max(data(:,5))];
 % 
-% CF   = [systemData_100kW.ecoOutputs.metrics.CF, systemData_250kW.ecoOutputs.metrics.CF, ...
-%       systemData_500kW.ecoOutputs.metrics.CF, systemData_750kW.ecoOutputs.metrics.CF, ...
-%       systemData_1MW.ecoOutputs.metrics.CF, systemData_2MW.ecoOutputs.metrics.CF];
+% axis_labels = {'S (m^2)', 'AR (-)', 'W_{l,max} (kN/m^2)', 'σ_{t,max} (GPa)', 'P_{crest} (-)'};
 % 
-% WASP = [systemData_100kW.perfInputs.P_ratedElec/systemData_100kW.perfInputs.S, ...
-%         systemData_250kW.perfInputs.P_ratedElec/systemData_250kW.perfInputs.S, ...
-%         systemData_500kW.perfInputs.P_ratedElec/systemData_500kW.perfInputs.S, ...
-%         systemData_750kW.perfInputs.P_ratedElec/systemData_750kW.perfInputs.S, ...
-%         systemData_1MW.perfInputs.P_ratedElec/systemData_1MW.perfInputs.S, ...
-%         systemData_2MW.perfInputs.P_ratedElec/systemData_2MW.perfInputs.S];
-% 
-% figure()
+% % Spider Plot
+% figure;
 % hold on
-% grid on
-% box on
-% % Set the x-axis ticks
-% xticks([100, 250, 500, 750, 1000, 1250, 1500, 1750, 2000]);
-% yyaxis left
-% plot(systemSizes, LCoE, '-o', 'linewidth', 1 ,'markersize', 5);
-% ylabel('LCoE (€/MWh)');
-% yyaxis right
-% plot(systemSizes, CF, '-s', 'linewidth', 1 , 'markersize', 5);
-% ylabel('Capacity factor (-)');
-% xlabel('System size (kW)');
-% hold off
-% 
-% figure()
-% hold on
-% grid on
-% box on
-% % Set the x-axis ticks
-% xticks([100, 250, 500, 750, 1000, 1250, 1500, 1750, 2000]);
-% plot(systemSizes, WASP, '-s', 'linewidth', 1 , 'markersize', 5);
-% ylabel('WASP (W/m^2)');
-% xlabel('System size (kW)');
-% hold off
-
+% spider_plot(data, ...
+%     'AxesLimits', axes_limits,'AxesLabels',axis_labels); % Pass the calculated axis limits
+% title
