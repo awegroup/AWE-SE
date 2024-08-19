@@ -10,7 +10,7 @@ function inp = eco_system_inputs_awePower(inputs, processedOutputs)
   
   % Wind conditions
   atm.k = 2; % Weibull shape parameter
-  atm.A = 8.5/(gamma(1+1/atm.k)); % Mean wind speed of 8m/s at 100m height
+  atm.A = 8.5/(gamma(1+1/atm.k)); % Mean wind speed of 8.5m/s at 100m height
   
   % Business related quantities
   inp.business.N_y     = 25; % project years

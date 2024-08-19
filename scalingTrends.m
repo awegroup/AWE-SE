@@ -13,20 +13,81 @@ addpath(genpath([pwd '/outputFiles']));
 addpath(genpath([pwd '/src']));
 addpath(genpath([pwd '/lib']));
 
-%% Load Base case
+%% Load Base case scenario
 load('outputFiles/systemData_100kW_baseCase.mat');
 load('outputFiles/systemData_500kW_baseCase.mat');
 load('outputFiles/systemData_1000kW_baseCase.mat');
 load('outputFiles/systemData_2000kW_baseCase.mat');
 
-%% 
+LCoE_baseCase = [systemData_100kW.ecoOutputs.metrics.LCoE, ...
+        systemData_500kW.ecoOutputs.metrics.LCoE, ...
+        systemData_1000kW.ecoOutputs.metrics.LCoE, ...
+        systemData_2000kW.ecoOutputs.metrics.LCoE];
 
-%%
+%% Load Reduced kite mass scenario
+load('outputFiles/systemData_100kW_decr_mk.mat');
+load('outputFiles/systemData_500kW_decr_mk.mat');
+load('outputFiles/systemData_1000kW_decr_mk.mat');
+load('outputFiles/systemData_2000kW_decr_mk.mat');
 
+LCoE_decr_mk = [systemData_100kW.ecoOutputs.metrics.LCoE, ...
+        systemData_500kW.ecoOutputs.metrics.LCoE, ...
+        systemData_1000kW.ecoOutputs.metrics.LCoE, ...
+        systemData_2000kW.ecoOutputs.metrics.LCoE];
 
-%% Plots
+%% Load Increased discount rate scenario
+load('outputFiles/systemData_100kW_incr_r.mat');
+load('outputFiles/systemData_500kW_incr_r.mat');
+load('outputFiles/systemData_1000kW_incr_r.mat');
+load('outputFiles/systemData_2000kW_incr_r.mat');
 
+LCoE_decr_r = [systemData_100kW.ecoOutputs.metrics.LCoE, ...
+        systemData_500kW.ecoOutputs.metrics.LCoE, ...
+        systemData_1000kW.ecoOutputs.metrics.LCoE, ...
+        systemData_2000kW.ecoOutputs.metrics.LCoE];
+
+%% Load zero wind shear scenario
+load('outputFiles/systemData_100kW_0_windShear.mat');
+load('outputFiles/systemData_500kW_0_windShear.mat');
+load('outputFiles/systemData_1000kW_0_windShear.mat');
+load('outputFiles/systemData_2000kW_0_windShear.mat');
+
+LCoE_0_windShear = [systemData_100kW.ecoOutputs.metrics.LCoE, ...
+        systemData_500kW.ecoOutputs.metrics.LCoE, ...
+        systemData_1000kW.ecoOutputs.metrics.LCoE, ...
+        systemData_2000kW.ecoOutputs.metrics.LCoE];
+
+%% Load high wind zero shear scenario
+load('outputFiles/systemData_100kW_high_wind_0_shear.mat');
+load('outputFiles/systemData_500kW_high_wind_0_shear.mat');
+load('outputFiles/systemData_1000kW_high_wind_0_shear.mat');
+load('outputFiles/systemData_2000kW_high_wind_0_shear.mat');
+
+LCoE_high_wind_0_shear = [systemData_100kW.ecoOutputs.metrics.LCoE, ...
+        systemData_500kW.ecoOutputs.metrics.LCoE, ...
+        systemData_1000kW.ecoOutputs.metrics.LCoE, ...
+        systemData_2000kW.ecoOutputs.metrics.LCoE];
+
+%% LCoE comparison 
 systemSizes = [100, 500, 1000, 2000];
+
+figure()
+hold on
+box on
+grid on
+plot(systemSizes, LCoE_baseCase,'k-o', 'LineWidth',2,'MarkerSize',4);
+plot(systemSizes, LCoE_decr_mk,'-o', 'LineWidth',1,'MarkerSize',4);
+plot(systemSizes, LCoE_decr_r,'-o', 'LineWidth',1,'MarkerSize',4);
+plot(systemSizes, LCoE_0_windShear,'-o', 'LineWidth',1,'MarkerSize',4);
+plot(systemSizes, LCoE_high_wind_0_shear,'-o', 'LineWidth',1,'MarkerSize',4);
+legend('Base-case: r=10%, α=0.2, v_{w,mean}=8.5m/s', 'Reduced m_k by 50%', 'Increased r to 15%','α=0', 'α=0, v_{w,mean}=10m/s');
+ylabel('LCoE (€/MWh)');
+xticks([100, 500, 1000, 1500, 2000]);
+xlabel('System size (kW)');
+hold off
+
+
+%% Single scenario plots
 
 LCoE = [systemData_100kW.ecoOutputs.metrics.LCoE, ...
         systemData_500kW.ecoOutputs.metrics.LCoE, ...
