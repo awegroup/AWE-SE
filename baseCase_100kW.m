@@ -18,10 +18,10 @@ clearvars
 inputs = loadInputs('inputFile_100kW_baseCase.yml');
 
 % Define range for wing area 
-WA_values = [10, 20, 30, 40]; % m^2
+WA_values = [10, 20, 30]; % m^2
 
 % Define range for wing loading
-WL_values = [1e3, 2e3, 3e3, 4e3]; % N/m^2
+WL_values = [1e3, 2e3, 3e3]; % N/m^2
 
 % Evaluate design space
 [designSpace_100kW_WA_WL_var] = wingArea_wingLoading_variation(WA_values, WL_values, inputs);
@@ -45,7 +45,7 @@ inputs = loadInputs('inputFile_100kW_baseCase.yml');
 WL_values = [1e3, 2e3, 3e3]; % N/m^2
 
 % Define the range for sigma_t_max
-sigma_t_max_values = [2e8, 3e8, 4e8]; % Pa
+sigma_t_max_values = [3e8, 4e8, 5e8]; % Pa
 
 [designSpace_100kW_WL_sigma_t_var] = wingLoading_sigma_t_max_variation(WL_values, sigma_t_max_values, inputs);
 
@@ -69,7 +69,7 @@ WL_max = 2e3;
 
 % Define the range for wing area and aspect ratio
 WA_values = [10, 20, 30]; % m^2
-AR_values = [12, 14, 16]; % -
+AR_values = [8, 10, 12]; % -
 
 % Evaluate design space
 [designSpace_100kW_WA_AR_var] = wingArea_aspectRatio_variation(WA_values, AR_values, inputs, WL_max);

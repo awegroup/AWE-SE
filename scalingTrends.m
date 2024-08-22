@@ -89,6 +89,14 @@ hold off
 
 %% Single scenario plots
 
+systemSizes = [100, 500, 1000, 2000];
+
+% Load Base case scenario
+load('outputFiles/systemData_100kW_baseCase.mat');
+load('outputFiles/systemData_500kW_baseCase.mat');
+load('outputFiles/systemData_1000kW_baseCase.mat');
+load('outputFiles/systemData_2000kW_baseCase.mat');
+
 LCoE = [systemData_100kW.ecoOutputs.metrics.LCoE, ...
         systemData_500kW.ecoOutputs.metrics.LCoE, ...
         systemData_1000kW.ecoOutputs.metrics.LCoE, ...

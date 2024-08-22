@@ -21,7 +21,7 @@ clearvars
 inputs = loadInputs('inputFile_100kW_decr_mk.yml');
 
 % Define range for wing area 
-WA_values = [10, 20, 30]; % m^2
+WA_values = [20, 30, 40]; % m^2
 
 % Define range for wing loading
 WL_values = [1e3, 2e3, 3e3]; % N/m^2
@@ -71,8 +71,8 @@ inputs = loadInputs('inputFile_100kW_decr_mk.yml');
 WL_max = 2e3;
 
 % Define the range for wing area and aspect ratio
-WA_values = [10, 20, 30]; % m^2
-AR_values = [14, 16, 18]; % -
+WA_values = [20, 30, 40]; % m^2
+AR_values = [8, 10, 12]; % -
 
 % Evaluate design space
 [designSpace_100kW_WA_AR_var] = wingArea_aspectRatio_variation(WA_values, AR_values, inputs, WL_max);
@@ -93,7 +93,7 @@ clearvars
 inputs = loadInputs('inputFile_100kW_decr_mk.yml');
 
 % Define the range for wing area and aspect ratio
-WA_values          = [10, 20, 30]; % m^2
+WA_values          = [20, 30, 40]; % m^2
 crestFactor_values = [1.5, 2, 2.5]; % -
 
 % Fixed WL
