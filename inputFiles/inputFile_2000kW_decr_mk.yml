@@ -23,15 +23,15 @@ windProfile_h: 'h_windDataset'
 windProfile_vw: 'v_windDataset_Cabauw'
 
 # System Parameters
-S: 130  # Wing surface area [m^2]
-AR: 14  # Aspect ratio [-]
+S: 160  # Wing surface area [m^2]
+AR: 10  # Aspect ratio [-]
 P_ratedElec: 2000000  # Rated electrical power [W]
 massOverride: 0  # Mass override toggle
 kiteMass: 600  # (Overridden) Kite mass [kg]
 crestFactor_power: 2  # Peak mechanical to electric cycle power factor [-]
 
 # Tether Parameters
-Ft_max: 650000  # Maximum tether force [N]
+Ft_max: 640000  # Maximum tether force [N]
 Ft_max_SF: 1.0  # Safety factor for maximum tether force
 maxTeLen: 4000  # Maximum tether length [m]
 maxHeight: 1000  # Maximum operational height [m]

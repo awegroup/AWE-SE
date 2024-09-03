@@ -48,7 +48,7 @@ inputs = loadInputs('inputFile_500kW_high_wind_0_shear.yml');
 WL_values = [2e3, 3e3, 4e3]; % N/m^2
 
 % Define the range for sigma_t_max
-sigma_t_max_values = [2e8, 3e8, 4e8]; % Pa
+sigma_t_max_values = [3e8, 4e8, 5e8]; % Pa
 
 [designSpace_500kW_WL_sigma_t_var] = wingLoading_sigma_t_max_variation(WL_values, sigma_t_max_values, inputs);
 
@@ -72,7 +72,7 @@ WL_max = 3e3;
 
 % Define the range for wing area and aspect ratio
 WA_values = [50, 60, 70]; % m^2
-AR_values = [10, 12, 14]; % -
+AR_values = [6, 8, 10]; % -
 
 % Evaluate design space
 [designSpace_500kW_WA_AR_var] = wingArea_aspectRatio_variation(WA_values, AR_values, inputs, WL_max);

@@ -72,7 +72,7 @@ WL_max = 3e3;
 
 % Define the range for wing area and aspect ratio
 WA_values = [50, 60, 70]; % m^2
-AR_values = [12, 14, 16]; % -
+AR_values = [8, 10, 12]; % -
 
 % Evaluate design space
 [designSpace_500kW_WA_AR_var] = wingArea_aspectRatio_variation(WA_values, AR_values, inputs, WL_max);

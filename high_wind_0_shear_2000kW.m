@@ -21,10 +21,10 @@ clearvars
 inputs = loadInputs('inputFile_2000kW_high_wind_0_shear.yml');
 
 % Define range for wing area 
-WA_values = [120, 130, 140]; % m^2
+WA_values = [150, 160, 170]; % m^2
 
 % Define range for wing loading
-WL_values = [4e3, 5e3, 6e3]; % N/m^2
+WL_values = [3e3, 4e3, 5e3]; % N/m^2
 
 % Evaluate design space
 [designSpace_2000kW_WA_WL_var] = wingArea_wingLoading_variation(WA_values, WL_values, inputs);
@@ -45,7 +45,7 @@ clearvars
 inputs = loadInputs('inputFile_2000kW_high_wind_0_shear.yml');
 
 % Define range for wing loading
-WL_values = [4e3, 5e3, 6e3]; % N/m^2
+WL_values = [3e3, 4e3, 5e3]; % N/m^2
 
 % Define the range for sigma_t_max
 sigma_t_max_values = [3e8, 4e8, 5e8]; % Pa
@@ -68,11 +68,11 @@ clearvars
 inputs = loadInputs('inputFile_2000kW_high_wind_0_shear.yml');
 
 % Fixed WL
-WL_max = 5e3;
+WL_max = 4e3;
 
 % Define the range for wing area and aspect ratio
-WA_values = [120, 130, 140]; % m^2
-AR_values = [10, 12, 14]; % -
+WA_values = [150, 160, 170]; % m^2
+AR_values = [8, 10, 12]; % -
 
 % Evaluate design space
 [designSpace_2000kW_WA_AR_var] = wingArea_aspectRatio_variation(WA_values, AR_values, inputs, WL_max);
@@ -94,11 +94,11 @@ clearvars
 inputs = loadInputs('inputFile_2000kW_high_wind_0_shear.yml');
 
 % Define the range for wing area and aspect ratio
-WA_values          = [120, 130, 140]; % m^2
+WA_values          = [150, 160, 170]; % m^2
 crestFactor_values = [1.5, 2, 2.5]; % -
 
 % Fixed WL
-WL_max = 5e3;
+WL_max = 4e3;
 
 % Evaluate design space
 [designSpace_2000kW_WA_crestFactor_var] = wingArea_crestFactor_variation(WA_values, crestFactor_values, inputs, WL_max);

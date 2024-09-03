@@ -68,6 +68,18 @@ LCoE_high_wind_0_shear = [systemData_100kW.ecoOutputs.metrics.LCoE, ...
         systemData_1000kW.ecoOutputs.metrics.LCoE, ...
         systemData_2000kW.ecoOutputs.metrics.LCoE];
 
+%% No storage scenario
+load('outputFiles/systemData_100kW_noStorage.mat');
+load('outputFiles/systemData_500kW_noStorage.mat');
+load('outputFiles/systemData_1000kW_noStorage.mat');
+load('outputFiles/systemData_2000kW_noStorage.mat');
+
+LCoE_noStorage = [systemData_100kW.ecoOutputs.metrics.LCoE, ...
+        systemData_500kW.ecoOutputs.metrics.LCoE, ...
+        systemData_1000kW.ecoOutputs.metrics.LCoE, ...
+        systemData_2000kW.ecoOutputs.metrics.LCoE];
+
+
 %% LCoE comparison 
 systemSizes = [100, 500, 1000, 2000];
 
@@ -80,7 +92,8 @@ plot(systemSizes, LCoE_decr_mk,'-o', 'LineWidth',1,'MarkerSize',4);
 plot(systemSizes, LCoE_decr_r,'-o', 'LineWidth',1,'MarkerSize',4);
 plot(systemSizes, LCoE_0_windShear,'-o', 'LineWidth',1,'MarkerSize',4);
 plot(systemSizes, LCoE_high_wind_0_shear,'-o', 'LineWidth',1,'MarkerSize',4);
-legend('Base-case: r=10%, α=0.2, v_{w,mean}=8.5m/s', 'Reduced m_k by 50%', 'Increased r to 15%','α=0', 'α=0, v_{w,mean}=10m/s');
+plot(systemSizes, LCoE_noStorage,'-o', 'LineWidth',1,'MarkerSize',4);
+legend('Base-case: r=10%, α=0.2, v_{w,mean}=8.5m/s', 'Reduced m_k by 50%', 'Increased r to 15%','α=0', 'α=0, v_{w,mean}=10m/s', 'No Storage');
 ylabel('LCoE (€/MWh)');
 xticks([100, 500, 1000, 1500, 2000]);
 xlabel('System size (kW)');
