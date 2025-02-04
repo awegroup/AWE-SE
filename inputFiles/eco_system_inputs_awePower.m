@@ -9,26 +9,27 @@ function inp = eco_system_inputs_awePower(inputs, processedOutputs)
   eco_settings.wing             = 'fixed';  % fixed || soft
   
   % Wind conditions
-  atm.k = 2;
-  atm.A = 8/(gamma(1+1/atm.k));
-  
+  atm.k = 2; % Weibull shape parameter
+  atm.A = 8.5/(gamma(1+1/atm.k)); % Mean wind speed of 8.5m/s at 100m height
+%   atm.A = 8;
+
   % Business related quantities
   inp.business.N_y     = 25; % project years
-  inp.business.r_d     = 0.08; % cost of debt
-  inp.business.r_e     = 0.12; % cost of equity
-  inp.business.TaxRate = 0.25; % Tax rate (25%)
-  inp.business.DtoE    = 70/30; % Debt-Equity-ratio      
+  inp.business.r_d     = 0.10; % cost of debt
+  inp.business.r_e     = 0.10; % cost of equity
+  inp.business.TaxRate = 0; % Tax rate (25%)
+  inp.business.DtoE    = 1; % Debt-Equity-ratio      
                           
   % Wind resources
-  inp.atm.wind_range = inputs.vw_ref(1):processedOutputs.vw_100m_operRange(end); % m/s
+  inp.atm.wind_range = inputs.vw_ref(1):processedOutputs.vw_h_ref_operRange(end); % m/s
   inp.atm.gw         = atm.k/atm.A *(inp.atm.wind_range/atm.A).^(atm.k-1).*exp(-(inp.atm.wind_range/atm.A).^atm.k); % Wind distribution
   
   % Kite
   inp.kite.structure.m            = processedOutputs.m_k; % kg
   inp.kite.structure.A            = inputs.S; % m^2
   inp.kite.structure.f_repl       = 0; % /year
-  inp.kite.obGen.P                = 1e3; % W
-  inp.kite.obBatt.E               = inp.kite.obGen.P/1e3; % kWh
+  inp.kite.obGen.P                = 0; % 1e3; % W
+  inp.kite.obBatt.E               = 0; % inp.kite.obGen.P/1e3; % kWh
   
   % Tether
   inp.tether.d      = processedOutputs.Dia_te; % m
@@ -38,8 +39,8 @@ function inp = eco_system_inputs_awePower(inputs, processedOutputs)
   
   % System
   inp.system.F_t       = mean(processedOutputs.Ft,2)'; % N
-%   inp.system.P_m_peak  = inputs.peakM2E_F * inputs.P_ratedElec; % W
-  inp.system.P_m_peak  = max(processedOutputs.P_m_o); % W
+  inp.system.P_m_peak  = inputs.crestFactor_power * inputs.P_ratedElec; % W
+%   inp.system.P_m_peak  = max(processedOutputs.P_m_o); % W
   inp.system.P_e_avg   = processedOutputs.P_e_avg; % W
 %   inp.system.P_e_rated = inputs.P_ratedElec; % W
   inp.system.P_e_rated = max(processedOutputs.P_e_avg); % W
@@ -49,7 +50,7 @@ function inp = eco_system_inputs_awePower(inputs, processedOutputs)
   inp.gStation.ultracap.E_rated = 1.1*max(processedOutputs.storageExchange)/1e3; % kWh % 10% oversizing safety factor
   inp.gStation.ultracap.E_ex    = processedOutputs.storageExchange./1e3; % kWh
   inp.gStation.ultracap.f_repl  = -1; % /year
-  inp.gStation.batt.E_rated     = max((processedOutputs.P_m_avg+processedOutputs.P_m_i))/1e3; % kWh
+  inp.gStation.batt.E_rated     = 1.1*max((processedOutputs.P_m_avg+processedOutputs.P_m_i))/1e3; % kWh 10% oversizing for SoC limits
   inp.gStation.batt.E_ex        = processedOutputs.storageExchange./1e3; % kWh
   inp.gStation.batt.f_repl      = -1; % /year
   inp.gStation.hydAccum.E_rated = inp.gStation.ultracap.E_rated ;  % kWh
