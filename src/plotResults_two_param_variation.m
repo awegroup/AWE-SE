@@ -13,32 +13,58 @@ values2 = unique([designSpace.(fieldNames{2})]);
 num_values1 = length(values1);
 num_values2 = length(values2);
 
+<<<<<<< Updated upstream
 % Create a figure for power curves
 figure;
 hold on
 % set(gcf, 'Units', 'centimeters', 'Position', [4, 4, 10, 7]); 
 box on;
 for i = 1:length(designSpace)
+=======
+%% Create a figure for power curves
+figure;
+hold on
+set(gcf, 'Units', 'centimeters', 'Position', [15, 8, 10, 7]); 
+box on;
+for i = [1,3,5,7,9] %1:length(designSpace)
+>>>>>>> Stashed changes
     % Extract values for the current combination
     value1 = designSpace(i).(fieldNames{1});
     value2 = designSpace(i).(fieldNames{2});
     
     % Extract power curve
+<<<<<<< Updated upstream
     P_e_avg = designSpace(i).perfOutputs.P_e_avg;
     
     % Generate a label for the legend
     label = sprintf('%s: %.1f (%s), %s: %.1f (%s)', name1, value1, unit1, name2, value2, unit2);
+=======
+    P_e_avg = designSpace(i).perfOutputs.P_e_avg/1e3;
+    
+    % Generate a label for the legend
+%     label = sprintf('%s: %.1f (%s), %s: %.1f (%s)', name1, value1, unit1, name2, value2, unit2);
+    label = sprintf('%s: %.f, %s: %.1f', name1, value1, name2, value2);
+>>>>>>> Stashed changes
     
     % Plot the power curve
     plot(P_e_avg, 'DisplayName', label);
 end
 hold off;
+<<<<<<< Updated upstream
 xlabel('Wind speed (m/s)');
 ylabel('Power (W)');
 legend('show');
 grid on;
 
 % Prepare data for LCoE contour plot
+=======
+xlabel('Wind speed at 100 m (m/s)');
+ylabel('Power (kW)');
+legend('show');
+grid on;
+
+%% Prepare data for LCoE contour plot
+>>>>>>> Stashed changes
 LCoE = zeros(num_values1, num_values2);
 for i = 1:length(designSpace)
     % Find indices for the current combination
@@ -49,6 +75,7 @@ for i = 1:length(designSpace)
     LCoE(idx1, idx2) = designSpace(i).ecoOutputs.metrics.LCoE;
 end
 
+<<<<<<< Updated upstream
 % Create a figure for LCoE contours
 figure();
 set(gcf, 'Units', 'centimeters', 'Position', [2, 2, 10, 7]); 
@@ -68,6 +95,27 @@ ylabel(sprintf('%s (%s)', name2, unit2));
 hold on;
 [C, h] = contour(values1_grid, values2_grid, LCoE', 'LineColor', 'k');
 clabel(C, h, 'FontSize', 8, 'Color', 'w');
+=======
+ %% Create a figure for LCoE contours
+figure();
+set(gcf, 'Units', 'centimeters', 'Position', [2, 2, 10, 7]); 
+[values1_grid, values2_grid] = meshgrid(values1, values2);
+contourf(values1_grid, values2_grid, LCoE', 'LineStyle', 'none');  % This creates the filled contour plot
+shading interp  % Interpolates the color shading
+caxis([140 190]);  % Set the color bar limits
+colormap(turbo(12))  % Set the colormap to 'turbo' with 15 levels
+c = colorbar;  % Add the color bar
+c.FontSize = 9;
+c.Label.String = 'LCoE (€/MWh)';  % Label for the color bar
+
+xlabel(sprintf('%s (%s)', name1, unit1));  % Label for the x-axis
+ylabel(sprintf('%s (%s)', name2, unit2));  % Label for the y-axis
+
+% % Add contour labels
+% hold on;
+% [C, h] = contour(values1_grid, values2_grid, LCoE', 'LineColor', 'k');
+% clabel(C, h, 'FontSize', 8, 'Color', 'w');
+>>>>>>> Stashed changes
 
 % Find the minimum LCoE value and its corresponding indices
 [min_LCoE, min_idx] = min(LCoE(:));
@@ -79,11 +127,21 @@ optimal_value2 = values2(optimal_idx2);
 
 % Mark the minimum LCoE value on the contour plot
 hold on;
+<<<<<<< Updated upstream
 plot(values1(optimal_idx1), values2(optimal_idx2), 'wx', 'MarkerSize', 5, 'LineWidth', 1);
 text(values1(optimal_idx1), values2(optimal_idx2), sprintf('%.0f', round(min_LCoE)), 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'left', 'Color', 'w','FontSize', 10);
 hold off
 
 % Display the optimal combination
+=======
+plot(values1(optimal_idx1), values2(optimal_idx2), 'wx', 'MarkerSize', 5, 'LineWidth', 1);  % Add a white 'x' at the minimum point
+text(values1(optimal_idx1), values2(optimal_idx2), sprintf('%.0f', round(min_LCoE)), ...
+    'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'left', 'Color', 'w', 'FontSize', 10);  % Annotate the minimum point
+hold off;
+
+
+%% Display the optimal combination
+>>>>>>> Stashed changes
 fprintf('Optimal %s: %.2f %s\n', name1, optimal_value1, unit1);
 fprintf('Optimal %s: %.2f %s\n', name2, optimal_value2, unit2);
 fprintf('Minimum LCoE: %.2f €/MWh\n', min_LCoE);

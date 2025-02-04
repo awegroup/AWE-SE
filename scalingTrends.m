@@ -24,6 +24,14 @@ LCoE_baseCase = [systemData_100kW.ecoOutputs.metrics.LCoE, ...
         systemData_1000kW.ecoOutputs.metrics.LCoE, ...
         systemData_2000kW.ecoOutputs.metrics.LCoE];
 
+<<<<<<< Updated upstream
+=======
+CF_baseCase = [systemData_100kW.ecoOutputs.metrics.CF, ...
+        systemData_500kW.ecoOutputs.metrics.CF, ...
+        systemData_1000kW.ecoOutputs.metrics.CF, ...
+        systemData_2000kW.ecoOutputs.metrics.CF];
+
+>>>>>>> Stashed changes
 %% Load Reduced kite mass scenario
 load('outputFiles/systemData_100kW_decr_mk.mat');
 load('outputFiles/systemData_500kW_decr_mk.mat');
@@ -35,6 +43,31 @@ LCoE_decr_mk = [systemData_100kW.ecoOutputs.metrics.LCoE, ...
         systemData_1000kW.ecoOutputs.metrics.LCoE, ...
         systemData_2000kW.ecoOutputs.metrics.LCoE];
 
+<<<<<<< Updated upstream
+=======
+CF_decr_mk = [systemData_100kW.ecoOutputs.metrics.CF, ...
+        systemData_500kW.ecoOutputs.metrics.CF, ...
+        systemData_1000kW.ecoOutputs.metrics.CF, ...
+        systemData_2000kW.ecoOutputs.metrics.CF];
+    
+    %% No storage scenario
+load('outputFiles/systemData_100kW_noStorage.mat');
+load('outputFiles/systemData_500kW_noStorage.mat');
+load('outputFiles/systemData_1000kW_noStorage.mat');
+load('outputFiles/systemData_2000kW_noStorage.mat');
+
+LCoE_noStorage = [systemData_100kW.ecoOutputs.metrics.LCoE, ...
+        systemData_500kW.ecoOutputs.metrics.LCoE, ...
+        systemData_1000kW.ecoOutputs.metrics.LCoE, ...
+        systemData_2000kW.ecoOutputs.metrics.LCoE];
+
+CF_noStorage = [systemData_100kW.ecoOutputs.metrics.CF, ...
+        systemData_500kW.ecoOutputs.metrics.CF, ...
+        systemData_1000kW.ecoOutputs.metrics.CF, ...
+        systemData_2000kW.ecoOutputs.metrics.CF];
+
+
+>>>>>>> Stashed changes
 %% Load Increased discount rate scenario
 load('outputFiles/systemData_100kW_incr_r.mat');
 load('outputFiles/systemData_500kW_incr_r.mat');
@@ -46,6 +79,14 @@ LCoE_decr_r = [systemData_100kW.ecoOutputs.metrics.LCoE, ...
         systemData_1000kW.ecoOutputs.metrics.LCoE, ...
         systemData_2000kW.ecoOutputs.metrics.LCoE];
 
+<<<<<<< Updated upstream
+=======
+CF_decr_r = [systemData_100kW.ecoOutputs.metrics.CF, ...
+        systemData_500kW.ecoOutputs.metrics.CF, ...
+        systemData_1000kW.ecoOutputs.metrics.CF, ...
+        systemData_2000kW.ecoOutputs.metrics.CF];
+
+>>>>>>> Stashed changes
 %% Load zero wind shear scenario
 load('outputFiles/systemData_100kW_0_windShear.mat');
 load('outputFiles/systemData_500kW_0_windShear.mat');
@@ -57,6 +98,14 @@ LCoE_0_windShear = [systemData_100kW.ecoOutputs.metrics.LCoE, ...
         systemData_1000kW.ecoOutputs.metrics.LCoE, ...
         systemData_2000kW.ecoOutputs.metrics.LCoE];
 
+<<<<<<< Updated upstream
+=======
+CF_0_windShear = [systemData_100kW.ecoOutputs.metrics.CF, ...
+        systemData_500kW.ecoOutputs.metrics.CF, ...
+        systemData_1000kW.ecoOutputs.metrics.CF, ...
+        systemData_2000kW.ecoOutputs.metrics.CF];
+
+>>>>>>> Stashed changes
 %% Load high wind zero shear scenario
 load('outputFiles/systemData_100kW_high_wind_0_shear.mat');
 load('outputFiles/systemData_500kW_high_wind_0_shear.mat');
@@ -68,6 +117,7 @@ LCoE_high_wind_0_shear = [systemData_100kW.ecoOutputs.metrics.LCoE, ...
         systemData_1000kW.ecoOutputs.metrics.LCoE, ...
         systemData_2000kW.ecoOutputs.metrics.LCoE];
 
+<<<<<<< Updated upstream
 %% No storage scenario
 load('outputFiles/systemData_100kW_noStorage.mat');
 load('outputFiles/systemData_500kW_noStorage.mat');
@@ -101,6 +151,54 @@ hold off
 
 
 %% Single scenario plots
+=======
+CF_high_wind_0_shear = [systemData_100kW.ecoOutputs.metrics.CF, ...
+        systemData_500kW.ecoOutputs.metrics.CF, ...
+        systemData_1000kW.ecoOutputs.metrics.CF, ...
+        systemData_2000kW.ecoOutputs.metrics.CF];
+
+
+
+%% LCoE and CF comparison 
+systemSizes = [100, 500, 1000, 2000];
+
+figure('units','inch','Position', [5 0.5 7 4])
+hold on
+box on
+grid on
+plot(systemSizes, LCoE_baseCase,'k-s', 'LineWidth',1.5,'MarkerSize',4);
+plot(systemSizes, LCoE_decr_mk,'-x', 'LineWidth',1.5,'MarkerSize',4);
+plot(systemSizes, LCoE_noStorage,'-^', 'LineWidth',1.5,'MarkerSize',4);
+plot(systemSizes, LCoE_decr_r,'-v', 'LineWidth',1.5,'MarkerSize',4);
+plot(systemSizes, LCoE_0_windShear,'-d', 'LineWidth',1.5,'MarkerSize',4);
+plot(systemSizes, LCoE_high_wind_0_shear,'-o', 'LineWidth',1.5,'MarkerSize',4);
+legend('Reference scenario', 'Reduced m_k by 50%', 'No storage', 'Increased r to 15%','α_{w}=0', 'α_{w}=0, v_{w,mean}=10m/s');
+ylabel('LCoE (€/MWh)');
+xticks([100, 500, 1000, 1500, 2000]);
+xlabel('System rated power (kW)');
+xlim([0 2100]);
+hold off
+
+figure('units','inch','Position', [5 5 7 4])
+hold on
+box on
+grid on
+plot(systemSizes, CF_baseCase,'k-o', 'LineWidth',2,'MarkerSize',4);
+plot(systemSizes, CF_decr_mk,'-o', 'LineWidth',2,'MarkerSize',4);
+plot(systemSizes, CF_noStorage,'-o', 'LineWidth',2,'MarkerSize',4);
+plot(systemSizes, CF_decr_r,'-o', 'LineWidth',2,'MarkerSize',4);
+plot(systemSizes, CF_0_windShear,'-o', 'LineWidth',2,'MarkerSize',4);
+plot(systemSizes, CF_high_wind_0_shear,'-o', 'LineWidth',2,'MarkerSize',4);
+legend('Reference scenario', 'Reduced m_k by 50%', 'No storage', 'Increased r to 15%','α=0', 'α=0, v_{w,mean}=10m/s');
+ylabel('CF (-)');
+xticks([100, 500, 1000, 1500, 2000]);
+xlabel('System rated power (kW)');
+xlim([0 2100]);
+hold off
+
+
+%% Single scenario plots: Base case
+>>>>>>> Stashed changes
 
 systemSizes = [100, 500, 1000, 2000];
 
@@ -120,11 +218,53 @@ CF   = [systemData_100kW.ecoOutputs.metrics.CF, ...
         systemData_1000kW.ecoOutputs.metrics.CF, ...
         systemData_2000kW.ecoOutputs.metrics.CF];
 
+<<<<<<< Updated upstream
 WASP = [systemData_100kW.perfInputs.P_ratedElec/systemData_100kW.perfInputs.S, ...
+=======
+AEP = [systemData_100kW.ecoOutputs.metrics.AEP, ...
+        systemData_500kW.ecoOutputs.metrics.AEP, ...
+        systemData_1000kW.ecoOutputs.metrics.AEP, ...
+        systemData_2000kW.ecoOutputs.metrics.AEP];
+
+CapEx = [systemData_100kW.ecoOutputs.metrics.ICC, ...
+        systemData_500kW.ecoOutputs.metrics.ICC, ...
+        systemData_1000kW.ecoOutputs.metrics.ICC, ...
+        systemData_2000kW.ecoOutputs.metrics.ICC];
+
+OpEx  = [systemData_100kW.ecoOutputs.metrics.OMC, ...
+        systemData_500kW.ecoOutputs.metrics.OMC, ...
+        systemData_1000kW.ecoOutputs.metrics.OMC, ...
+        systemData_2000kW.ecoOutputs.metrics.OMC];
+
+SP_wingarea = [systemData_100kW.perfInputs.P_ratedElec/systemData_100kW.perfInputs.S, ...
+>>>>>>> Stashed changes
         systemData_500kW.perfInputs.P_ratedElec/systemData_500kW.perfInputs.S, ...
         systemData_1000kW.perfInputs.P_ratedElec/systemData_1000kW.perfInputs.S, ...
         systemData_2000kW.perfInputs.P_ratedElec/systemData_2000kW.perfInputs.S];
 
+<<<<<<< Updated upstream
+=======
+WL_max   = [max(mean(systemData_100kW.perfOutputs.Ft,2))/systemData_100kW.perfInputs.S, ...
+        max(mean(systemData_500kW.perfOutputs.Ft,2))/systemData_500kW.perfInputs.S, ...
+        max(mean(systemData_1000kW.perfOutputs.Ft,2))/systemData_1000kW.perfInputs.S, ...
+        max(mean(systemData_2000kW.perfOutputs.Ft,2))/systemData_2000kW.perfInputs.S];
+
+Cp_ref_area = [systemData_100kW.perfInputs.P_ratedElec/(0.5*1.225*systemData_100kW.perfOutputs.ratedWind^3*pi()*systemData_100kW.perfInputs.b^2), ...
+        systemData_500kW.perfInputs.P_ratedElec/(0.5*1.225*systemData_500kW.perfOutputs.ratedWind^3*pi()*systemData_500kW.perfInputs.b^2), ...
+        systemData_1000kW.perfInputs.P_ratedElec/(0.5*1.225*systemData_1000kW.perfOutputs.ratedWind^3*pi()*systemData_1000kW.perfInputs.b^2), ...
+        systemData_2000kW.perfInputs.P_ratedElec/(0.5*1.225*systemData_2000kW.perfOutputs.ratedWind^3*pi()*systemData_2000kW.perfInputs.b^2)];
+
+SP_ref_area = [systemData_100kW.perfInputs.P_ratedElec/(pi()*systemData_100kW.perfInputs.b^2), ...
+        systemData_500kW.perfInputs.P_ratedElec/(pi()*systemData_500kW.perfInputs.b^2), ...
+        systemData_1000kW.perfInputs.P_ratedElec/(pi()*systemData_1000kW.perfInputs.b^2), ...
+        systemData_2000kW.perfInputs.P_ratedElec/(pi()*systemData_2000kW.perfInputs.b^2)];
+
+zeta = [systemData_100kW.perfInputs.P_ratedElec/(0.5*1.225*systemData_100kW.perfOutputs.ratedWind^3*systemData_100kW.perfInputs.S), ...
+        systemData_500kW.perfInputs.P_ratedElec/(0.5*1.225*systemData_500kW.perfOutputs.ratedWind^3*systemData_500kW.perfInputs.S), ...
+        systemData_1000kW.perfInputs.P_ratedElec/(0.5*1.225*systemData_1000kW.perfOutputs.ratedWind^3*systemData_1000kW.perfInputs.S), ...
+        systemData_2000kW.perfInputs.P_ratedElec/(0.5*1.225*systemData_2000kW.perfOutputs.ratedWind^3*systemData_2000kW.perfInputs.S)];
+
+>>>>>>> Stashed changes
 % Power curves
 figure('units','inch','Position', [1 1 3.5 2.2])
 hold on
@@ -151,24 +291,98 @@ box on
 xticks([100, 500, 1000, 1500, 2000]);
 yyaxis left
 plot(systemSizes, LCoE, '-o', 'linewidth', 1 ,'markersize', 4);
+<<<<<<< Updated upstream
+=======
+ylim([0.95*min(LCoE) 1.05*max(LCoE)]);
+>>>>>>> Stashed changes
 ylabel('LCoE (€/MWh)');
 yyaxis right
 plot(systemSizes, CF, '-x', 'linewidth', 1 , 'markersize', 4);
 ylabel('Capacity factor (-)');
+<<<<<<< Updated upstream
 xlabel('System size (kW)');
 hold off
 
 % WASP
+=======
+xlabel('System rated power (kW)');
+xlim([0 2100]);
+hold off
+
+% SP_wing_area and wing loading
+>>>>>>> Stashed changes
 figure('units','inch','Position', [9 1 3.5 2.2])
 hold on
 grid on
 box on
 % Set the x-axis ticks
 xticks([100, 500, 1000, 1500, 2000]);
+<<<<<<< Updated upstream
 plot(systemSizes, WASP, '-s', 'linewidth', 1 , 'markersize', 5);
 ylabel('WASP (W/m^2)');
 xlabel('System size (kW)');
 hold off  
+=======
+yyaxis left
+plot(systemSizes, SP_wingarea/1e3, '-s', 'linewidth', 1 , 'markersize', 3);
+ylabel('SP_{S} (kW/m^2)');
+yyaxis right
+plot(systemSizes, WL_max/1e3, '-x', 'linewidth', 1 , 'markersize', 5);
+ylabel('W_{l,max} (kN/m^2)');
+xlabel('System rated power (kW)');
+xlim([0 2100]);
+legend('SP_{S} (kW/m^2)', 'W_{l,max} (kN/m^2)', 'Location', 'best');
+hold off
+
+% SP_ref_area and Cp_ref_area
+figure('units','inch','Position', [13 1 3.5 2.2])
+hold on
+grid on
+box on
+% Set the x-axis ticks
+xticks([100, 500, 1000, 1500, 2000]);
+yyaxis left
+plot(systemSizes, SP_ref_area, '-s', 'linewidth', 1 , 'markersize', 3);
+ylabel('SP_{Aref} (W/m^2)');
+yyaxis right
+plot(systemSizes, Cp_ref_area, '-x', 'linewidth', 1 , 'markersize', 5);
+ylabel('C_{p,Aref} (-)');
+xlabel('System rated power (kW)');
+xlim([0 2100]);
+legend('SP_{Aref} (W/m^2)', 'C_{p,Aref} (-)', 'Location', 'best');
+hold off
+
+% Power harvesting factor (zeta)
+figure('units','inch','Position', [17 1 3.5 2.2])
+hold on
+grid on
+box on
+% Set the x-axis ticks
+xticks([100, 500, 1000, 1500, 2000]);
+plot(systemSizes, zeta, '-x', 'linewidth', 1 , 'markersize', 4);
+ylabel('ζ (-)');
+xlabel('System rated power (kW)');
+xlim([0 2100]);
+hold off
+
+% % AEP, CapEx, OpEx 
+% figure('units','inch','Position', [5 1 3.5 2.2])
+% hold on
+% grid on
+% box on
+% % Set the x-axis ticks
+% xticks([100, 500, 1000, 1500, 2000]);
+% yyaxis left
+% plot(systemSizes, AEP, '-o', 'linewidth', 1 ,'markersize', 4);
+% ylabel('AEP (MWh)');
+% yyaxis right
+% plot(systemSizes, [CapEx+OpEx], '-x', 'linewidth', 1 , 'markersize', 4);
+% % plot(systemSizes, OpEx, '-s', 'linewidth', 1 , 'markersize', 4);
+% ylabel('Euros (€)');
+% xlabel('System rated power (kW)');
+% hold off
+  
+>>>>>>> Stashed changes
 
 % Design matrix table
 kW100 = [systemData_100kW.perfInputs.P_ratedElec/1e3, ...
@@ -207,6 +421,7 @@ designMatrixTable = table(data(:,1), data(:,2), data(:,3), data(:,4), data(:,5),
 % Display the table
 disp(designMatrixTable);
 
+<<<<<<< Updated upstream
 
 
 % % Spider plot
@@ -228,3 +443,5 @@ disp(designMatrixTable);
 % spider_plot(data, ...
 %     'AxesLimits', axes_limits,'AxesLabels',axis_labels); % Pass the calculated axis limits
 % title
+=======
+>>>>>>> Stashed changes

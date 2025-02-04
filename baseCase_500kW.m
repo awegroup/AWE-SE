@@ -142,21 +142,34 @@ eco_displayResults_mod_SE(systemData_500kW.ecoInputs, systemData_500kW.ecoOutput
 % Load saved design space results
 load('outPutFiles/designSpace_500kW_WA_WL_var_baseCase.mat');
 % Plot
+<<<<<<< Updated upstream
 plotResults_two_param_variation('WA', 'm^2', 'WL', 'N/m^2', designSpace_500kW_WA_WL_var);
+=======
+plotResults_two_param_variation('S', 'm^2', 'W_{l,max}', 'Nm^{-2}', designSpace_500kW_WA_WL_var);
+>>>>>>> Stashed changes
 
 % Load the saved design space results
 load('outPutFiles/designSpace_500kW_WL_sigma_t_var_baseCase.mat');
 % Plot
+<<<<<<< Updated upstream
 plotResults_two_param_variation('WL', 'N/m^2', 'σ_{t,max}','Pa', designSpace_500kW_WL_sigma_t_var)
+=======
+plotResults_two_param_variation('W_{l,max}', 'Nm^{-2}', 'σ_{t,max}','Nm^{-2}', designSpace_500kW_WL_sigma_t_var)
+>>>>>>> Stashed changes
 
 % Load the saved design space results
 load('outPutFiles/designSpace_500kW_WA_AR_var_baseCase.mat');
 % Plot
+<<<<<<< Updated upstream
 plotResults_two_param_variation('WA', 'm^2', 'AR','-', designSpace_500kW_WA_AR_var)
+=======
+plotResults_two_param_variation('S', 'm^2', 'AR','-', designSpace_500kW_WA_AR_var)
+>>>>>>> Stashed changes
 
 % Load the saved design space results
 load('outPutFiles/designSpace_500kW_WA_crestFactor_var_baseCase.mat');
 % Plot
+<<<<<<< Updated upstream
 plotResults_two_param_variation('Wing area', 'm^2', 'f_{crest}','-', designSpace_500kW_WA_crestFactor_var)
 
 
@@ -183,4 +196,7 @@ plotResults_two_param_variation('Wing area', 'm^2', 'f_{crest}','-', designSpace
 % 
 % % Plot
 % plotResults_two_param_variation('crestFactor', '-', 'P_{rated}','W', designSpace_500kW_crestFactor_P_rated_var)
+=======
+plotResults_two_param_variation('S', 'm^2', 'f_{crest}','-', designSpace_500kW_WA_crestFactor_var)
+>>>>>>> Stashed changes
 
