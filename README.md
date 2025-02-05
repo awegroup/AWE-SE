@@ -23,6 +23,9 @@ git clone --recurse-submodules https://github.com/awegroup/AWE-SE
 ## Licence
 This project is licensed under the MIT License. Please see the below WAIVER in association with the license.
 
+## Acknowledgement
+The project was supported by the Digital Competence Centre, Delft University of Technology.
+
 ### WAIVER
 
 Technische Universiteit Delft hereby disclaims all copyright interest in the program “AWE-SE” (a systems engineering toolchain) written by the Author(s).

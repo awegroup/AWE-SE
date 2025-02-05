@@ -142,45 +142,20 @@ eco_displayResults_mod_SE(systemData_500kW.ecoInputs, systemData_500kW.ecoOutput
 % Load saved design space results
 load('outPutFiles/designSpace_500kW_WA_WL_var_baseCase.mat');
 % Plot
-plotResults_two_param_variation('WA', 'm^2', 'WL', 'N/m^2', designSpace_500kW_WA_WL_var);
+plotResults_two_param_variation('S', 'm^2', 'W_{l,max}', 'Nm^{-2}', designSpace_500kW_WA_WL_var);
 
 % Load the saved design space results
 load('outPutFiles/designSpace_500kW_WL_sigma_t_var_baseCase.mat');
 % Plot
-plotResults_two_param_variation('WL', 'N/m^2', 'σ_{t,max}','Pa', designSpace_500kW_WL_sigma_t_var)
+plotResults_two_param_variation('W_{l,max}', 'Nm^{-2}', 'σ_{t,max}','Nm^{-2}', designSpace_500kW_WL_sigma_t_var)
 
 % Load the saved design space results
 load('outPutFiles/designSpace_500kW_WA_AR_var_baseCase.mat');
 % Plot
-plotResults_two_param_variation('WA', 'm^2', 'AR','-', designSpace_500kW_WA_AR_var)
+plotResults_two_param_variation('S', 'm^2', 'AR','-', designSpace_500kW_WA_AR_var)
 
 % Load the saved design space results
 load('outPutFiles/designSpace_500kW_WA_crestFactor_var_baseCase.mat');
 % Plot
-plotResults_two_param_variation('Wing area', 'm^2', 'f_{crest}','-', designSpace_500kW_WA_crestFactor_var)
-
-
-%% Archived
-
-% %% Crest factor and System rated power variation 
-% clearvars
-% 
-% % Load input file
-% inputs = loadInputs('inputFile_500kW_awePower.yml');
-% 
-% % Define the range for wing area and aspect ratio
-% crestFactor_values = [1.5, 2, 2.5]; % -
-% P_rated_values   = [250e3, 500e3, 750e3]; % W
-% 
-% % Evaluate design space
-% [designSpace_500kW_crestFactor_P_rated_var] = crestFactor_P_rated_variation(crestFactor_values, P_rated_values, inputs);
-% 
-% % Save design space results
-% save('outPutFiles/designSpace_500kW_crestFactor_P_rated_var.mat','designSpace_500kW_crestFactor_P_rated_var');
-% 
-% % Load the saved design space results
-% load('outPutFiles/designSpace_500kW_crestFactor_P_rated_var.mat');
-% 
-% % Plot
-% plotResults_two_param_variation('crestFactor', '-', 'P_{rated}','W', designSpace_500kW_crestFactor_P_rated_var)
+plotResults_two_param_variation('S', 'm^2', 'f_{crest}','-', designSpace_500kW_WA_crestFactor_var)
 
