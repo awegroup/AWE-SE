@@ -1,9 +1,8 @@
 %% Script to find the optimal system design within a given design space
 clc; clearvars;
 
-% Add the source code folders of AWE-Power and AWE-Eco to path
-addpath(genpath('C:/PhD/GitHubRepo/AWE-Power/src'));
-addpath(genpath('C:/PhD/GitHubRepo/AWE-Power/lib'));
+% Add AWE-Power and AWE-Eco to path
+addpath(genpath([pwd '/AWE-Power']));
 addpath(genpath([pwd '/AWE-Eco']));
 
 % Add folders to path
