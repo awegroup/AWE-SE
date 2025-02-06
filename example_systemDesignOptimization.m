@@ -11,7 +11,7 @@ addpath(genpath([pwd '/outputFiles']));
 addpath(genpath([pwd '/src']));
 
 % Load input file
-inputs                = loadInputs('inputFile_100kW_awePower.yml');
+inputs                = loadInputs('inputFile_500kW_example.yml');
 inputs.name           = 'Opt_systDes_100kW';
 % inputs.numDeltaLelems = 1;
 
