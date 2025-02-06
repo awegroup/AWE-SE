@@ -1,17 +1,9 @@
-% Design space exploration: Scaling
-
+% WES2025 paper plots
 clc; clearvars;
-
-% Add the source code folders of AWE-Power and AWE-Eco to path
-addpath(genpath('C:/PhD/GitHubRepo/AWE-Power/src'));
-addpath(genpath('C:/PhD/GitHubRepo/AWE-Power/lib'));
-addpath(genpath([pwd '/AWE-Eco']));
 
 % Add folders to path
 addpath(genpath([pwd '/inputFiles']));
 addpath(genpath([pwd '/outputFiles']));
-addpath(genpath([pwd '/src']));
-addpath(genpath([pwd '/lib']));
 
 %% Load Base case scenario
 load('outputFiles/systemData_100kW_baseCase.mat');
