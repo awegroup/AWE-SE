@@ -166,27 +166,3 @@ load('outPutFiles/designSpace_2000kW_WA_crestFactor_var_high_wind_0_shear.mat');
 % Plot
 plotResults_two_param_variation('Wing area', 'm^2', 'f_{crest}','-', designSpace_2000kW_WA_crestFactor_var)
 
-%%
-
-% %% Crest factor and System rated power variation 
-% clearvars
-% 
-% % Load input file
-% inputs = loadInputs('inputFile_2000kW_high_wind_0_shear.yml');
-% 
-% % Define the range for wing area and aspect ratio
-% crestFactor_values = [2, 2.5, 3]; % -
-% P_rated_values   = [1750e3, 2000e3, 2250e3]; % W
-% 
-% % Evaluate design space
-% [designSpace_2000kW_crestFactor_P_rated_var] = crestFactor_P_rated_variation(crestFactor_values, P_rated_values, inputs);
-% 
-% % Save design space results
-% save('outPutFiles/designSpace_2000kW_crestFactor_P_rated_var_high_wind_0_shear.mat','designSpace_2000kW_crestFactor_P_rated_var');
-% 
-% % Load the saved design space results
-% load('outPutFiles/designSpace_2000kW_crestFactor_P_rated_var_high_wind_0_shear.mat');
-% 
-% % Plot
-% plotResults_two_param_variation('crestFactor', '-', 'P_{rated}','W', designSpace_2000kW_crestFactor_P_rated_var)
-
