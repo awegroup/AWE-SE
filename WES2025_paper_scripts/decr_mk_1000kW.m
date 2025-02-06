@@ -2,15 +2,14 @@
 
 % AWE-Power is changed such that m_k = 0.5*m_k
 
-% Add the source code folders of AWE-Power and AWE-Eco to path
-addpath(genpath('C:/PhD/GitHubRepo/AWE-Power/src'));
-addpath(genpath('C:/PhD/GitHubRepo/AWE-Power/lib'));
-addpath(genpath([pwd '/AWE-Eco']));
+% Add AWE-Power and AWE-Eco to path
+addpath(genpath(fullfile(pwd, '..', 'AWE-Power')));
+addpath(genpath(fullfile(pwd, '..', 'AWE-Eco')));
+addpath(genpath(fullfile(pwd, '..', 'src')));
 
 % Add folders to path
 addpath(genpath([pwd '/inputFiles']));
 addpath(genpath([pwd '/outputFiles']));
-addpath(genpath([pwd '/src']));
 
 %% Wing area and wing loading variation
 clearvars
