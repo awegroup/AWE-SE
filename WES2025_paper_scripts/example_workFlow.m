@@ -2,11 +2,11 @@
 clc; clearvars;
 
 % Add AWE-Power and AWE-Eco to path
-addpath(genpath([pwd '/AWE-Power']));
-addpath(genpath([pwd '/AWE-Eco']));
+addpath(genpath(fullfile(pwd, '..', 'AWE-Power')));
+addpath(genpath(fullfile(pwd, '..', 'AWE-Eco')));
 
 % Add inputFiles folder to path
-addpath(genpath([pwd '/inputFiles']));
+addpath(genpath(fullfile(pwd, '..', 'inputFiles')));
 
 %% Run AWE-Power
 % Load defined input file
