@@ -20,16 +20,16 @@ The framework is built and tested in MATLAB R2021b (without additional add-ons).
 
 Please Clone the repository using the following command
 
-git clone --recurse-submodules https://github.com/awegroup/AWE-SE
+`git clone --recurse-submodules https://github.com/awegroup/AWE-SE`
 
-This will automatically download the interoperable external repositories AWE-Power and AWE-Eco as git submodules.
+This will automatically download the interoperable external repositories [AWE-Power](https://github.com/awegroup/AWE-Power) and [AWE-Eco](https://github.com/awegroup/AWE-Eco) as git submodules.
 
 ## Overview of the repository
 
 The Repository consists following folders:
 
-1. `AWE-Eco`: Interoperable external repository (https://github.com/awegroup/AWE-Eco) estimating cost of AWE systems included as a git submodule.
-1. `AWE-Power`: Interoperable external repository (https://github.com/awegroup/AWE-Power) estimating power curve of AWE systems included as a git submodule.
+1. `AWE-Eco`: Interoperable external repository estimating cost of AWE systems included as a git submodule.
+1. `AWE-Power`: Interoperable external repository estimating power curve of AWE systems included as a git submodule.
 1. `inputFiles`: Contains pre-defined input files.
 1. `outputFiles`: Contains generated output files based on the pre-defined input files.
 1. `src`: Contains the functions required to utilise the capabilities of the framework.
@@ -70,16 +70,16 @@ Create your own input files preserving the format and the structure as described
 ## Licence
 This project is licensed under the MIT License. Please see the below WAIVER in association with the license.
 
-## Acknowledgement
-The project was supported by the Digital Competence Centre, Delft University of Technology.
-
 ### WAIVER
 
-Technische Universiteit Delft hereby disclaims all copyright interest in the program “AWE-SE” (a systems engineering toolchain) written by the Author(s).
+Technische Universiteit Delft hereby disclaims all copyright interest in the program “AWE-SE” (a systems engineering framework for system design of airborne wind energy) written by the Author(s).
 
 Prof.dr. H.G.C. (Henri) Werij, Dean of Aerospace Engineering
 
 Copyright (c) 2024 Rishikesh Joshi
+
+## Acknowledgement
+The project was supported by the Digital Competence Centre, Delft University of Technology.
 
 
 
