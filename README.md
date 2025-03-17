@@ -37,7 +37,7 @@ The Repository consists following folders:
 
 ## Pre-defined example simulation
 
-The script `example_workFlow_AWE-Power_AWE-Eco_coupling.m` can be directly executed to simulate with pre-defined input files.
+The script `example_workFlow_AWE_Power_AWE_Eco_coupling.m` can be directly executed to simulate with pre-defined input files.
 
 It shows the workflow to couple [AWE-Power](https://github.com/awegroup/AWE-Power) and [AWE-Eco](https://github.com/awegroup/AWE-Eco).
 
@@ -49,15 +49,23 @@ It shows the workflow to couple [AWE-Power](https://github.com/awegroup/AWE-Powe
 
 ### `outputFiles` folder
 
-The generated output files have a prefix as the name of the used input file. Following .mat files get stored in the `outputFiles` folder.
+The generated output files have a prefix as the name of the used input file. Following .mat files are automatically saved in the `outputFiles` folder at the end of every simulation.
+
+AWE-Power outputs
 
 1. `optimDetails` has the details regarding the optimization.
-2. `outputs` has all the raw outputs.
-3. `processedOutputs` has post-processed relevant outputs for better visualization. 
+1. `outputs` has all the raw outputs.
+1. `processedOutputs` has post-processed relevant outputs for better visualization. 
+
+AWE-Eco outputs
+
+1. `inp` has the definition of the system taken from the outputs of AWE-Power.
+1. `par` has the cost parameters as defined in `eco_cost_inputs_GG_fixed.xlsx`.
+1. `eco` has the final outputs.
 
 ## To run with user-defined inputs
 
-Create your own input files preserving the format and the structure as described by the pre-defined input files and use the `example_workFlow_AWE-Power_AWE-Eco_coupling.m` as a reference for the work flow.
+Create your own input files preserving the format and the structure as described by the pre-defined input files and use the `example_workFlow_AWE_Power_AWE_Eco_coupling.m` as a reference for the work flow.
 
 ## Licence
 This project is licensed under the MIT License. Please see the below WAIVER in association with the license.
