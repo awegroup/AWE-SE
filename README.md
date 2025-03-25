@@ -28,12 +28,12 @@ This will automatically download the interoperable external repositories [AWE-Po
 
 The Repository consists following folders:
 
-1. `AWE-Eco`: Interoperable external repository estimating cost of AWE systems included as a git submodule.
-1. `AWE-Power`: Interoperable external repository estimating power curve of AWE systems included as a git submodule.
+1. `AWE-Eco`: External repository estimating cost of AWE systems included as a git submodule.
+1. `AWE-Power`: External repository estimating power curve of AWE systems included as a git submodule.
 1. `inputFiles`: Contains pre-defined input files.
 1. `outputFiles`: Contains generated output files based on the pre-defined input files.
 1. `src`: Contains the functions required to utilise the capabilities of the framework.
-1. `WES2025_paper`: Contains scripts, input files and generated output files used to generate plots used in the associated journal publication mentioned above.
+1. `WES2025_paper`: Contains scripts, input files and generated output files used to generate plots used in the associated journal publication mentioned in the citation.
 
 ## Pre-defined example simulation
 
@@ -49,7 +49,7 @@ It shows the workflow to couple [AWE-Power](https://github.com/awegroup/AWE-Powe
 
 ### `outputFiles` folder
 
-The generated output files have a prefix as the name of the used input file. Following .mat files are automatically saved in the `outputFiles` folder at the end of every simulation.
+The generated output files have a prefix as alpha-numeric text mentioned under the `name` field in the input file. Following .mat files are automatically saved in the `outputFiles` folder at the end of every simulation.
 
 AWE-Power outputs
 
@@ -65,7 +65,7 @@ AWE-Eco outputs
 
 ## To run with user-defined inputs
 
-Create your own input files preserving the format and the structure as described by the pre-defined input files and use the `example_workFlow_AWE_Power_AWE_Eco_coupling.m` as a reference for the work flow.
+Create your own input files preserving the format and the structure as described by the pre-defined input files and use the `example_workFlow_AWE_Power_AWE_Eco_coupling.m` as a reference for execution.
 
 ## Licence
 This project is licensed under the MIT License. Please see the below WAIVER in association with the license.
