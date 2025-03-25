@@ -8,6 +8,9 @@ addpath(genpath([pwd '/AWE-Eco']));
 % Add inputFiles folder to path
 addpath(genpath([pwd '/inputFiles']));
 
+% Add inputFiles folder to path
+addpath(genpath([pwd '/outputFiles']));
+
 %% Run AWE-Power
 % Load defined input file
 inputs = loadInputs('inputFile_500kW_example.yml');
