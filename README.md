@@ -1,6 +1,7 @@
 # AWE-SE
 ![GitHub License](https://img.shields.io/github/license/awegroup/AWE-SE)
 ![Static Badge](https://img.shields.io/badge/MATLAB-R2021b-blue)
+[![DOI](https://zenodo.org/badge/803840756.svg)](https://doi.org/10.5281/zenodo.15187606)
 
 A repository establishing the coupling between interoperable external repositories repositories [AWE-Power](https://github.com/awegroup/AWE-Power) and [AWE-Eco](https://github.com/awegroup/AWE-Eco) to setup workflows for system design of airborne wind energy (AWE). The framework is based on the field of multi-disciplinary design, analysis and optimisation (MDAO). It enables the design of AWE systems with an objective to minimise the levelised cost of energy (LCoE) and also other profit-based metrics. 
 
