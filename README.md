@@ -76,7 +76,7 @@ Technische Universiteit Delft hereby disclaims all copyright interest in the pro
 
 Prof.dr. H.G.C. (Henri) Werij, Dean of Aerospace Engineering
 
-Copyright (c) 2024 Rishikesh Joshi
+Copyright (c) 2025 Rishikesh Joshi
 
 ## Acknowledgement
 The project was supported by the Digital Competence Centre, Delft University of Technology.
