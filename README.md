@@ -9,7 +9,7 @@ A repository establishing the coupling between interoperable external repositori
 
 If you use the framework then please cite:
 
-Joshi, R., von Terzi, D., and Schmehl, R.: System design and scaling trends for airborne wind energy, Wind Energ. Sci. Discuss. [preprint], https://doi.org/10.5194/wes-2024-161, in review, 2024.
+Joshi, R., von Terzi, D., and Schmehl, R.: System design and scaling trends in airborne wind energy demonstrated for a ground-generation concept, Wind Energ. Sci., 10, 695–718, https://doi.org/10.5194/wes-10-695-2025, 2025.
 
 
 ## Dependencies
